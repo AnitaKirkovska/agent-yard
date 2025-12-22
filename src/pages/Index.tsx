@@ -147,7 +147,7 @@ const Index = () => {
 
           {/* Subtitle */}
           <p className="text-lg text-muted-foreground max-w-md mx-auto">
-            Describe your Secret Santa recipient and get personalized gift recommendations powered by AI magic ✨
+            Tell us a bit about who you're shopping for, and we'll help you find a gift they'll absolutely love ✨
           </p>
         </header>
 
