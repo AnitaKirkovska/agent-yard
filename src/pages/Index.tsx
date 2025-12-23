@@ -139,7 +139,8 @@ const Index = () => {
               <img 
                 src={santaFace} 
                 alt="Santa Claus" 
-                className="w-24 h-24 object-contain drop-shadow-lg"
+                className="w-24 h-24 object-contain drop-shadow-lg mix-blend-screen dark:mix-blend-lighten"
+                style={{ filter: 'brightness(1.1)' }}
               />
               <Sparkles className="absolute -top-1 -right-1 w-6 h-6 text-accent animate-pulse" />
             </div>
