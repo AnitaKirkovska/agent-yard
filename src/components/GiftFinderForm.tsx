@@ -25,58 +25,54 @@ export const GiftFinderForm = ({ onSubmit, isLoading }: GiftFinderFormProps) => 
   const isValid = friendDescription.trim() && budget.trim();
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <form onSubmit={handleSubmit} className="space-y-8">
       {/* Friend Description */}
       <div className="space-y-3">
         <Label 
           htmlFor="friend-description" 
-          className="flex items-center gap-2 text-base font-medium text-foreground"
+          className="flex items-center gap-2 text-sm font-medium text-foreground tracking-wide"
         >
-          <UserCircle className="w-5 h-5 text-primary" />
-          Describe Your Friend
+          <UserCircle className="w-4 h-4 text-primary" />
+          About Your Recipient
         </Label>
         <Textarea
           id="friend-description"
-          placeholder="Tell us about your Secret Santa recipient... What are their hobbies, interests, favorite things? The more details, the better the recommendations!"
+          placeholder="What are their hobbies, interests, and favorite things? The more details you share, the better we can match..."
           value={friendDescription}
           onChange={(e) => setFriendDescription(e.target.value)}
           className={cn(
-            "min-h-[120px] resize-none transition-all duration-300",
-            "bg-card border-border focus:border-primary focus:ring-2 focus:ring-primary/20",
-            "placeholder:text-muted-foreground/60"
+            "min-h-[140px] resize-none transition-all duration-200",
+            "bg-muted/30 border-border rounded-2xl",
+            "focus:border-primary focus:ring-2 focus:ring-primary/10",
+            "placeholder:text-muted-foreground/50 text-foreground"
           )}
           disabled={isLoading}
         />
-        <p className="text-sm text-muted-foreground">
-          Include personality traits, hobbies, favorite colors, or anything that makes them unique.
-        </p>
       </div>
 
       {/* Budget */}
       <div className="space-y-3">
         <Label 
           htmlFor="budget" 
-          className="flex items-center gap-2 text-base font-medium text-foreground"
+          className="flex items-center gap-2 text-sm font-medium text-foreground tracking-wide"
         >
-          <DollarSign className="w-5 h-5 text-accent" />
-          Gift Budget
+          <DollarSign className="w-4 h-4 text-accent" />
+          Budget Range
         </Label>
         <Input
           id="budget"
           type="text"
-          placeholder="e.g., $25, $50-75, under $100"
+          placeholder="e.g., $50, $25-75, under $100"
           value={budget}
           onChange={(e) => setBudget(e.target.value)}
           className={cn(
-            "transition-all duration-300",
-            "bg-card border-border focus:border-primary focus:ring-2 focus:ring-primary/20",
-            "placeholder:text-muted-foreground/60"
+            "h-12 transition-all duration-200 rounded-xl",
+            "bg-muted/30 border-border",
+            "focus:border-primary focus:ring-2 focus:ring-primary/10",
+            "placeholder:text-muted-foreground/50 text-foreground"
           )}
           disabled={isLoading}
         />
-        <p className="text-sm text-muted-foreground">
-          Enter your budget as a specific amount or range.
-        </p>
       </div>
 
       {/* Submit Button */}
@@ -84,22 +80,21 @@ export const GiftFinderForm = ({ onSubmit, isLoading }: GiftFinderFormProps) => 
         type="submit"
         disabled={!isValid || isLoading}
         className={cn(
-          "w-full h-14 text-lg font-semibold transition-all duration-300",
-          "bg-gradient-festive hover:opacity-90",
-          "disabled:opacity-50 disabled:cursor-not-allowed",
-          isValid && !isLoading && "animate-pulse-glow"
+          "w-full h-14 text-base font-medium transition-all duration-200 rounded-2xl",
+          "bg-gradient-primary text-primary-foreground",
+          "hover:opacity-90 hover:shadow-glow",
+          "disabled:opacity-40 disabled:cursor-not-allowed"
         )}
       >
         {isLoading ? (
           <span className="flex items-center gap-3">
-            <Gift className="w-5 h-5 animate-spin-slow" />
-            Finding Perfect Gifts...
+            <Gift className="w-5 h-5 animate-spin" />
+            Finding Gifts...
           </span>
         ) : (
           <span className="flex items-center gap-3">
             <Sparkles className="w-5 h-5" />
-            Find Gift Ideas
-            <Gift className="w-5 h-5" />
+            Find Perfect Gifts
           </span>
         )}
       </Button>

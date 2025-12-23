@@ -2,112 +2,112 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=DM+Sans:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap');
 
-/* Secret Santa Gift Finder - Festive Design System */
+/* Secret Santa Gift Finder - Refined Winter Design System */
 
 @layer base {
   :root {
-    /* Warm cream background */
-    --background: 40 30% 96%;
-    --foreground: 350 30% 15%;
+    /* Soft off-white background */
+    --background: 210 20% 98%;
+    --foreground: 220 25% 15%;
 
-    /* Card - slightly warmer cream */
-    --card: 40 25% 98%;
-    --card-foreground: 350 30% 15%;
+    /* Card - pure white with subtle warmth */
+    --card: 0 0% 100%;
+    --card-foreground: 220 25% 15%;
 
     /* Popover */
-    --popover: 40 25% 98%;
-    --popover-foreground: 350 30% 15%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 25% 15%;
 
-    /* Primary - Deep burgundy red */
-    --primary: 350 65% 35%;
-    --primary-foreground: 40 30% 98%;
+    /* Primary - Deep forest green */
+    --primary: 160 35% 30%;
+    --primary-foreground: 0 0% 100%;
 
-    /* Secondary - Forest green */
-    --secondary: 150 45% 25%;
-    --secondary-foreground: 40 30% 98%;
+    /* Secondary - Soft sage */
+    --secondary: 160 15% 92%;
+    --secondary-foreground: 160 35% 25%;
 
-    /* Muted - Soft warm gray */
-    --muted: 40 15% 90%;
-    --muted-foreground: 350 15% 45%;
+    /* Muted - Cool gray */
+    --muted: 210 15% 94%;
+    --muted-foreground: 220 15% 45%;
 
-    /* Accent - Warm gold */
-    --accent: 42 85% 55%;
-    --accent-foreground: 350 30% 15%;
+    /* Accent - Warm copper/rose gold */
+    --accent: 15 45% 65%;
+    --accent-foreground: 220 25% 15%;
 
     /* Destructive */
     --destructive: 0 65% 50%;
-    --destructive-foreground: 40 30% 98%;
+    --destructive-foreground: 0 0% 100%;
 
     /* Border and inputs */
-    --border: 40 20% 85%;
-    --input: 40 20% 85%;
-    --ring: 350 65% 35%;
+    --border: 220 15% 90%;
+    --input: 220 15% 90%;
+    --ring: 160 35% 30%;
 
-    --radius: 0.75rem;
+    --radius: 1rem;
 
     /* Custom design tokens */
-    --gradient-festive: linear-gradient(135deg, hsl(350 65% 35%) 0%, hsl(350 55% 45%) 50%, hsl(42 85% 55%) 100%);
-    --gradient-green: linear-gradient(135deg, hsl(150 45% 25%) 0%, hsl(150 35% 35%) 100%);
-    --gradient-gold: linear-gradient(135deg, hsl(42 85% 55%) 0%, hsl(38 80% 60%) 100%);
-    --shadow-festive: 0 10px 40px -10px hsl(350 65% 35% / 0.25);
-    --shadow-soft: 0 4px 20px -4px hsl(350 30% 20% / 0.1);
-    --shadow-glow: 0 0 40px hsl(42 85% 55% / 0.3);
+    --gradient-primary: linear-gradient(135deg, hsl(160 35% 30%) 0%, hsl(160 40% 40%) 100%);
+    --gradient-accent: linear-gradient(135deg, hsl(15 45% 65%) 0%, hsl(20 50% 70%) 100%);
+    --gradient-subtle: linear-gradient(180deg, hsl(210 20% 98%) 0%, hsl(210 15% 95%) 100%);
+    --shadow-soft: 0 4px 24px -6px hsl(220 25% 15% / 0.08);
+    --shadow-medium: 0 8px 32px -8px hsl(220 25% 15% / 0.12);
+    --shadow-glow: 0 0 40px hsl(160 35% 30% / 0.15);
 
     /* Sidebar */
-    --sidebar-background: 40 25% 98%;
-    --sidebar-foreground: 350 30% 15%;
-    --sidebar-primary: 350 65% 35%;
-    --sidebar-primary-foreground: 40 30% 98%;
-    --sidebar-accent: 40 15% 92%;
-    --sidebar-accent-foreground: 350 30% 15%;
-    --sidebar-border: 40 20% 85%;
-    --sidebar-ring: 350 65% 35%;
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 220 25% 15%;
+    --sidebar-primary: 160 35% 30%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 160 15% 95%;
+    --sidebar-accent-foreground: 220 25% 15%;
+    --sidebar-border: 220 15% 90%;
+    --sidebar-ring: 160 35% 30%;
   }
 
   .dark {
-    /* Deep burgundy background */
-    --background: 350 40% 8%;
-    --foreground: 40 20% 95%;
+    /* Deep navy background */
+    --background: 220 30% 8%;
+    --foreground: 210 15% 95%;
 
-    --card: 350 35% 12%;
-    --card-foreground: 40 20% 95%;
+    --card: 220 25% 12%;
+    --card-foreground: 210 15% 95%;
 
-    --popover: 350 35% 12%;
-    --popover-foreground: 40 20% 95%;
+    --popover: 220 25% 12%;
+    --popover-foreground: 210 15% 95%;
 
-    /* Primary - Lighter burgundy for dark mode */
-    --primary: 350 55% 55%;
-    --primary-foreground: 350 40% 8%;
+    /* Primary - Lighter sage green */
+    --primary: 160 30% 55%;
+    --primary-foreground: 220 30% 8%;
 
-    /* Secondary - Lighter green */
-    --secondary: 150 35% 40%;
-    --secondary-foreground: 350 40% 8%;
+    /* Secondary */
+    --secondary: 220 20% 18%;
+    --secondary-foreground: 160 30% 60%;
 
     /* Muted */
-    --muted: 350 30% 18%;
-    --muted-foreground: 40 15% 65%;
+    --muted: 220 20% 16%;
+    --muted-foreground: 210 10% 55%;
 
-    /* Accent - Gold */
-    --accent: 42 75% 50%;
-    --accent-foreground: 350 40% 8%;
+    /* Accent - Warm rose */
+    --accent: 15 50% 60%;
+    --accent-foreground: 220 30% 8%;
 
     --destructive: 0 55% 45%;
-    --destructive-foreground: 40 20% 95%;
+    --destructive-foreground: 210 15% 95%;
 
-    --border: 350 30% 20%;
-    --input: 350 30% 20%;
-    --ring: 350 55% 55%;
+    --border: 220 20% 18%;
+    --input: 220 20% 18%;
+    --ring: 160 30% 55%;
 
-    --sidebar-background: 350 35% 10%;
-    --sidebar-foreground: 40 20% 95%;
-    --sidebar-primary: 350 55% 55%;
-    --sidebar-primary-foreground: 350 40% 8%;
-    --sidebar-accent: 350 30% 16%;
-    --sidebar-accent-foreground: 40 20% 95%;
-    --sidebar-border: 350 30% 20%;
-    --sidebar-ring: 350 55% 55%;
+    --sidebar-background: 220 25% 10%;
+    --sidebar-foreground: 210 15% 95%;
+    --sidebar-primary: 160 30% 55%;
+    --sidebar-primary-foreground: 220 30% 8%;
+    --sidebar-accent: 220 20% 16%;
+    --sidebar-accent-foreground: 210 15% 95%;
+    --sidebar-border: 220 20% 18%;
+    --sidebar-ring: 160 30% 55%;
   }
 }
 
@@ -117,84 +117,90 @@
   }
 
   body {
-    @apply bg-background text-foreground font-sans antialiased;
-    font-family: 'DM Sans', sans-serif;
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', sans-serif;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    letter-spacing: -0.02em;
   }
 }
 
 @layer utilities {
   .font-display {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Cormorant Garamond', serif;
   }
 
-  .text-gradient-festive {
-    background: var(--gradient-festive);
+  .font-sans {
+    font-family: 'Inter', sans-serif;
+  }
+
+  .text-gradient {
+    background: var(--gradient-primary);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
-  .bg-gradient-festive {
-    background: var(--gradient-festive);
+  .bg-gradient-primary {
+    background: var(--gradient-primary);
   }
 
-  .bg-gradient-green {
-    background: var(--gradient-green);
+  .bg-gradient-accent {
+    background: var(--gradient-accent);
   }
 
-  .bg-gradient-gold {
-    background: var(--gradient-gold);
-  }
-
-  .shadow-festive {
-    box-shadow: var(--shadow-festive);
+  .bg-gradient-subtle {
+    background: var(--gradient-subtle);
   }
 
   .shadow-soft {
     box-shadow: var(--shadow-soft);
   }
 
+  .shadow-medium {
+    box-shadow: var(--shadow-medium);
+  }
+
   .shadow-glow {
     box-shadow: var(--shadow-glow);
   }
 
-  /* Snowfall animation */
+  /* Subtle snowfall animation */
   @keyframes snowfall {
     0% {
-      transform: translateY(-10vh) rotate(0deg);
+      transform: translateY(-10vh) translateX(0) rotate(0deg);
       opacity: 0;
     }
     10% {
-      opacity: 1;
+      opacity: 0.6;
     }
     90% {
-      opacity: 1;
+      opacity: 0.6;
     }
     100% {
-      transform: translateY(100vh) rotate(360deg);
+      transform: translateY(100vh) translateX(20px) rotate(180deg);
       opacity: 0;
     }
   }
 
   @keyframes float {
     0%, 100% {
-      transform: translateY(0px) rotate(0deg);
+      transform: translateY(0px);
     }
     50% {
-      transform: translateY(-10px) rotate(3deg);
+      transform: translateY(-8px);
     }
   }
 
-  @keyframes pulse-glow {
+  @keyframes pulse-subtle {
     0%, 100% {
-      box-shadow: 0 0 20px hsl(42 85% 55% / 0.3);
+      opacity: 1;
     }
     50% {
-      box-shadow: 0 0 40px hsl(42 85% 55% / 0.5);
+      opacity: 0.7;
     }
   }
 
@@ -208,22 +214,22 @@
   }
 
   .animate-snowfall {
-    animation: snowfall 10s linear infinite;
+    animation: snowfall 12s linear infinite;
   }
 
   .animate-float {
-    animation: float 4s ease-in-out infinite;
+    animation: float 5s ease-in-out infinite;
   }
 
-  .animate-pulse-glow {
-    animation: pulse-glow 2s ease-in-out infinite;
+  .animate-pulse-subtle {
+    animation: pulse-subtle 2.5s ease-in-out infinite;
   }
 
   .animate-shimmer {
     background: linear-gradient(
       90deg,
       hsl(var(--muted)) 0%,
-      hsl(var(--accent) / 0.3) 50%,
+      hsl(var(--primary) / 0.15) 50%,
       hsl(var(--muted)) 100%
     );
     background-size: 200% 100%;
