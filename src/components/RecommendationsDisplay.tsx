@@ -8,6 +8,7 @@ interface Recommendation {
   description: string;
   price: string;
   link: string;
+  image_url?: string;
   why_its_perfect: string;
 }
 
@@ -54,7 +55,7 @@ export const RecommendationsDisplay = ({ recommendations, onReset }: Recommendat
 
       {/* Recommendations Content */}
       {parsedRecommendations ? (
-        <div className="grid gap-4">
+      <div className="grid gap-4">
           {parsedRecommendations.map((rec, index) => (
             <div
               key={index}
@@ -64,40 +65,74 @@ export const RecommendationsDisplay = ({ recommendations, onReset }: Recommendat
                 "hover:border-primary/30"
               )}
             >
-              <div className="flex flex-col gap-3">
-                {/* Product header */}
-                <div className="flex items-start justify-between gap-4">
-                  <div className="flex-1">
-                    <h4 className="font-display font-semibold text-foreground text-lg">
-                      {rec.product_name}
-                    </h4>
-                    <span className="inline-block mt-1 px-3 py-1 rounded-full bg-primary/10 text-primary font-semibold text-sm">
-                      {rec.price}
-                    </span>
+              <div className="flex gap-4">
+                {/* Product Image */}
+                {rec.image_url && (
+                  <div className="shrink-0">
+                    <img
+                      src={rec.image_url}
+                      alt={rec.product_name}
+                      className="w-24 h-24 object-cover rounded-lg border border-border"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).style.display = 'none';
+                      }}
+                    />
                   </div>
+                )}
+
+                <div className="flex-1 flex flex-col gap-3">
+                  {/* Product header */}
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1">
+                      {rec.link ? (
+                        <a
+                          href={rec.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="font-display font-semibold text-foreground text-lg hover:text-primary transition-colors inline-flex items-center gap-1"
+                        >
+                          {rec.product_name}
+                          <ExternalLink className="w-4 h-4" />
+                        </a>
+                      ) : (
+                        <h4 className="font-display font-semibold text-foreground text-lg">
+                          {rec.product_name}
+                        </h4>
+                      )}
+                      <span className="inline-block mt-1 px-3 py-1 rounded-full bg-primary/10 text-primary font-semibold text-sm">
+                        {rec.price}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Description */}
+                  <p className="text-muted-foreground text-sm leading-relaxed">
+                    {rec.description}
+                  </p>
+
+                  {/* Why it's perfect */}
+                  <div className="flex items-start gap-2 p-3 rounded-lg bg-accent/30 border border-accent/20">
+                    <Sparkles className="w-4 h-4 text-accent shrink-0 mt-0.5" />
+                    <p className="text-sm text-foreground/80 italic">
+                      {rec.why_its_perfect}
+                    </p>
+                  </div>
+
+                  {/* View Product Button */}
                   {rec.link && (
                     <a
                       href={rec.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-1 text-sm text-primary hover:underline shrink-0"
+                      className={cn(
+                        "inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg",
+                        "bg-primary text-primary-foreground font-medium text-sm",
+                        "hover:bg-primary/90 transition-colors w-fit"
+                      )}
                     >
-                      View <ExternalLink className="w-3 h-3" />
+                      View Product <ExternalLink className="w-3 h-3" />
                     </a>
                   )}
-                </div>
-
-                {/* Description */}
-                <p className="text-muted-foreground text-sm leading-relaxed">
-                  {rec.description}
-                </p>
-
-                {/* Why it's perfect */}
-                <div className="flex items-start gap-2 p-3 rounded-lg bg-accent/30 border border-accent/20">
-                  <Sparkles className="w-4 h-4 text-accent shrink-0 mt-0.5" />
-                  <p className="text-sm text-foreground/80 italic">
-                    {rec.why_its_perfect}
-                  </p>
                 </div>
               </div>
             </div>
