@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Calendar, Sparkles, Gift, ArrowRight, Heart } from "lucide-react";
+import { Calendar, Sparkles, ArrowRight, Heart, Twitter } from "lucide-react";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
@@ -161,9 +161,8 @@ const Index = () => {
             <Sparkles className="w-8 h-8 text-primary" />
           </div>
           
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-foreground mb-4 tracking-tight">
-            30 Days of
-            <span className="block text-gradient mt-2">AI Agents</span>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-bold text-foreground mb-4 tracking-tight px-2">
+            30 Days of <span className="text-gradient">AI Agents</span>
           </h1>
           
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
@@ -171,9 +170,20 @@ const Index = () => {
             Follow along and try each one as they launch!
           </p>
 
-          <div className="flex items-center justify-center gap-2 mt-6 text-sm text-muted-foreground">
-            <Calendar className="w-4 h-4" />
-            <span>Started December 23, 2024</span>
+          <div className="flex flex-wrap items-center justify-center gap-4 mt-6 text-sm text-muted-foreground">
+            <div className="flex items-center gap-2">
+              <Calendar className="w-4 h-4" />
+              <span>Started December 23, 2024</span>
+            </div>
+            <a 
+              href="https://x.com/anitakirkovska" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-foreground/5 hover:bg-foreground/10 text-foreground/70 hover:text-foreground transition-colors"
+            >
+              <Twitter className="w-3.5 h-3.5" />
+              <span>@anitakirkovska</span>
+            </a>
           </div>
         </header>
 
