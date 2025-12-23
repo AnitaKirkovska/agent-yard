@@ -1,5 +1,4 @@
-import { Gift, RefreshCw, ExternalLink, Sparkles, RotateCcw, Loader2, Check } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Gift, ExternalLink, Sparkles, Loader2, Check } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 import { useMemo } from "react";
@@ -185,42 +184,6 @@ export const RecommendationsDisplay = ({ recommendations, onFindMore, onStartOve
           <span className="text-muted-foreground font-medium">Finding more ideas...</span>
         </div>
       )}
-
-      {/* Footer */}
-      <div className="flex flex-col items-center gap-6 pt-6 border-t border-border/50">
-        <div className="flex flex-wrap items-center justify-center gap-3">
-          <Button 
-            onClick={onFindMore} 
-            disabled={isLoadingMore}
-            className={cn(
-              "h-12 px-6 text-sm font-medium rounded-xl",
-              "bg-gradient-primary hover:opacity-90 hover:shadow-glow transition-all duration-300"
-            )}
-          >
-            {isLoadingMore ? (
-              <>
-                <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                Loading...
-              </>
-            ) : (
-              <>
-                <RefreshCw className="w-4 h-4 mr-2" />
-                Find More Ideas
-              </>
-            )}
-          </Button>
-          
-          <Button 
-            onClick={onStartOver} 
-            variant="outline"
-            disabled={isLoadingMore}
-            className="h-12 px-6 text-sm font-medium rounded-xl border-border/60 hover:bg-muted/50 transition-all duration-300"
-          >
-            <RotateCcw className="w-4 h-4 mr-2" />
-            Start Over
-          </Button>
-        </div>
-      </div>
     </div>
   );
 };

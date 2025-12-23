@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect, useRef } from "react";
-import { Gift, Sparkles } from "lucide-react";
+import { Gift, Sparkles, RefreshCw, RotateCcw, Loader2 } from "lucide-react";
 import { GiftFinderForm } from "@/components/GiftFinderForm";
 import { LoadingState } from "@/components/LoadingState";
 import { RecommendationsDisplay } from "@/components/RecommendationsDisplay";
@@ -7,6 +7,7 @@ import { ErrorDisplay } from "@/components/ErrorDisplay";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 import { triggerCelebration, triggerSubtleSparkle } from "@/lib/confetti";
+import { Button } from "@/components/ui/button";
 import santaFace from "@/assets/santa-face.png";
 
 interface WorkflowOutput {
@@ -170,13 +171,48 @@ const Index = () => {
       )}>
         {/* Header */}
         {hasRecommendations ? (
-          <header className="flex items-center justify-center gap-3 mb-4 animate-fade-in shrink-0">
-            <div className="p-2 rounded-xl bg-gradient-subtle">
-              <Gift className="w-6 h-6 text-primary" />
+          <header className="flex items-center justify-between gap-3 mb-4 animate-fade-in shrink-0">
+            <div className="flex items-center gap-3">
+              <div className="p-2 rounded-xl bg-gradient-subtle">
+                <Gift className="w-6 h-6 text-primary" />
+              </div>
+              <h1 className="text-xl md:text-2xl font-display font-bold text-foreground">
+                Secret Santa <span className="text-gradient">Gift Finder</span>
+              </h1>
             </div>
-            <h1 className="text-xl md:text-2xl font-display font-bold text-foreground">
-              Secret Santa <span className="text-gradient">Gift Finder</span>
-            </h1>
+            <div className="flex items-center gap-2">
+              <Button 
+                onClick={handleFindMore} 
+                disabled={isLoadingMore}
+                size="sm"
+                className={cn(
+                  "h-9 px-4 text-sm font-medium rounded-xl",
+                  "bg-gradient-primary hover:opacity-90 hover:shadow-glow transition-all duration-300"
+                )}
+              >
+                {isLoadingMore ? (
+                  <>
+                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                    Loading...
+                  </>
+                ) : (
+                  <>
+                    <RefreshCw className="w-4 h-4 mr-2" />
+                    Find More Ideas
+                  </>
+                )}
+              </Button>
+              <Button 
+                onClick={handleReset} 
+                variant="outline"
+                size="sm"
+                disabled={isLoadingMore}
+                className="h-9 px-4 text-sm font-medium rounded-xl border-border/60 hover:bg-muted/50 transition-all duration-300"
+              >
+                <RotateCcw className="w-4 h-4 mr-2" />
+                Start Over
+              </Button>
+            </div>
           </header>
         ) : (
           <header className="text-center mb-6 animate-fade-in shrink-0">
