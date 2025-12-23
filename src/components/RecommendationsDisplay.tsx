@@ -42,22 +42,22 @@ export const RecommendationsDisplay = ({ recommendations, onReset }: Recommendat
   const parsedRecommendations = useMemo(() => parseRecommendations(recommendations), [recommendations]);
 
   return (
-    <div className="space-y-8 animate-fade-in">
+    <div className="space-y-10 animate-fade-in">
       {/* Header */}
-      <div className="text-center">
-        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary/50 text-secondary-foreground mb-4">
-          <PartyPopper className="w-4 h-4" />
-          <span className="text-sm font-medium">Perfect matches found</span>
+      <div className="text-center space-y-4">
+        <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-green text-primary-foreground shadow-lg">
+          <Sparkles className="w-4 h-4" />
+          <span className="text-sm font-semibold tracking-wide">Perfect matches found</span>
         </div>
-        <h3 className="text-2xl md:text-3xl font-display font-bold text-foreground mb-2">
+        <h3 className="text-3xl md:text-4xl font-display font-extrabold text-foreground tracking-tight">
           Gift Recommendations
         </h3>
-        <p className="text-muted-foreground">Curated picks based on your description</p>
+        <p className="text-muted-foreground text-lg">Curated picks based on your description</p>
       </div>
 
       {/* Recommendations Grid */}
       {parsedRecommendations ? (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full">
           {parsedRecommendations.map((rec, index) => {
             const link = cleanUrl(rec.link);
             const imageUrl = cleanUrl(rec.image_url);
@@ -66,72 +66,83 @@ export const RecommendationsDisplay = ({ recommendations, onReset }: Recommendat
               <article
                 key={index}
                 className={cn(
-                  "group relative flex flex-col rounded-2xl bg-card border border-border/50 overflow-hidden",
-                  "hover:border-primary/20 hover:shadow-lg transition-all duration-300"
+                  "group relative flex flex-col rounded-3xl bg-card overflow-hidden",
+                  "border-2 border-transparent",
+                  "shadow-soft hover:shadow-festive transition-all duration-500",
+                  "hover:-translate-y-2 hover:border-primary/30"
                 )}
+                style={{ animationDelay: `${index * 100}ms` }}
               >
+                {/* Decorative gradient overlay */}
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-primary/5 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                
                 {/* Product Image */}
                 {imageUrl ? (
-                  <div className="aspect-[4/3] bg-muted/30 flex items-center justify-center p-6 overflow-hidden">
+                  <div className="relative aspect-square bg-gradient-to-br from-muted/20 to-muted/40 flex items-center justify-center p-8 overflow-hidden">
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,hsl(var(--accent)/0.1),transparent_70%)]" />
                     <img
                       src={imageUrl}
                       alt={rec.product_name}
                       loading="lazy"
-                      className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
+                      className="relative w-full h-full object-contain group-hover:scale-110 transition-transform duration-500 ease-out"
                       onError={(e) => {
                         (e.currentTarget as HTMLImageElement).src = "/placeholder.svg";
                       }}
                     />
                   </div>
                 ) : (
-                  <div className="aspect-[4/3] bg-muted/30 flex items-center justify-center">
-                    <Gift className="w-12 h-12 text-muted-foreground/50" />
+                  <div className="aspect-square bg-gradient-to-br from-muted/30 to-muted/50 flex items-center justify-center">
+                    <div className="p-6 rounded-full bg-muted/50">
+                      <Gift className="w-12 h-12 text-muted-foreground/40" />
+                    </div>
                   </div>
                 )}
 
                 {/* Product Details */}
-                <div className="flex-1 flex flex-col p-5 gap-4">
-                  {/* Title & Price */}
-                  <div>
+                <div className="relative flex-1 flex flex-col p-6 gap-4 bg-card">
+                  {/* Title & Price Row */}
+                  <div className="space-y-3">
                     {link ? (
                       <a
                         href={link}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-start gap-2"
+                        className="group/link inline-flex items-start gap-2"
                       >
-                        <h4 className="font-display font-semibold text-foreground text-lg leading-tight hover:text-primary transition-colors">
+                        <h4 className="font-display font-bold text-foreground text-xl leading-tight group-hover/link:text-primary transition-colors duration-200">
                           {rec.product_name}
                         </h4>
-                        <ExternalLink className="w-4 h-4 text-muted-foreground mt-1 shrink-0" />
+                        <ExternalLink className="w-4 h-4 text-muted-foreground/60 mt-1.5 shrink-0 group-hover/link:text-primary transition-colors" />
                       </a>
                     ) : (
-                      <h4 className="font-display font-semibold text-foreground text-lg leading-tight">
+                      <h4 className="font-display font-bold text-foreground text-xl leading-tight">
                         {rec.product_name}
                       </h4>
                     )}
 
-                    <span className="inline-flex mt-2 px-3 py-1 rounded-full bg-primary/10 text-primary font-bold text-sm">
+                    <span className="inline-flex px-4 py-1.5 rounded-full bg-gradient-festive text-primary-foreground font-bold text-base shadow-sm">
                       {rec.price}
                     </span>
                   </div>
 
                   {/* Description */}
-                  <p className="text-muted-foreground text-sm leading-relaxed line-clamp-2">
+                  <p className="text-muted-foreground text-sm leading-relaxed line-clamp-3 flex-1">
                     {rec.description}
                   </p>
 
-                  {/* Why it's perfect - hover on stars */}
+                  {/* Why it's perfect */}
                   <TooltipProvider>
                     <Tooltip>
                       <TooltipTrigger asChild>
-                        <button className="inline-flex items-center gap-2 p-2 rounded-lg hover:bg-accent/10 transition-colors cursor-pointer">
-                          <Sparkles className="w-5 h-5 text-accent" />
-                          <span className="text-sm text-muted-foreground">Why it's perfect</span>
+                        <button className="inline-flex items-center gap-2 py-2 px-3 -mx-3 rounded-xl hover:bg-accent/10 transition-all duration-200 cursor-pointer group/why">
+                          <div className="p-1.5 rounded-lg bg-accent/20 group-hover/why:bg-accent/30 transition-colors">
+                            <Sparkles className="w-4 h-4 text-accent" />
+                          </div>
+                          <span className="text-sm font-medium text-muted-foreground group-hover/why:text-foreground transition-colors">Why it's perfect</span>
                         </button>
                       </TooltipTrigger>
-                      <TooltipContent side="top" className="max-w-xs p-3">
-                        <p className="text-sm">{rec.why_its_perfect}</p>
+                      <TooltipContent side="top" className="max-w-xs p-4 rounded-xl shadow-xl">
+                        <p className="text-sm leading-relaxed">{rec.why_its_perfect}</p>
                       </TooltipContent>
                     </Tooltip>
                   </TooltipProvider>
@@ -143,10 +154,10 @@ export const RecommendationsDisplay = ({ recommendations, onReset }: Recommendat
                       target="_blank"
                       rel="noopener noreferrer"
                       className={cn(
-                        "inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl mt-auto",
-                        "bg-primary text-primary-foreground font-medium",
-                        "hover:bg-primary/90 transition-all duration-200",
-                        "group-hover:shadow-md"
+                        "inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-2xl mt-auto",
+                        "bg-primary text-primary-foreground font-semibold text-base",
+                        "hover:bg-primary/90 active:scale-[0.98] transition-all duration-200",
+                        "shadow-md hover:shadow-lg"
                       )}
                     >
                       View Product <ExternalLink className="w-4 h-4" />
@@ -158,7 +169,7 @@ export const RecommendationsDisplay = ({ recommendations, onReset }: Recommendat
           })}
         </div>
       ) : (
-        <div className="p-6 rounded-2xl border border-border bg-card">
+        <div className="p-8 rounded-3xl border-2 border-border/50 bg-card shadow-soft">
           <div className="prose prose-sm max-w-none text-foreground">
             <div className="whitespace-pre-wrap leading-relaxed">{recommendations}</div>
           </div>
@@ -166,15 +177,20 @@ export const RecommendationsDisplay = ({ recommendations, onReset }: Recommendat
       )}
 
       {/* Footer */}
-      <div className="flex flex-col items-center gap-4 pt-2">
-        <div className="flex items-center gap-2 text-accent">
-          <Gift className="w-5 h-5" />
-          <span className="text-sm font-medium">Happy gifting!</span>
-          <Gift className="w-5 h-5" />
+      <div className="flex flex-col items-center gap-6 pt-4">
+        <div className="flex items-center gap-3 px-6 py-3 rounded-full bg-accent/10 border border-accent/20">
+          <Gift className="w-5 h-5 text-accent" />
+          <span className="text-base font-semibold text-accent">Happy gifting!</span>
+          <Gift className="w-5 h-5 text-accent" />
         </div>
 
-        <Button onClick={onReset} variant="outline" size="lg" className="px-8">
-          <RefreshCw className="w-4 h-4 mr-2" />
+        <Button 
+          onClick={onReset} 
+          variant="outline" 
+          size="lg" 
+          className="px-10 py-6 text-base font-semibold rounded-2xl border-2 hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all duration-300"
+        >
+          <RefreshCw className="w-5 h-5 mr-2" />
           Find More Gift Ideas
         </Button>
       </div>
