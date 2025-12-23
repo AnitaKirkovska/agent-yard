@@ -234,7 +234,7 @@ const Index = () => {
           <Dialog>
             <DialogTrigger asChild>
               <button
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-accent/10 hover:bg-accent/20 text-accent-foreground text-xs font-medium transition-colors"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-foreground/10 hover:bg-foreground/20 text-foreground text-xs font-medium transition-colors"
               >
                 <Lightbulb className="w-3 h-3" />
                 What I Learned
