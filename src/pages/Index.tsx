@@ -1,5 +1,8 @@
-import { Calendar, Sparkles, Gift, ArrowRight } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Calendar, Sparkles, Gift, ArrowRight, Heart } from "lucide-react";
 import { Link } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 import santaFace from "@/assets/santa-face.png";
 
 interface DayApp {
@@ -34,7 +37,104 @@ const apps: DayApp[] = [
   })),
 ];
 
+const VOTED_STORAGE_KEY = "ai-agents-30-days-votes";
+
+const getVotedApps = (): number[] => {
+  try {
+    const stored = localStorage.getItem(VOTED_STORAGE_KEY);
+    return stored ? JSON.parse(stored) : [];
+  } catch {
+    return [];
+  }
+};
+
+const setVotedApp = (day: number) => {
+  const voted = getVotedApps();
+  if (!voted.includes(day)) {
+    localStorage.setItem(VOTED_STORAGE_KEY, JSON.stringify([...voted, day]));
+  }
+};
+
 const Index = () => {
+  const [votes, setVotes] = useState<Record<number, number>>({});
+  const [votedApps, setVotedApps] = useState<number[]>([]);
+  const [isVoting, setIsVoting] = useState<number | null>(null);
+  const { toast } = useToast();
+
+  useEffect(() => {
+    setVotedApps(getVotedApps());
+    fetchVotes();
+  }, []);
+
+  const fetchVotes = async () => {
+    const { data, error } = await supabase
+      .from("app_votes")
+      .select("app_day, vote_count");
+    
+    if (!error && data) {
+      const votesMap: Record<number, number> = {};
+      data.forEach((row) => {
+        votesMap[row.app_day] = row.vote_count;
+      });
+      setVotes(votesMap);
+    }
+  };
+
+  const handleVote = async (day: number, e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (votedApps.includes(day)) {
+      toast({
+        title: "Already voted!",
+        description: "You've already liked this app.",
+      });
+      return;
+    }
+
+    setIsVoting(day);
+
+    try {
+      // Check if record exists
+      const { data: existing } = await supabase
+        .from("app_votes")
+        .select("vote_count")
+        .eq("app_day", day)
+        .maybeSingle();
+
+      if (existing) {
+        // Update existing record
+        await supabase
+          .from("app_votes")
+          .update({ vote_count: existing.vote_count + 1 })
+          .eq("app_day", day);
+      } else {
+        // Insert new record
+        await supabase
+          .from("app_votes")
+          .insert({ app_day: day, vote_count: 1 });
+      }
+
+      // Update local state
+      setVotes((prev) => ({ ...prev, [day]: (prev[day] || 0) + 1 }));
+      setVotedApp(day);
+      setVotedApps((prev) => [...prev, day]);
+
+      toast({
+        title: "Thanks for the love! ❤️",
+        description: "Your vote has been counted.",
+      });
+    } catch (error) {
+      toast({
+        title: "Oops!",
+        description: "Something went wrong. Try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsVoting(null);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background relative overflow-hidden">
       {/* Ambient Background Orbs */}
@@ -81,7 +181,14 @@ const Index = () => {
         <section className="animate-scale-in" style={{ animationDelay: "0.15s" }}>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 md:gap-4">
             {apps.map((app) => (
-              <AppCard key={app.day} app={app} />
+              <AppCard 
+                key={app.day} 
+                app={app} 
+                votes={votes[app.day] || 0}
+                hasVoted={votedApps.includes(app.day)}
+                isVoting={isVoting === app.day}
+                onVote={handleVote}
+              />
             ))}
           </div>
         </section>
@@ -95,7 +202,15 @@ const Index = () => {
   );
 };
 
-const AppCard = ({ app }: { app: DayApp }) => {
+interface AppCardProps {
+  app: DayApp;
+  votes: number;
+  hasVoted: boolean;
+  isVoting: boolean;
+  onVote: (day: number, e: React.MouseEvent) => void;
+}
+
+const AppCard = ({ app, votes, hasVoted, isVoting, onVote }: AppCardProps) => {
   if (!app.available) {
     return (
       <div className="group relative p-4 rounded-2xl border border-border/40 bg-card/30 backdrop-blur-sm opacity-60">
@@ -142,9 +257,24 @@ const AppCard = ({ app }: { app: DayApp }) => {
         {app.description}
       </p>
       
-      <div className="flex items-center gap-1 mt-3 text-xs text-primary opacity-0 group-hover:opacity-100 transition-opacity">
-        <span>Try it</span>
-        <ArrowRight className="w-3 h-3" />
+      <div className="flex items-center justify-between mt-3">
+        <div className="flex items-center gap-1 text-xs text-primary opacity-0 group-hover:opacity-100 transition-opacity">
+          <span>Try it</span>
+          <ArrowRight className="w-3 h-3" />
+        </div>
+        
+        <button
+          onClick={(e) => onVote(app.day, e)}
+          disabled={isVoting}
+          className={`flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium transition-all duration-200 ${
+            hasVoted
+              ? "bg-primary/20 text-primary"
+              : "bg-muted/50 text-muted-foreground hover:bg-primary/10 hover:text-primary"
+          }`}
+        >
+          <Heart className={`w-3 h-3 ${hasVoted ? "fill-primary" : ""} ${isVoting ? "animate-pulse" : ""}`} />
+          <span>{votes}</span>
+        </button>
       </div>
     </Link>
   );
