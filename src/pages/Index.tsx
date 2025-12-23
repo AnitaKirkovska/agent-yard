@@ -148,28 +148,19 @@ const Index = () => {
       "bg-background relative overflow-hidden flex flex-col",
       hasRecommendations ? "h-screen" : "min-h-screen"
     )}>
-      {/* Shadow Blob Background */}
+      {/* Ambient Background Orbs */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        {/* Dark shadow blobs */}
         <div 
-          className="absolute -top-32 -right-32 w-[500px] h-[500px] rounded-full bg-black/40 blur-3xl animate-blob-pulse"
+          className="absolute -top-40 -right-40 w-96 h-96 rounded-full bg-primary/10 blur-3xl animate-orb-float"
           style={{ animationDelay: "0s" }}
         />
         <div 
-          className="absolute top-1/3 -left-48 w-[450px] h-[450px] rounded-full bg-black/35 blur-3xl animate-blob-pulse"
-          style={{ animationDelay: "-3s" }}
+          className="absolute top-1/2 -left-40 w-80 h-80 rounded-full bg-accent/10 blur-3xl animate-orb-float"
+          style={{ animationDelay: "-5s" }}
         />
         <div 
-          className="absolute -bottom-40 right-1/4 w-[400px] h-[400px] rounded-full bg-black/30 blur-3xl animate-blob-pulse"
-          style={{ animationDelay: "-6s" }}
-        />
-        <div 
-          className="absolute bottom-1/3 left-1/3 w-[350px] h-[350px] rounded-full bg-black/25 blur-3xl animate-orb-float"
+          className="absolute -bottom-20 right-1/3 w-72 h-72 rounded-full bg-secondary/10 blur-3xl animate-orb-float"
           style={{ animationDelay: "-10s" }}
-        />
-        {/* Subtle warm accent glow */}
-        <div 
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-primary/5 blur-3xl animate-pulse-soft"
         />
       </div>
 
