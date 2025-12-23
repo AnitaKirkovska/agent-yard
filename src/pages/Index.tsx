@@ -162,12 +162,12 @@ const Index = () => {
         />
       </div>
 
-      {/* Main Content */}
+        {/* Main Content */}
       <div className={cn(
         "relative z-10 w-full px-4 transition-all duration-500 flex flex-col flex-1 min-h-0",
         hasRecommendations 
           ? "py-6" 
-          : "py-8 md:py-12 container max-w-xl mx-auto"
+          : "py-8 md:py-12 container max-w-xl mx-auto justify-center"
       )}>
         {/* Header */}
         {hasRecommendations ? (
