@@ -297,7 +297,17 @@ const Index = () => {
           style={{ animationDelay: "0.15s" }}
         >
           {isLoading ? (
-            <LoadingState description={lastInputs?.friendDescription} />
+            <div className="flex flex-col items-center">
+              <LoadingState description={lastInputs?.friendDescription} />
+              <button
+                onClick={() => setShowGame(true)}
+                className="mt-6 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 hover:bg-primary/20 text-primary text-sm font-medium transition-colors animate-fade-in"
+                style={{ animationDelay: "1s" }}
+              >
+                <Gamepad2 className="w-4 h-4" />
+                Play a game while you wait!
+              </button>
+            </div>
           ) : hasRecommendations ? (
             <div className="flex-1 min-h-0 overflow-y-auto">
               <RecommendationsDisplay 
@@ -316,15 +326,8 @@ const Index = () => {
       </div>
 
       {/* Footer - Always visible */}
-      <footer className="relative z-10 text-center py-4 text-sm text-muted-foreground/60 animate-fade-in shrink-0 flex items-center justify-center gap-4" style={{ animationDelay: "0.3s" }}>
+      <footer className="relative z-10 text-center py-4 text-sm text-muted-foreground/60 animate-fade-in shrink-0" style={{ animationDelay: "0.3s" }}>
         <p>Powered by <a href="https://vellum.ai?utm_medium=tool&utm_content=anita&utm_source=tool&utm_campaign=secret_santa" target="_blank" rel="noopener noreferrer" className="underline hover:text-muted-foreground transition-colors">Vellum AI Workflows</a></p>
-        <button
-          onClick={() => setShowGame(true)}
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary/10 hover:bg-primary/20 text-primary text-xs font-medium transition-colors"
-        >
-          <Gamepad2 className="w-3.5 h-3.5" />
-          Play Game
-        </button>
       </footer>
 
       {/* Mini-game modal */}
