@@ -43,17 +43,16 @@ export const RecommendationsDisplay = ({ recommendations, onFindMore, onStartOve
   const parsedRecommendations = useMemo(() => parseRecommendations(recommendations), [recommendations]);
 
   return (
-    <div className="space-y-10 animate-fade-in">
+    <div className="space-y-8 animate-fade-in">
       {/* Header */}
-      <div className="text-center space-y-4">
-        <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-green text-primary-foreground shadow-lg">
-          <Sparkles className="w-4 h-4" />
-          <span className="text-sm font-semibold tracking-wide">Perfect matches found</span>
+      <div className="text-center space-y-2">
+        <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gradient-green text-primary-foreground text-xs font-medium">
+          <Sparkles className="w-3 h-3" />
+          <span>Perfect matches found</span>
         </div>
-        <h3 className="text-3xl md:text-4xl font-display font-extrabold text-foreground tracking-tight">
+        <h3 className="text-2xl font-display font-bold text-foreground">
           Gift Recommendations
         </h3>
-        <p className="text-muted-foreground text-lg">Curated picks based on your description</p>
       </div>
 
       {/* Recommendations Grid */}
