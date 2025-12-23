@@ -17,19 +17,17 @@ export const Snowflake = ({ className, delay = 0, size = "md", left = "50%" }: S
   return (
     <div
       className={cn(
-        "absolute pointer-events-none animate-snowfall",
+        "absolute text-accent/40 pointer-events-none animate-snowfall",
         sizeClasses[size],
         className
       )}
       style={{
         left,
         animationDelay: `${delay}s`,
-        animationDuration: `${10 + Math.random() * 8}s`,
+        animationDuration: `${8 + Math.random() * 6}s`,
       }}
     >
-      <svg viewBox="0 0 24 24" fill="none" className="w-full h-full text-primary/20">
-        <circle cx="12" cy="12" r="3" fill="currentColor" />
-      </svg>
+      ❄
     </div>
   );
 };
