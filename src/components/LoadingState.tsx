@@ -1,5 +1,4 @@
-import { Gift, Sparkles, Star } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { Gift, Loader2 } from "lucide-react";
 import { useState, useEffect } from "react";
 
 export const LoadingState = () => {
@@ -7,24 +6,23 @@ export const LoadingState = () => {
   const [progress, setProgress] = useState(0);
   
   const messages = [
-    "Checking the nice list...",
-    "Consulting the elves...",
-    "Wrapping up ideas...",
-    "Finding the perfect match...",
-    "Sprinkling holiday magic...",
+    "Analyzing preferences...",
+    "Searching for perfect matches...",
+    "Curating gift ideas...",
+    "Almost there...",
   ];
 
   useEffect(() => {
     const messageInterval = setInterval(() => {
       setMessageIndex((prev) => (prev + 1) % messages.length);
-    }, 2500);
+    }, 2200);
 
     const progressInterval = setInterval(() => {
       setProgress((prev) => {
         if (prev >= 100) return 0;
-        return prev + Math.random() * 15 + 5;
+        return prev + Math.random() * 12 + 4;
       });
-    }, 400);
+    }, 350);
 
     return () => {
       clearInterval(messageInterval);
@@ -33,64 +31,42 @@ export const LoadingState = () => {
   }, []);
 
   return (
-    <div className="flex flex-col items-center justify-center py-16 space-y-8 animate-fade-in">
-      {/* Animated gift box with orbiting elements */}
-      <div className="relative w-32 h-32">
-        {/* Glow effect */}
-        <div className="absolute inset-0 rounded-full bg-primary/20 blur-xl animate-pulse" />
+    <div className="flex flex-col items-center justify-center py-20 space-y-10 animate-fade-in">
+      {/* Main loader */}
+      <div className="relative">
+        {/* Glow */}
+        <div className="absolute inset-0 rounded-full bg-primary/20 blur-2xl scale-150 animate-pulse-soft" />
         
-        {/* Main gift box */}
-        <div className="absolute inset-2 rounded-2xl bg-gradient-festive shadow-festive flex items-center justify-center animate-float">
-          <Gift className="w-12 h-12 text-primary-foreground" />
+        {/* Icon container */}
+        <div className="relative w-24 h-24 rounded-3xl bg-gradient-primary flex items-center justify-center shadow-glow">
+          <Gift className="w-10 h-10 text-primary-foreground" />
         </div>
         
-        {/* Orbiting sparkles */}
-        <div className="absolute inset-0 animate-spin-slow">
-          <Sparkles className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-2 w-5 h-5 text-accent" />
-          <Star className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-2 w-4 h-4 text-accent fill-accent" />
-        </div>
-        <div className="absolute inset-0 animate-spin-slow" style={{ animationDirection: 'reverse', animationDuration: '4s' }}>
-          <Sparkles className="absolute top-1/2 left-0 -translate-y-1/2 -translate-x-2 w-4 h-4 text-primary" />
-          <Star className="absolute top-1/2 right-0 -translate-y-1/2 translate-x-2 w-5 h-5 text-primary fill-primary" />
+        {/* Spinner ring */}
+        <div className="absolute inset-0 flex items-center justify-center">
+          <Loader2 className="w-32 h-32 text-primary/30 animate-spin-slow" />
         </div>
       </div>
 
-      {/* Loading text with smooth transition */}
-      <div className="text-center space-y-3 min-h-[80px]">
+      {/* Loading text */}
+      <div className="text-center space-y-3">
         <h3 className="text-xl font-display font-semibold text-foreground">
-          Magic in Progress
+          Finding Gifts
         </h3>
         <p 
           key={messageIndex}
-          className="text-muted-foreground animate-fade-in"
+          className="text-muted-foreground animate-fade-in min-h-[1.5rem]"
         >
           {messages[messageIndex]}
         </p>
       </div>
 
-      {/* Smooth progress bar */}
-      <div className="w-48 h-1.5 rounded-full bg-muted overflow-hidden">
+      {/* Progress bar */}
+      <div className="w-56 h-1 rounded-full bg-muted overflow-hidden">
         <div 
-          className="h-full bg-gradient-to-r from-primary via-accent to-primary rounded-full transition-all duration-300 ease-out"
-          style={{ width: `${Math.min(progress, 95)}%` }}
+          className="h-full bg-gradient-primary rounded-full transition-all duration-300 ease-out"
+          style={{ width: `${Math.min(progress, 92)}%` }}
         />
-      </div>
-
-      {/* Floating particles */}
-      <div className="flex gap-3">
-        {[0, 1, 2, 3, 4].map((i) => (
-          <div
-            key={i}
-            className={cn(
-              "w-2 h-2 rounded-full",
-              i % 2 === 0 ? "bg-primary" : "bg-accent"
-            )}
-            style={{ 
-              animation: `float 1.5s ease-in-out infinite`,
-              animationDelay: `${i * 0.15}s`
-            }}
-          />
-        ))}
       </div>
     </div>
   );
