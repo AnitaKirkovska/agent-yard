@@ -142,7 +142,10 @@ const Index = () => {
   }));
 
   return (
-    <div className="min-h-screen bg-background relative overflow-hidden">
+    <div className={cn(
+      "bg-background relative overflow-hidden flex flex-col",
+      recommendations ? "h-screen" : "min-h-screen"
+    )}>
       {/* Snowflakes Background */}
       <div className="fixed inset-0 pointer-events-none">
         {snowflakes.map((flake) => (
@@ -157,52 +160,61 @@ const Index = () => {
 
       {/* Main Content */}
       <div className={cn(
-        "relative z-10 w-full px-4 py-12 md:py-20 transition-all duration-500",
-        recommendations ? "max-w-none" : "container max-w-2xl mx-auto"
+        "relative z-10 w-full px-4 transition-all duration-500 flex flex-col",
+        recommendations 
+          ? "flex-1 py-6 min-h-0" 
+          : "py-12 md:py-20 container max-w-2xl mx-auto"
       )}>
-        {/* Header */}
-        <header className="text-center mb-12 animate-fade-in">
-          {/* Logo/Icon */}
-          <div className="inline-flex items-center justify-center mb-6">
-            <div className="relative animate-float">
-              <img 
-                src={santaFace} 
-                alt="Santa Claus" 
-                className="w-24 h-24 object-contain"
-              />
-              <Sparkles className="absolute -top-1 -right-1 w-6 h-6 text-accent animate-pulse" />
+        {/* Header - hide when showing results */}
+        {!recommendations && (
+          <header className="text-center mb-12 animate-fade-in">
+            {/* Logo/Icon */}
+            <div className="inline-flex items-center justify-center mb-6">
+              <div className="relative animate-float">
+                <img 
+                  src={santaFace} 
+                  alt="Santa Claus" 
+                  className="w-24 h-24 object-contain"
+                />
+                <Sparkles className="absolute -top-1 -right-1 w-6 h-6 text-accent animate-pulse" />
+              </div>
             </div>
-          </div>
 
-          {/* Title */}
-          <h1 className="text-4xl md:text-5xl font-display font-bold text-foreground mb-4">
-            Secret Santa
-            <span className="block text-gradient-festive">Gift Finder</span>
-          </h1>
+            {/* Title */}
+            <h1 className="text-4xl md:text-5xl font-display font-bold text-foreground mb-4">
+              Secret Santa
+              <span className="block text-gradient-festive">Gift Finder</span>
+            </h1>
 
-          {/* Subtitle */}
-          <p className="text-lg text-muted-foreground max-w-md mx-auto">
-            Tell us a bit about who you're shopping for, and we'll help you find a gift they'll absolutely love ✨
-          </p>
-        </header>
+            {/* Subtitle */}
+            <p className="text-lg text-muted-foreground max-w-md mx-auto">
+              Tell us a bit about who you're shopping for, and we'll help you find a gift they'll absolutely love ✨
+            </p>
+          </header>
+        )}
 
         {/* Main Card */}
         <main 
           className={cn(
-            "bg-card rounded-2xl border border-border p-6 md:p-8",
+            "bg-card rounded-2xl border border-border",
             "shadow-soft backdrop-blur-sm",
-            "animate-scale-in"
+            "animate-scale-in",
+            recommendations 
+              ? "flex-1 min-h-0 flex flex-col overflow-hidden p-4 md:p-6" 
+              : "p-6 md:p-8"
           )}
           style={{ animationDelay: "0.2s" }}
         >
           {isLoading ? (
             <LoadingState />
           ) : recommendations ? (
-            <RecommendationsDisplay 
-              recommendations={recommendations} 
-              onFindMore={handleFindMore}
-              onStartOver={handleReset}
-            />
+            <div className="flex-1 min-h-0 overflow-y-auto">
+              <RecommendationsDisplay 
+                recommendations={recommendations} 
+                onFindMore={handleFindMore}
+                onStartOver={handleReset}
+              />
+            </div>
           ) : error ? (
             <ErrorDisplay error={error} onRetry={handleReset} />
           ) : (
@@ -210,10 +222,12 @@ const Index = () => {
           )}
         </main>
 
-        {/* Footer */}
-        <footer className="text-center mt-8 text-sm text-muted-foreground animate-fade-in" style={{ animationDelay: "0.4s" }}>
-          <p>Powered by Vellum AI Workflows</p>
-        </footer>
+        {/* Footer - hide when showing results */}
+        {!recommendations && (
+          <footer className="text-center mt-8 text-sm text-muted-foreground animate-fade-in" style={{ animationDelay: "0.4s" }}>
+            <p>Powered by Vellum AI Workflows</p>
+          </footer>
+        )}
       </div>
     </div>
   );
