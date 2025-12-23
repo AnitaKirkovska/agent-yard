@@ -19,7 +19,6 @@ interface RecommendationsDisplayProps {
 
 const parseRecommendations = (text: string): Recommendation[] | null => {
   try {
-    // Try to find JSON in the text (it might be wrapped in other content)
     const jsonMatch = text.match(/\{[\s\S]*"recommendations"[\s\S]*\}/);
     if (jsonMatch) {
       const parsed = JSON.parse(jsonMatch[0]);
@@ -37,68 +36,62 @@ export const RecommendationsDisplay = ({ recommendations, onReset }: Recommendat
   const parsedRecommendations = useMemo(() => parseRecommendations(recommendations), [recommendations]);
 
   return (
-    <div className="space-y-6 animate-fade-in">
+    <div className="space-y-8 animate-fade-in">
       {/* Header */}
-      <div className="flex items-center gap-3">
-        <div className="w-12 h-12 rounded-xl bg-gradient-green flex items-center justify-center shadow-soft">
-          <PartyPopper className="w-6 h-6 text-secondary-foreground" />
+      <div className="text-center">
+        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary/50 text-secondary-foreground mb-4">
+          <PartyPopper className="w-4 h-4" />
+          <span className="text-sm font-medium">Perfect matches found</span>
         </div>
-        <div>
-          <h3 className="text-xl font-display font-semibold text-foreground">
-            Gift Recommendations
-          </h3>
-          <p className="text-sm text-muted-foreground">
-            Here are some perfect gift ideas for your Secret Santa!
-          </p>
-        </div>
+        <h3 className="text-2xl md:text-3xl font-display font-bold text-foreground mb-2">
+          Gift Recommendations
+        </h3>
+        <p className="text-muted-foreground">
+          Curated picks based on your description
+        </p>
       </div>
 
-      {/* Recommendations Content */}
+      {/* Recommendations Grid */}
       {parsedRecommendations ? (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {parsedRecommendations.map((rec, index) => (
             <div
               key={index}
               className={cn(
-                "flex flex-col rounded-xl border border-border bg-card/50 backdrop-blur-sm overflow-hidden",
-                "shadow-soft hover:shadow-md transition-all duration-300",
-                "hover:border-primary/30"
+                "group relative flex flex-col rounded-2xl bg-card border border-border/50 overflow-hidden",
+                "hover:border-primary/20 hover:shadow-lg transition-all duration-300"
               )}
             >
-              {/* Product Image - Top Full Width */}
-              {rec.image_url && (
-                <div className="w-full aspect-square bg-white flex items-center justify-center p-4">
+              {/* Product Image */}
+              {rec.image_url ? (
+                <div className="aspect-square bg-muted/30 flex items-center justify-center p-6 overflow-hidden">
                   <img
                     src={rec.image_url}
                     alt={rec.product_name}
-                    className="w-full h-full object-contain"
+                    className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
                     onError={(e) => {
-                      (e.target as HTMLImageElement).style.display = 'none';
+                      (e.target as HTMLImageElement).parentElement!.innerHTML = `
+                        <div class="w-full h-full flex items-center justify-center text-muted-foreground">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
+                        </div>
+                      `;
                     }}
                   />
+                </div>
+              ) : (
+                <div className="aspect-square bg-muted/30 flex items-center justify-center">
+                  <Gift className="w-12 h-12 text-muted-foreground/50" />
                 </div>
               )}
 
               {/* Product Details */}
-              <div className="flex-1 flex flex-col gap-3 p-4">
-                {/* Product header */}
+              <div className="flex-1 flex flex-col p-5 gap-4">
+                {/* Title & Price */}
                 <div>
-                  {rec.link ? (
-                    <a
-                      href={rec.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="font-display font-semibold text-foreground text-base hover:text-primary transition-colors inline-flex items-center gap-1"
-                    >
-                      {rec.product_name}
-                      <ExternalLink className="w-4 h-4 shrink-0" />
-                    </a>
-                  ) : (
-                    <h4 className="font-display font-semibold text-foreground text-base">
-                      {rec.product_name}
-                    </h4>
-                  )}
-                  <span className="inline-block mt-2 px-3 py-1 rounded-full bg-primary/10 text-primary font-semibold text-sm">
+                  <h4 className="font-display font-semibold text-foreground text-lg leading-tight mb-2">
+                    {rec.product_name}
+                  </h4>
+                  <span className="inline-flex px-3 py-1 rounded-full bg-primary/10 text-primary font-bold text-sm">
                     {rec.price}
                   </span>
                 </div>
@@ -109,9 +102,9 @@ export const RecommendationsDisplay = ({ recommendations, onReset }: Recommendat
                 </p>
 
                 {/* Why it's perfect */}
-                <div className="flex items-start gap-2 p-3 rounded-lg bg-accent/30 border border-accent/20">
+                <div className="flex items-start gap-2 p-3 rounded-xl bg-accent/20 border border-accent/10">
                   <Sparkles className="w-4 h-4 text-accent shrink-0 mt-0.5" />
-                  <p className="text-sm text-foreground/80 italic line-clamp-3">
+                  <p className="text-sm text-foreground/80 italic line-clamp-2">
                     {rec.why_its_perfect}
                   </p>
                 </div>
@@ -123,12 +116,13 @@ export const RecommendationsDisplay = ({ recommendations, onReset }: Recommendat
                     target="_blank"
                     rel="noopener noreferrer"
                     className={cn(
-                      "inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg mt-auto",
-                      "bg-primary text-primary-foreground font-medium text-sm",
-                      "hover:bg-primary/90 transition-colors"
+                      "inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl mt-auto",
+                      "bg-primary text-primary-foreground font-medium",
+                      "hover:bg-primary/90 transition-all duration-200",
+                      "group-hover:shadow-md"
                     )}
                   >
-                    View Product <ExternalLink className="w-3 h-3" />
+                    View Product <ExternalLink className="w-4 h-4" />
                   </a>
                 )}
               </div>
@@ -136,12 +130,7 @@ export const RecommendationsDisplay = ({ recommendations, onReset }: Recommendat
           ))}
         </div>
       ) : (
-        <div 
-          className={cn(
-            "p-6 rounded-xl border border-border bg-card/50 backdrop-blur-sm",
-            "shadow-soft"
-          )}
-        >
+        <div className="p-6 rounded-2xl border border-border bg-card">
           <div className="prose prose-sm max-w-none text-foreground">
             <div className="whitespace-pre-wrap leading-relaxed">
               {recommendations}
@@ -150,25 +139,24 @@ export const RecommendationsDisplay = ({ recommendations, onReset }: Recommendat
         </div>
       )}
 
-      {/* Decorative elements */}
-      <div className="flex items-center justify-center gap-2 text-accent">
-        <Gift className="w-5 h-5" />
-        <span className="text-sm font-medium">Happy gifting!</span>
-        <Gift className="w-5 h-5" />
-      </div>
+      {/* Footer */}
+      <div className="flex flex-col items-center gap-4 pt-4">
+        <div className="flex items-center gap-2 text-accent">
+          <Gift className="w-5 h-5" />
+          <span className="text-sm font-medium">Happy gifting!</span>
+          <Gift className="w-5 h-5" />
+        </div>
 
-      {/* Reset Button */}
-      <Button
-        onClick={onReset}
-        variant="outline"
-        className={cn(
-          "w-full h-12 transition-all duration-300",
-          "border-primary/30 hover:border-primary hover:bg-primary/5"
-        )}
-      >
-        <RefreshCw className="w-4 h-4 mr-2" />
-        Find More Gift Ideas
-      </Button>
+        <Button
+          onClick={onReset}
+          variant="outline"
+          size="lg"
+          className="px-8"
+        >
+          <RefreshCw className="w-4 h-4 mr-2" />
+          Find More Gift Ideas
+        </Button>
+      </div>
     </div>
   );
 };
