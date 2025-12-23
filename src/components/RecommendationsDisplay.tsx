@@ -1,5 +1,6 @@
 import { Gift, PartyPopper, RefreshCw, ExternalLink, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 import { useMemo } from "react";
 
@@ -120,11 +121,20 @@ export const RecommendationsDisplay = ({ recommendations, onReset }: Recommendat
                     {rec.description}
                   </p>
 
-                  {/* Why it's perfect */}
-                  <div className="flex items-start gap-2 p-3 rounded-xl bg-accent/10 border border-border/40">
-                    <Sparkles className="w-4 h-4 text-accent shrink-0 mt-0.5" />
-                    <p className="text-sm text-foreground/80 line-clamp-2">{rec.why_its_perfect}</p>
-                  </div>
+                  {/* Why it's perfect - hover on stars */}
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <button className="inline-flex items-center gap-2 p-2 rounded-lg hover:bg-accent/10 transition-colors cursor-pointer">
+                          <Sparkles className="w-5 h-5 text-accent" />
+                          <span className="text-sm text-muted-foreground">Why it's perfect</span>
+                        </button>
+                      </TooltipTrigger>
+                      <TooltipContent side="top" className="max-w-xs p-3">
+                        <p className="text-sm">{rec.why_its_perfect}</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
 
                   {/* View Product Button */}
                   {link && (
