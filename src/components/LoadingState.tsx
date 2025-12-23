@@ -56,33 +56,9 @@ const getLoadingMessages = (description?: string): string[] => {
     : baseMessages;
 };
 
-const Snowflake = ({ delay, left, size, duration }: { delay: number; left: number; size: number; duration: number }) => (
-  <div
-    className="absolute text-primary/30 animate-snowfall pointer-events-none"
-    style={{
-      left: `${left}%`,
-      animationDelay: `${delay}s`,
-      animationDuration: `${duration}s`,
-      fontSize: `${size}px`,
-    }}
-  >
-    ❄
-  </div>
-);
-
 export const LoadingState = ({ description }: LoadingStateProps) => {
   const loadingMessages = useMemo(() => getLoadingMessages(description), [description]);
   const [currentIndex, setCurrentIndex] = useState(0);
-
-  const snowflakes = useMemo(() => 
-    Array.from({ length: 15 }, (_, i) => ({
-      id: i,
-      delay: Math.random() * 5,
-      left: Math.random() * 100,
-      size: 10 + Math.random() * 14,
-      duration: 6 + Math.random() * 4,
-    })), 
-  []);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -93,14 +69,9 @@ export const LoadingState = ({ description }: LoadingStateProps) => {
   }, [loadingMessages.length]);
 
   return (
-    <div className="relative flex flex-col items-center justify-center py-12 space-y-8 animate-fade-in overflow-hidden">
-      {/* Snowflakes */}
-      {snowflakes.map((flake) => (
-        <Snowflake key={flake.id} {...flake} />
-      ))}
-
+    <div className="flex flex-col items-center justify-center py-12 space-y-8 animate-fade-in">
       {/* Animated gift icon */}
-      <div className="relative z-10">
+      <div className="relative">
         {/* Pulsing glow */}
         <div className="absolute inset-0 rounded-full bg-primary/20 blur-2xl scale-150 animate-pulse" />
         
@@ -123,7 +94,7 @@ export const LoadingState = ({ description }: LoadingStateProps) => {
       {/* Simple message */}
       <p 
         key={currentIndex}
-        className="relative z-10 text-muted-foreground text-center animate-fade-in"
+        className="text-muted-foreground text-center animate-fade-in"
       >
         {loadingMessages[currentIndex]}
       </p>
