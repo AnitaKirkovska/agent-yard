@@ -3,29 +3,12 @@ import { useState, useEffect, useCallback } from "react";
 
 const loadingMessages = [
   { message: "Analyzing preferences...", subtext: "Consulting with the elves 🎄" },
-  { message: "Searching the internet...", subtext: "Looking through millions of options" },
-  { message: "Checking trending gifts...", subtext: "What's hot this season? 🔥" },
-  { message: "Hmm, that's not quite right...", subtext: "Let me dig deeper" },
+  { message: "Searching the internet...", subtext: "Browsing top retailers for you" },
+  { message: "Hmm, not quite right...", subtext: "Your friend deserves better" },
   { message: "Oh wait, this is cool!", subtext: "Found something interesting ✨" },
-  { message: "Browsing top retailers...", subtext: "Amazon, Etsy, and more" },
-  { message: "Reading reviews...", subtext: "Only the best-rated items" },
-  { message: "Comparing prices...", subtext: "Finding the sweet spot 💰" },
-  { message: "Nope, too boring...", subtext: "Your friend deserves better" },
-  { message: "Ooh, this could work!", subtext: "Adding to the shortlist" },
-  { message: "Checking availability...", subtext: "Making sure it ships in time 📦" },
-  { message: "Cross-referencing interests...", subtext: "The algorithm is cooking" },
-  { message: "Wait, found a gem!", subtext: "This one's special ✨" },
-  { message: "Thinking outside the box...", subtext: "Literally and figuratively 🎁" },
-  { message: "Asking the gift gods...", subtext: "They're very wise" },
-  { message: "Almost there...", subtext: "Wrapping up the best picks" },
-  { message: "Quality checking...", subtext: "No duds allowed here" },
-  { message: "Personalizing results...", subtext: "Making it special for them" },
-  { message: "This is exciting!", subtext: "Found some real winners 🏆" },
-  { message: "One sec, double checking...", subtext: "Perfection takes time" },
-  { message: "Curating the list...", subtext: "Only the cream of the crop" },
-  { message: "Getting creative...", subtext: "Unique ideas incoming 🎨" },
-  { message: "Scouring hidden gems...", subtext: "The best stuff isn't obvious" },
-  { message: "Running final checks...", subtext: "Almost ready to reveal!" },
+  { message: "Comparing options...", subtext: "Only the best-rated items" },
+  { message: "Curating the perfect list...", subtext: "Almost there!" },
+  { message: "Found some gems!", subtext: "These are going to be good 🏆" },
 ];
 
 const finalMessages = [
@@ -81,12 +64,12 @@ export const LoadingState = () => {
       setIconComponent(() => getRandomIcon());
       setMessageKey(prev => prev + 1);
       
-      // Schedule next rotation with random interval (2-4s)
-      const nextInterval = 2000 + Math.random() * 2000;
+      // Schedule next rotation with random interval (5-8s)
+      const nextInterval = 5000 + Math.random() * 3000;
       setTimeout(rotateMessage, nextInterval);
     };
 
-    const firstTimeout = setTimeout(rotateMessage, 2500);
+    const firstTimeout = setTimeout(rotateMessage, 6000);
 
     return () => {
       clearInterval(progressInterval);
