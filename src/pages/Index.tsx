@@ -253,7 +253,7 @@ const Index = () => {
           style={{ animationDelay: "0.15s" }}
         >
           {isLoading ? (
-            <LoadingState />
+            <LoadingState description={lastInputs?.friendDescription} />
           ) : hasRecommendations ? (
             <div className="flex-1 min-h-0 overflow-y-auto">
               <RecommendationsDisplay 
