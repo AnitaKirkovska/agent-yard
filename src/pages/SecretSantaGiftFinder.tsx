@@ -169,12 +169,12 @@ const Index = () => {
         <meta name="description" content="Find the perfect Secret Santa gift with AI. Describe your friend's personality and get personalized gift recommendations instantly." />
         <meta property="og:title" content="Secret Santa Gift Finder | AI-Powered Gift Ideas" />
         <meta property="og:description" content="Find the perfect Secret Santa gift with AI. Describe your friend's personality and get personalized gift recommendations instantly." />
-        <meta property="og:image" content="https://storage.googleapis.com/gpt-engineer-file-uploads/BsNiJOYnVOSWtKJerQCYHMZC7Uo1/social-images/social-1766525855306-CleanShot 2025-12-23 at 22.37.23@2x.png" />
+        <meta property="og:image" content="https://agentyard.co/images/og-secret-santa.png" />
         <meta property="og:type" content="website" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Secret Santa Gift Finder | AI-Powered Gift Ideas" />
         <meta name="twitter:description" content="Find the perfect Secret Santa gift with AI. Describe your friend's personality and get personalized gift recommendations instantly." />
-        <meta name="twitter:image" content="https://storage.googleapis.com/gpt-engineer-file-uploads/BsNiJOYnVOSWtKJerQCYHMZC7Uo1/social-images/social-1766525855306-CleanShot 2025-12-23 at 22.37.23@2x.png" />
+        <meta name="twitter:image" content="https://agentyard.co/images/og-secret-santa.png" />
       </Helmet>
       <div className="theme-christmas bg-background relative overflow-hidden flex flex-col h-screen">
       {/* Snowflakes - only show during loading */}
