@@ -1,4 +1,5 @@
 import { useState, useCallback, useMemo, useEffect } from "react";
+import { Helmet } from "react-helmet-async";
 import { Gift, RefreshCw, RotateCcw, Loader2, Gamepad2, ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import { CatchPresentsGame } from "@/components/CatchPresentsGame";
@@ -162,7 +163,12 @@ const Index = () => {
   []);
 
   return (
-    <div className="theme-christmas bg-background relative overflow-hidden flex flex-col h-screen">
+    <>
+      <Helmet>
+        <title>Secret Santa Gift Finder | AI-Powered Gift Ideas</title>
+        <meta name="description" content="Find the perfect Secret Santa gift with AI. Describe your friend's personality and get personalized gift recommendations instantly." />
+      </Helmet>
+      <div className="theme-christmas bg-background relative overflow-hidden flex flex-col h-screen">
       {/* Snowflakes - only show during loading */}
       {isLoading && (
         <div className="fixed inset-0 pointer-events-none z-20 overflow-hidden">
@@ -339,6 +345,7 @@ const Index = () => {
       {/* Mini-game modal */}
       {showGame && <CatchPresentsGame onClose={() => setShowGame(false)} />}
     </div>
+    </>
   );
 };
 
