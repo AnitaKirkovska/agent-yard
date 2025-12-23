@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import { Gift, Sparkles } from "lucide-react";
 import { GiftFinderForm } from "@/components/GiftFinderForm";
 import { LoadingState } from "@/components/LoadingState";
@@ -6,6 +6,7 @@ import { RecommendationsDisplay } from "@/components/RecommendationsDisplay";
 import { ErrorDisplay } from "@/components/ErrorDisplay";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
+import { triggerCelebration, triggerSubtleSparkle } from "@/lib/confetti";
 import santaFace from "@/assets/santa-face.png";
 
 interface WorkflowOutput {
@@ -97,7 +98,16 @@ const Index = () => {
       );
 
       if (recommendationsOutput?.value) {
+        const isFirstBatch = allRecommendations.length === 0;
         setAllRecommendations(prev => [...prev, recommendationsOutput.value]);
+        
+        // Trigger celebration animation
+        if (isFirstBatch) {
+          setTimeout(() => triggerCelebration(), 300);
+        } else {
+          setTimeout(() => triggerSubtleSparkle(), 200);
+        }
+        
         toast({
           title: isLoadMore ? "More gift ideas found! 🎁" : "Gift ideas found! 🎁",
           description: isLoadMore ? "New recommendations added below." : "Check out the personalized recommendations below.",
