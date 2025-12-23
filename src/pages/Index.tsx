@@ -185,19 +185,11 @@ const Index = () => {
           <header className="text-center mb-12 animate-fade-in">
             {/* Logo/Icon */}
             <div className="inline-flex items-center justify-center mb-8">
-              <div className="relative">
-                <div className="absolute inset-0 rounded-3xl bg-gradient-primary opacity-20 blur-2xl scale-150" />
-                <div className="relative p-6 rounded-3xl bg-gradient-subtle border border-border/50 animate-float-gentle">
-                  <img 
-                    src={santaFace} 
-                    alt="Santa Claus" 
-                    className="w-20 h-20 object-contain"
-                  />
-                </div>
-                <div className="absolute -top-2 -right-2 p-2 rounded-full bg-card border border-border shadow-md-custom">
-                  <Sparkles className="w-4 h-4 text-accent" />
-                </div>
-              </div>
+              <img 
+                src={santaFace} 
+                alt="Santa Claus" 
+                className="w-28 h-28 object-contain animate-float-gentle"
+              />
             </div>
 
             {/* Title */}
