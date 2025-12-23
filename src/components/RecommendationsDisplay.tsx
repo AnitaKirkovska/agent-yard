@@ -1,4 +1,4 @@
-import { Gift, PartyPopper, RefreshCw, ExternalLink, Sparkles } from "lucide-react";
+import { Gift, RefreshCw, ExternalLink, Sparkles, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
@@ -15,7 +15,8 @@ interface Recommendation {
 
 interface RecommendationsDisplayProps {
   recommendations: string;
-  onReset: () => void;
+  onFindMore: () => void;
+  onStartOver: () => void;
 }
 
 const parseRecommendations = (text: string): Recommendation[] | null => {
@@ -38,7 +39,7 @@ const cleanUrl = (value?: string) => {
   return trimmed ? trimmed : undefined;
 };
 
-export const RecommendationsDisplay = ({ recommendations, onReset }: RecommendationsDisplayProps) => {
+export const RecommendationsDisplay = ({ recommendations, onFindMore, onStartOver }: RecommendationsDisplayProps) => {
   const parsedRecommendations = useMemo(() => parseRecommendations(recommendations), [recommendations]);
 
   return (
@@ -184,15 +185,26 @@ export const RecommendationsDisplay = ({ recommendations, onReset }: Recommendat
           <Gift className="w-5 h-5 text-accent" />
         </div>
 
-        <Button 
-          onClick={onReset} 
-          variant="outline" 
-          size="lg" 
-          className="px-10 py-6 text-base font-semibold rounded-2xl border-2 hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all duration-300"
-        >
-          <RefreshCw className="w-5 h-5 mr-2" />
-          Find More Gift Ideas
-        </Button>
+        <div className="flex flex-wrap items-center justify-center gap-4">
+          <Button 
+            onClick={onFindMore} 
+            size="lg" 
+            className="px-8 py-6 text-base font-semibold rounded-2xl shadow-md hover:shadow-lg transition-all duration-300"
+          >
+            <RefreshCw className="w-5 h-5 mr-2" />
+            Find More Gift Ideas
+          </Button>
+          
+          <Button 
+            onClick={onStartOver} 
+            variant="outline"
+            size="lg" 
+            className="px-8 py-6 text-base font-semibold rounded-2xl border-2 hover:bg-muted transition-all duration-300"
+          >
+            <RotateCcw className="w-5 h-5 mr-2" />
+            Start Over
+          </Button>
+        </div>
       </div>
     </div>
   );
