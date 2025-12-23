@@ -144,10 +144,7 @@ const Index = () => {
   const hasRecommendations = allRecommendations.length > 0;
 
   return (
-    <div className={cn(
-      "bg-background relative overflow-hidden flex flex-col",
-      hasRecommendations ? "h-screen" : "min-h-screen"
-    )}>
+    <div className="bg-background relative overflow-hidden flex flex-col h-screen">
       {/* Ambient Background Orbs */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
         <div 
@@ -166,14 +163,14 @@ const Index = () => {
 
       {/* Main Content */}
       <div className={cn(
-        "relative z-10 w-full px-4 transition-all duration-500 flex flex-col",
+        "relative z-10 w-full px-4 transition-all duration-500 flex flex-col flex-1 min-h-0",
         hasRecommendations 
-          ? "flex-1 py-6 min-h-0" 
-          : "py-16 md:py-24 container max-w-xl mx-auto"
+          ? "py-6" 
+          : "py-8 md:py-12 container max-w-xl mx-auto"
       )}>
         {/* Header */}
         {hasRecommendations ? (
-          <header className="flex items-center justify-center gap-3 mb-4 animate-fade-in">
+          <header className="flex items-center justify-center gap-3 mb-4 animate-fade-in shrink-0">
             <div className="p-2 rounded-xl bg-gradient-subtle">
               <Gift className="w-6 h-6 text-primary" />
             </div>
@@ -182,24 +179,24 @@ const Index = () => {
             </h1>
           </header>
         ) : (
-          <header className="text-center mb-12 animate-fade-in">
+          <header className="text-center mb-6 animate-fade-in shrink-0">
             {/* Logo/Icon */}
-            <div className="inline-flex items-center justify-center mb-8">
+            <div className="inline-flex items-center justify-center mb-4">
               <img 
                 src={santaFace} 
                 alt="Santa Claus" 
-                className="w-28 h-28 object-contain animate-float-gentle"
+                className="w-20 h-20 md:w-24 md:h-24 object-contain animate-float-gentle"
               />
             </div>
 
             {/* Title */}
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-foreground mb-5 tracking-tight">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-foreground mb-3 tracking-tight">
               Secret Santa
               <span className="block text-gradient mt-1">Gift Finder</span>
             </h1>
 
             {/* Subtitle */}
-            <p className="text-lg text-muted-foreground max-w-lg mx-auto">
+            <p className="text-base md:text-lg text-muted-foreground max-w-lg mx-auto">
               Describe your friend and we'll find the perfect gift they'll love
             </p>
           </header>
@@ -213,7 +210,7 @@ const Index = () => {
             "animate-scale-in",
             hasRecommendations 
               ? "flex-1 min-h-0 flex flex-col overflow-hidden p-4 md:p-6 bg-card/90 backdrop-blur-xl" 
-              : "p-8 md:p-10 glass"
+              : "p-6 md:p-8 glass flex-1 min-h-0 flex flex-col"
           )}
           style={{ animationDelay: "0.15s" }}
         >
@@ -234,14 +231,12 @@ const Index = () => {
             <GiftFinderForm onSubmit={executeWorkflow} isLoading={isLoading} />
           )}
         </main>
-
-        {/* Footer */}
-        {!hasRecommendations && (
-          <footer className="text-center mt-10 text-sm text-muted-foreground/60 animate-fade-in" style={{ animationDelay: "0.3s" }}>
-            <p>Powered by <a href="https://vellum.ai?utm_medium=tool&utm_content=anita&utm_source=tool&utm_campaign=secret_santa" target="_blank" rel="noopener noreferrer" className="underline hover:text-muted-foreground transition-colors">Vellum AI Workflows</a></p>
-          </footer>
-        )}
       </div>
+
+      {/* Footer - Always visible */}
+      <footer className="relative z-10 text-center py-4 text-sm text-muted-foreground/60 animate-fade-in shrink-0" style={{ animationDelay: "0.3s" }}>
+        <p>Powered by <a href="https://vellum.ai?utm_medium=tool&utm_content=anita&utm_source=tool&utm_campaign=secret_santa" target="_blank" rel="noopener noreferrer" className="underline hover:text-muted-foreground transition-colors">Vellum AI Workflows</a></p>
+      </footer>
     </div>
   );
 };
