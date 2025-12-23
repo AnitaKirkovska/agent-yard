@@ -210,7 +210,9 @@ const Index = () => {
             "animate-scale-in",
             hasRecommendations 
               ? "flex-1 min-h-0 flex flex-col overflow-hidden p-4 md:p-6 bg-card/90 backdrop-blur-xl" 
-              : "p-6 md:p-8 glass flex-1 min-h-0 flex flex-col"
+              : isLoading 
+                ? "p-6 md:p-8 glass"
+                : "p-6 md:p-8 glass"
           )}
           style={{ animationDelay: "0.15s" }}
         >
