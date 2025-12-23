@@ -1,22 +1,29 @@
-import { Loader2 } from "lucide-react";
+import { Loader2, Brain, Search, Frown, Sparkles, Scale, ListChecks, Trophy, LucideIcon } from "lucide-react";
 import { useState, useEffect } from "react";
-import santaFace from "@/assets/santa-face.png";
 
-const loadingMessages = [
-  "Analyzing preferences... consulting with the elves 🎄",
-  "Searching the internet for the perfect gifts...",
-  "Hmm, not quite right... your friend deserves better",
-  "Oh wait, this is cool! Found something interesting ✨",
-  "Comparing options... only the best-rated items",
-  "Curating the perfect list... almost there!",
-  "Found some gems! These are going to be good 🏆",
+interface LoadingMessage {
+  text: string;
+  icon: LucideIcon;
+}
+
+const loadingMessages: LoadingMessage[] = [
+  { text: "Analyzing preferences... consulting with the elves 🎄", icon: Brain },
+  { text: "Searching the internet for the perfect gifts...", icon: Search },
+  { text: "Hmm, not quite right... your friend deserves better", icon: Frown },
+  { text: "Oh wait, this is cool! Found something interesting ✨", icon: Sparkles },
+  { text: "Comparing options... only the best-rated items", icon: Scale },
+  { text: "Curating the perfect list... almost there!", icon: ListChecks },
+  { text: "Found some gems! These are going to be good 🏆", icon: Trophy },
 ];
 
 export const LoadingState = () => {
-  const [currentMessage, setCurrentMessage] = useState(loadingMessages[0]);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [messageKey, setMessageKey] = useState(0);
   const [progress, setProgress] = useState(0);
   const [usedIndices, setUsedIndices] = useState<Set<number>>(new Set([0]));
+
+  const currentMessage = loadingMessages[currentIndex];
+  const IconComponent = currentMessage.icon;
 
   useEffect(() => {
     // Progress bar - fills to ~90% over 50 seconds
@@ -42,7 +49,7 @@ export const LoadingState = () => {
       } while (usedIndices.has(newIndex));
       
       setUsedIndices(prev => new Set([...prev, newIndex]));
-      setCurrentMessage(loadingMessages[newIndex]);
+      setCurrentIndex(newIndex);
       setMessageKey(prev => prev + 1);
       
       const nextInterval = 5000 + Math.random() * 3000;
@@ -64,14 +71,17 @@ export const LoadingState = () => {
         {/* Glow */}
         <div className="absolute inset-0 rounded-full bg-primary/20 blur-2xl scale-150 animate-pulse" />
         
-        {/* Santa container */}
-        <div className="relative w-32 h-32 rounded-3xl bg-gradient-to-br from-primary/10 to-primary/5 flex items-center justify-center shadow-lg border border-primary/10">
-          <img src={santaFace} alt="Santa" className="w-20 h-20 object-contain" />
+        {/* Icon container */}
+        <div className="relative w-28 h-28 rounded-3xl bg-gradient-to-br from-primary/10 to-primary/5 flex items-center justify-center shadow-lg border border-primary/10">
+          <IconComponent 
+            key={messageKey} 
+            className="w-12 h-12 text-primary animate-fade-in" 
+          />
         </div>
         
         {/* Spinner ring */}
         <div className="absolute inset-0 flex items-center justify-center">
-          <Loader2 className="w-40 h-40 text-primary/20 animate-spin" style={{ animationDuration: '3s' }} />
+          <Loader2 className="w-36 h-36 text-primary/20 animate-spin" style={{ animationDuration: '3s' }} />
         </div>
       </div>
 
@@ -81,7 +91,7 @@ export const LoadingState = () => {
           key={`msg-${messageKey}`}
           className="text-muted-foreground animate-fade-in max-w-md"
         >
-          {currentMessage}
+          {currentMessage.text}
         </p>
       </div>
 
