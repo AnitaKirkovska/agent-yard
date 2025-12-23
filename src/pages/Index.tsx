@@ -207,7 +207,7 @@ const Index = () => {
             </h1>
 
             {/* Subtitle */}
-            <p className="text-lg text-muted-foreground max-w-md mx-auto leading-relaxed">
+            <p className="text-lg text-muted-foreground max-w-lg mx-auto">
               Describe your friend and we'll find the perfect gift they'll love
             </p>
           </header>
