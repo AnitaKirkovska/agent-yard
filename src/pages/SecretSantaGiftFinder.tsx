@@ -119,10 +119,6 @@ const Index = () => {
           setTimeout(() => triggerSubtleSparkle(), 200);
         }
         
-        toast({
-          title: isLoadMore ? "More gift ideas found! 🎁" : "Gift ideas found! 🎁",
-          description: isLoadMore ? "New recommendations added below." : "Check out the personalized recommendations below.",
-        });
       } else {
         throw new Error("No recommendations received from the workflow");
       }
@@ -204,12 +200,23 @@ const Index = () => {
         />
       </div>
 
-        {/* Main Content */}
+      {/* Back link - fixed at top */}
+      <div className="relative z-10 px-4 pt-4">
+        <Link 
+          to="/" 
+          className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          Back to all apps
+        </Link>
+      </div>
+
+      {/* Main Content */}
       <div className={cn(
         "relative z-10 w-full px-4 transition-all duration-500 flex flex-col flex-1 min-h-0",
         hasRecommendations 
-          ? "py-6" 
-          : "py-8 md:py-12 container max-w-xl mx-auto justify-center"
+          ? "py-4" 
+          : "py-4 md:py-8 container max-w-xl mx-auto justify-center"
       )}>
         {/* Header */}
         {hasRecommendations ? (
@@ -258,14 +265,6 @@ const Index = () => {
           </header>
         ) : (
           <header className="text-center mb-6 animate-fade-in shrink-0">
-            {/* Back link */}
-            <Link 
-              to="/" 
-              className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors mb-6"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              Back to all apps
-            </Link>
 
             {/* Logo/Icon */}
             <div className="inline-flex items-center justify-center mb-4">
