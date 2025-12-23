@@ -165,8 +165,19 @@ const Index = () => {
           ? "flex-1 py-6 min-h-0" 
           : "py-12 md:py-20 container max-w-2xl mx-auto"
       )}>
-        {/* Header - hide when showing results */}
-        {!recommendations && (
+        {/* Header */}
+        {recommendations ? (
+          <header className="flex items-center justify-center gap-3 mb-4 animate-fade-in">
+            <img 
+              src={santaFace} 
+              alt="Santa Claus" 
+              className="w-10 h-10 object-contain"
+            />
+            <h1 className="text-xl md:text-2xl font-display font-bold text-foreground">
+              Secret Santa <span className="text-gradient-festive">Gift Finder</span>
+            </h1>
+          </header>
+        ) : (
           <header className="text-center mb-12 animate-fade-in">
             {/* Logo/Icon */}
             <div className="inline-flex items-center justify-center mb-6">
