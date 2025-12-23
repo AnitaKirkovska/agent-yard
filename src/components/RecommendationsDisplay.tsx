@@ -1,4 +1,4 @@
-import { Gift, RefreshCw, ExternalLink, Sparkles, RotateCcw } from "lucide-react";
+import { Gift, RefreshCw, ExternalLink, Sparkles, RotateCcw, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
@@ -14,9 +14,10 @@ interface Recommendation {
 }
 
 interface RecommendationsDisplayProps {
-  recommendations: string;
+  recommendations: string[];
   onFindMore: () => void;
   onStartOver: () => void;
+  isLoadingMore?: boolean;
 }
 
 const parseRecommendations = (text: string): Recommendation[] | null => {
@@ -39,8 +40,18 @@ const cleanUrl = (value?: string) => {
   return trimmed ? trimmed : undefined;
 };
 
-export const RecommendationsDisplay = ({ recommendations, onFindMore, onStartOver }: RecommendationsDisplayProps) => {
-  const parsedRecommendations = useMemo(() => parseRecommendations(recommendations), [recommendations]);
+export const RecommendationsDisplay = ({ recommendations, onFindMore, onStartOver, isLoadingMore = false }: RecommendationsDisplayProps) => {
+  // Parse all recommendation strings and flatten into a single array
+  const allParsedRecommendations = useMemo(() => {
+    const all: Recommendation[] = [];
+    for (const rec of recommendations) {
+      const parsed = parseRecommendations(rec);
+      if (parsed) {
+        all.push(...parsed);
+      }
+    }
+    return all.length > 0 ? all : null;
+  }, [recommendations]);
 
   return (
     <div className="space-y-8 animate-fade-in">
@@ -56,9 +67,9 @@ export const RecommendationsDisplay = ({ recommendations, onFindMore, onStartOve
       </div>
 
       {/* Recommendations Grid */}
-      {parsedRecommendations ? (
+      {allParsedRecommendations ? (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
-          {parsedRecommendations.map((rec, index) => {
+          {allParsedRecommendations.map((rec, index) => {
             const link = cleanUrl(rec.link);
             const imageUrl = cleanUrl(rec.image_url);
 
@@ -166,8 +177,16 @@ export const RecommendationsDisplay = ({ recommendations, onFindMore, onStartOve
       ) : (
         <div className="p-6 rounded-2xl border border-border/60 bg-card shadow-soft">
           <div className="prose prose-sm max-w-none text-foreground">
-            <div className="whitespace-pre-wrap leading-relaxed">{recommendations}</div>
+            <div className="whitespace-pre-wrap leading-relaxed">{recommendations.join('\n\n')}</div>
           </div>
+        </div>
+      )}
+
+      {/* Loading More Indicator */}
+      {isLoadingMore && (
+        <div className="flex items-center justify-center gap-3 py-6">
+          <Loader2 className="w-6 h-6 text-primary animate-spin" />
+          <span className="text-muted-foreground font-medium">Finding more gift ideas...</span>
         </div>
       )}
 
@@ -183,16 +202,27 @@ export const RecommendationsDisplay = ({ recommendations, onFindMore, onStartOve
           <Button 
             onClick={onFindMore} 
             size="lg" 
+            disabled={isLoadingMore}
             className="px-8 py-6 text-base font-semibold rounded-2xl shadow-md hover:shadow-lg transition-all duration-300"
           >
-            <RefreshCw className="w-5 h-5 mr-2" />
-            Find More Gift Ideas
+            {isLoadingMore ? (
+              <>
+                <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                Loading...
+              </>
+            ) : (
+              <>
+                <RefreshCw className="w-5 h-5 mr-2" />
+                Find More Gift Ideas
+              </>
+            )}
           </Button>
           
           <Button 
             onClick={onStartOver} 
             variant="outline"
             size="lg" 
+            disabled={isLoadingMore}
             className="px-8 py-6 text-base font-semibold rounded-2xl border-2 hover:bg-muted transition-all duration-300"
           >
             <RotateCcw className="w-5 h-5 mr-2" />

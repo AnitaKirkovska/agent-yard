@@ -25,19 +25,23 @@ interface WorkflowResponse {
 
 const Index = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [recommendations, setRecommendations] = useState<string | null>(null);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
+  const [allRecommendations, setAllRecommendations] = useState<string[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [lastInputs, setLastInputs] = useState<{ friendDescription: string; budget: string } | null>(null);
-  const [previousRecommendations, setPreviousRecommendations] = useState<string[]>([]);
   const { toast } = useToast();
 
   const executeWorkflow = useCallback(async (
     inputs: { friendDescription: string; budget: string },
-    excludeContext?: string
+    isLoadMore: boolean = false
   ) => {
-    setIsLoading(true);
+    if (isLoadMore) {
+      setIsLoadingMore(true);
+    } else {
+      setIsLoading(true);
+      setAllRecommendations([]);
+    }
     setError(null);
-    setRecommendations(null);
     setLastInputs(inputs);
 
     try {
@@ -55,11 +59,11 @@ const Index = () => {
       ];
 
       // Add previous recommendations context to avoid duplicates
-      if (excludeContext) {
+      if (isLoadMore && allRecommendations.length > 0) {
         workflowInputs.push({
           type: "STRING",
           name: "exclude_previous",
-          value: excludeContext,
+          value: allRecommendations.join("\n---\n"),
         });
       }
 
@@ -95,12 +99,10 @@ const Index = () => {
       );
 
       if (recommendationsOutput?.value) {
-        setRecommendations(recommendationsOutput.value);
-        // Store this recommendation to exclude in future requests
-        setPreviousRecommendations(prev => [...prev, recommendationsOutput.value]);
+        setAllRecommendations(prev => [...prev, recommendationsOutput.value]);
         toast({
-          title: "Gift ideas found! 🎁",
-          description: "Check out the personalized recommendations below.",
+          title: isLoadMore ? "More gift ideas found! 🎁" : "Gift ideas found! 🎁",
+          description: isLoadMore ? "New recommendations added below." : "Check out the personalized recommendations below.",
         });
       } else {
         throw new Error("No recommendations received from the workflow");
@@ -115,22 +117,20 @@ const Index = () => {
       });
     } finally {
       setIsLoading(false);
+      setIsLoadingMore(false);
     }
-  }, [toast]);
+  }, [toast, allRecommendations]);
 
   const handleFindMore = useCallback(() => {
     if (lastInputs) {
-      // Create context from previous recommendations to exclude
-      const excludeContext = previousRecommendations.join("\n---\n");
-      executeWorkflow(lastInputs, excludeContext);
+      executeWorkflow(lastInputs, true);
     }
-  }, [lastInputs, previousRecommendations, executeWorkflow]);
+  }, [lastInputs, executeWorkflow]);
 
   const handleReset = () => {
-    setRecommendations(null);
+    setAllRecommendations([]);
     setError(null);
     setLastInputs(null);
-    setPreviousRecommendations([]);
   };
 
   // Generate snowflakes
@@ -141,10 +141,12 @@ const Index = () => {
     left: `${Math.random() * 100}%`,
   }));
 
+  const hasRecommendations = allRecommendations.length > 0;
+
   return (
     <div className={cn(
       "bg-background relative overflow-hidden flex flex-col",
-      recommendations ? "h-screen" : "min-h-screen"
+      hasRecommendations ? "h-screen" : "min-h-screen"
     )}>
       {/* Snowflakes Background */}
       <div className="fixed inset-0 pointer-events-none">
@@ -161,12 +163,12 @@ const Index = () => {
       {/* Main Content */}
       <div className={cn(
         "relative z-10 w-full px-4 transition-all duration-500 flex flex-col",
-        recommendations 
+        hasRecommendations 
           ? "flex-1 py-6 min-h-0" 
           : "py-12 md:py-20 container max-w-2xl mx-auto"
       )}>
         {/* Header */}
-        {recommendations ? (
+        {hasRecommendations ? (
           <header className="flex items-center justify-center gap-3 mb-4 animate-fade-in">
             <img 
               src={santaFace} 
@@ -210,7 +212,7 @@ const Index = () => {
             "bg-card rounded-2xl border border-border",
             "shadow-soft backdrop-blur-sm",
             "animate-scale-in",
-            recommendations 
+            hasRecommendations 
               ? "flex-1 min-h-0 flex flex-col overflow-hidden p-4 md:p-6" 
               : "p-6 md:p-8"
           )}
@@ -218,12 +220,13 @@ const Index = () => {
         >
           {isLoading ? (
             <LoadingState />
-          ) : recommendations ? (
+          ) : hasRecommendations ? (
             <div className="flex-1 min-h-0 overflow-y-auto">
               <RecommendationsDisplay 
-                recommendations={recommendations} 
+                recommendations={allRecommendations} 
                 onFindMore={handleFindMore}
                 onStartOver={handleReset}
+                isLoadingMore={isLoadingMore}
               />
             </div>
           ) : error ? (
@@ -234,7 +237,7 @@ const Index = () => {
         </main>
 
         {/* Footer - hide when showing results */}
-        {!recommendations && (
+        {!hasRecommendations && (
           <footer className="text-center mt-8 text-sm text-muted-foreground animate-fade-in" style={{ animationDelay: "0.4s" }}>
             <p>Powered by Vellum AI Workflows</p>
           </footer>
