@@ -230,7 +230,7 @@ const Index = () => {
           className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary/10 hover:bg-primary/20 text-primary text-xs font-medium transition-colors"
         >
           <ExternalLink className="w-3 h-3" />
-          View Blueprint
+          Get Agent Blueprint
         </a>
       </div>
 
