@@ -7,13 +7,14 @@ interface LoadingMessage {
 }
 
 const loadingMessages: LoadingMessage[] = [
-  { text: "Analyzing preferences... consulting with the elves 🎄", icon: Brain },
-  { text: "Searching the internet for the perfect gifts...", icon: Search },
-  { text: "Hmm, not quite right... your friend deserves better", icon: Frown },
-  { text: "Oh wait, this is cool! Found something interesting ✨", icon: Sparkles },
-  { text: "Comparing options... only the best-rated items", icon: Scale },
-  { text: "Curating the perfect list... almost there!", icon: ListChecks },
-  { text: "Found some gems! These are going to be good 🏆", icon: Trophy },
+  { text: "Hmm, let me think about what they'd actually love...", icon: Brain },
+  { text: "Ooh, searching for something special...", icon: Search },
+  { text: "Nah, that's not quite right for them...", icon: Frown },
+  { text: "Oh wait, this might be fun! ✨", icon: Sparkles },
+  { text: "Actually, let me compare a few more options...", icon: Scale },
+  { text: "Oh no, that's probably not a good choice...", icon: Frown },
+  { text: "Getting closer! These are looking good...", icon: ListChecks },
+  { text: "Ooh yes, I think they'd really like this one! 🏆", icon: Trophy },
 ];
 
 export const LoadingState = () => {
