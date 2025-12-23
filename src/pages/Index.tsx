@@ -112,9 +112,9 @@ const Index = () => {
   }));
 
   return (
-    <div className="min-h-screen bg-background relative overflow-hidden">
-      {/* Snowflakes Background */}
-      <div className="fixed inset-0 pointer-events-none">
+    <div className="min-h-screen bg-gradient-subtle relative overflow-hidden">
+      {/* Subtle Snowflakes Background */}
+      <div className="fixed inset-0 pointer-events-none opacity-40">
         {snowflakes.map((flake) => (
           <Snowflake
             key={flake.id}
@@ -126,39 +126,39 @@ const Index = () => {
       </div>
 
       {/* Main Content */}
-      <div className="relative z-10 container max-w-2xl mx-auto px-4 py-12 md:py-20">
+      <div className="relative z-10 container max-w-xl mx-auto px-6 py-16 md:py-24">
         {/* Header */}
-        <header className="text-center mb-12 animate-fade-in">
+        <header className="text-center mb-14 animate-fade-in">
           {/* Logo/Icon */}
-          <div className="inline-flex items-center justify-center mb-6">
+          <div className="inline-flex items-center justify-center mb-8">
             <div className="relative">
-              <div className="w-20 h-20 rounded-2xl bg-gradient-festive shadow-festive flex items-center justify-center animate-float">
-                <Gift className="w-10 h-10 text-primary-foreground" />
+              <div className="w-16 h-16 rounded-2xl bg-gradient-primary shadow-glow flex items-center justify-center animate-float">
+                <Gift className="w-8 h-8 text-primary-foreground" />
               </div>
-              <Sparkles className="absolute -top-2 -right-2 w-6 h-6 text-accent animate-pulse" />
+              <Sparkles className="absolute -top-1 -right-1 w-5 h-5 text-accent animate-pulse-subtle" />
             </div>
           </div>
 
           {/* Title */}
-          <h1 className="text-4xl md:text-5xl font-display font-bold text-foreground mb-4">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-display text-foreground mb-5 leading-tight">
             Secret Santa
-            <span className="block text-gradient-festive">Gift Finder</span>
+            <span className="block text-gradient mt-1">Gift Finder</span>
           </h1>
 
           {/* Subtitle */}
-          <p className="text-lg text-muted-foreground max-w-md mx-auto">
-            Tell us a bit about who you're shopping for, and we'll help you find a gift they'll absolutely love ✨
+          <p className="text-base md:text-lg text-muted-foreground max-w-sm mx-auto leading-relaxed">
+            Describe your recipient and we'll find the perfect gift they'll love
           </p>
         </header>
 
         {/* Main Card */}
         <main 
           className={cn(
-            "bg-card rounded-2xl border border-border p-6 md:p-8",
-            "shadow-soft backdrop-blur-sm",
+            "bg-card rounded-3xl border border-border p-8 md:p-10",
+            "shadow-medium",
             "animate-scale-in"
           )}
-          style={{ animationDelay: "0.2s" }}
+          style={{ animationDelay: "0.15s" }}
         >
           {isLoading ? (
             <LoadingState />
@@ -175,8 +175,8 @@ const Index = () => {
         </main>
 
         {/* Footer */}
-        <footer className="text-center mt-8 text-sm text-muted-foreground animate-fade-in" style={{ animationDelay: "0.4s" }}>
-          <p>Powered by Vellum AI Workflows</p>
+        <footer className="text-center mt-10 text-sm text-muted-foreground/60 animate-fade-in" style={{ animationDelay: "0.3s" }}>
+          <p>Powered by Vellum AI</p>
         </footer>
       </div>
     </div>
