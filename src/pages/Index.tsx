@@ -1,5 +1,5 @@
-import { useState, useCallback, useEffect, useRef } from "react";
-import { Gift, Sparkles, RefreshCw, RotateCcw, Loader2 } from "lucide-react";
+import { useState, useCallback, useMemo } from "react";
+import { Gift, RefreshCw, RotateCcw, Loader2 } from "lucide-react";
 import { GiftFinderForm } from "@/components/GiftFinderForm";
 import { LoadingState } from "@/components/LoadingState";
 import { RecommendationsDisplay } from "@/components/RecommendationsDisplay";
@@ -144,8 +144,40 @@ const Index = () => {
 
   const hasRecommendations = allRecommendations.length > 0;
 
+  // Generate snowflakes for loading state
+  const snowflakes = useMemo(() => 
+    Array.from({ length: 20 }, (_, i) => ({
+      id: i,
+      delay: Math.random() * 8,
+      left: Math.random() * 100,
+      size: 12 + Math.random() * 12,
+      duration: 8 + Math.random() * 6,
+    })), 
+  []);
+
   return (
     <div className="bg-background relative overflow-hidden flex flex-col h-screen">
+      {/* Snowflakes - only show during loading */}
+      {isLoading && (
+        <div className="fixed inset-0 pointer-events-none z-20 overflow-hidden">
+          {snowflakes.map((flake) => (
+            <div
+              key={flake.id}
+              className="absolute text-primary/20 animate-snowfall"
+              style={{
+                left: `${flake.left}%`,
+                top: '-20px',
+                animationDelay: `${flake.delay}s`,
+                animationDuration: `${flake.duration}s`,
+                fontSize: `${flake.size}px`,
+              }}
+            >
+              ❄
+            </div>
+          ))}
+        </div>
+      )}
+
       {/* Ambient Background Orbs */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
         <div 
