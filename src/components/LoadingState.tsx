@@ -1,53 +1,35 @@
-import { Gift, Loader2, Sparkles, Search, Brain, Heart, Zap, Star, Coffee, Rocket } from "lucide-react";
-import { useState, useEffect, useCallback } from "react";
+import { Loader2 } from "lucide-react";
+import { useState, useEffect } from "react";
+import santaFace from "@/assets/santa-face.png";
 
 const loadingMessages = [
-  { message: "Analyzing preferences...", subtext: "Consulting with the elves 🎄" },
-  { message: "Searching the internet...", subtext: "Browsing top retailers for you" },
-  { message: "Hmm, not quite right...", subtext: "Your friend deserves better" },
-  { message: "Oh wait, this is cool!", subtext: "Found something interesting ✨" },
-  { message: "Comparing options...", subtext: "Only the best-rated items" },
-  { message: "Curating the perfect list...", subtext: "Almost there!" },
-  { message: "Found some gems!", subtext: "These are going to be good 🏆" },
+  "Analyzing preferences... consulting with the elves 🎄",
+  "Searching the internet for the perfect gifts...",
+  "Hmm, not quite right... your friend deserves better",
+  "Oh wait, this is cool! Found something interesting ✨",
+  "Comparing options... only the best-rated items",
+  "Curating the perfect list... almost there!",
+  "Found some gems! These are going to be good 🏆",
 ];
-
-const finalMessages = [
-  "I think your friend will absolutely love these!",
-  "These gifts are going to be a hit!",
-  "Found some gems that match perfectly!",
-  "Your gift game is about to level up!",
-  "These picks are chef's kiss 👌",
-  "Nailed it! Check these out!",
-];
-
-const icons = [Gift, Sparkles, Search, Brain, Heart, Zap, Star, Coffee, Rocket];
 
 export const LoadingState = () => {
   const [currentMessage, setCurrentMessage] = useState(loadingMessages[0]);
   const [messageKey, setMessageKey] = useState(0);
   const [progress, setProgress] = useState(0);
   const [usedIndices, setUsedIndices] = useState<Set<number>>(new Set([0]));
-  
-  const getRandomIcon = useCallback(() => {
-    return icons[Math.floor(Math.random() * icons.length)];
-  }, []);
-  
-  const [IconComponent, setIconComponent] = useState(() => getRandomIcon());
 
   useEffect(() => {
     // Progress bar - fills to ~90% over 50 seconds
     const progressInterval = setInterval(() => {
       setProgress(prev => {
         if (prev >= 90) return 90;
-        // Slow, variable progress
         return prev + (Math.random() * 1.5 + 0.5);
       });
     }, 1000);
 
-    // Message rotation - every 2-4 seconds randomly
+    // Message rotation - every 5-8 seconds randomly
     const rotateMessage = () => {
       setUsedIndices(prev => {
-        // Reset if we've used most messages
         if (prev.size >= loadingMessages.length - 2) {
           return new Set();
         }
@@ -61,10 +43,8 @@ export const LoadingState = () => {
       
       setUsedIndices(prev => new Set([...prev, newIndex]));
       setCurrentMessage(loadingMessages[newIndex]);
-      setIconComponent(() => getRandomIcon());
       setMessageKey(prev => prev + 1);
       
-      // Schedule next rotation with random interval (5-8s)
       const nextInterval = 5000 + Math.random() * 3000;
       setTimeout(rotateMessage, nextInterval);
     };
@@ -84,35 +64,29 @@ export const LoadingState = () => {
         {/* Glow */}
         <div className="absolute inset-0 rounded-full bg-primary/20 blur-2xl scale-150 animate-pulse" />
         
-        {/* Icon container */}
-        <div className="relative w-20 h-20 rounded-2xl bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center shadow-lg">
-          <IconComponent key={messageKey} className="w-8 h-8 text-primary-foreground animate-bounce-gentle" />
+        {/* Santa container */}
+        <div className="relative w-32 h-32 rounded-3xl bg-gradient-to-br from-primary/10 to-primary/5 flex items-center justify-center shadow-lg border border-primary/10">
+          <img src={santaFace} alt="Santa" className="w-20 h-20 object-contain" />
         </div>
         
         {/* Spinner ring */}
         <div className="absolute inset-0 flex items-center justify-center">
-          <Loader2 className="w-28 h-28 text-primary/20 animate-spin" style={{ animationDuration: '3s' }} />
+          <Loader2 className="w-40 h-40 text-primary/20 animate-spin" style={{ animationDuration: '3s' }} />
         </div>
       </div>
 
       {/* Loading text */}
-      <div className="text-center space-y-2 min-h-[80px]">
-        <h3 
-          key={`title-${messageKey}`}
-          className="text-xl font-display font-semibold text-foreground animate-fade-in"
-        >
-          {currentMessage.message}
-        </h3>
+      <div className="text-center space-y-2 min-h-[60px]">
         <p 
-          key={`sub-${messageKey}`}
-          className="text-muted-foreground text-sm animate-fade-in"
+          key={`msg-${messageKey}`}
+          className="text-muted-foreground animate-fade-in max-w-md"
         >
-          {currentMessage.subtext}
+          {currentMessage}
         </p>
       </div>
 
       {/* Progress bar */}
-      <div className="w-64 space-y-2">
+      <div className="w-64">
         <div className="h-1.5 rounded-full bg-muted overflow-hidden">
           <div 
             className="h-full bg-gradient-to-r from-primary to-primary/70 rounded-full transition-all duration-500 ease-out"
