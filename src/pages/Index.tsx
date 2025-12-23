@@ -211,7 +211,7 @@ const Index = () => {
 
         {/* Footer */}
         <footer className="text-center mt-16 text-sm text-muted-foreground/60 animate-fade-in" style={{ animationDelay: "0.3s" }}>
-          <p>Built with love using <a href="https://lovable.dev" target="_blank" rel="noopener noreferrer" className="underline hover:text-muted-foreground transition-colors">Lovable</a></p>
+          <p>Built with love using <a href="https://lovable.dev" target="_blank" rel="noopener noreferrer" className="underline hover:text-muted-foreground transition-colors">Lovable</a> and <a href="https://vellum.ai" target="_blank" rel="noopener noreferrer" className="underline hover:text-muted-foreground transition-colors">Vellum</a></p>
         </footer>
       </div>
     </div>
