@@ -238,7 +238,7 @@ const Index = () => {
         {/* Footer */}
         {!hasRecommendations && (
           <footer className="text-center mt-10 text-sm text-muted-foreground/60 animate-fade-in" style={{ animationDelay: "0.3s" }}>
-            <p>Powered by Vellum AI Workflows</p>
+            <p>Powered by <a href="https://vellum.ai?utm_medium=tool&utm_content=anita&utm_source=tool&utm_campaign=secret_santa" target="_blank" rel="noopener noreferrer" className="underline hover:text-muted-foreground transition-colors">Vellum AI Workflows</a></p>
           </footer>
         )}
       </div>
