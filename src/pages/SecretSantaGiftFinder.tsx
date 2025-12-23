@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo } from "react";
+import { useState, useCallback, useMemo, useEffect } from "react";
 import { Gift, RefreshCw, RotateCcw, Loader2, Gamepad2, ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import { CatchPresentsGame } from "@/components/CatchPresentsGame";
@@ -34,6 +34,13 @@ const Index = () => {
   const [lastInputs, setLastInputs] = useState<{ friendDescription: string; budget: string } | null>(null);
   const [showGame, setShowGame] = useState(false);
   const { toast } = useToast();
+
+  // Close game when results load
+  useEffect(() => {
+    if (!isLoading && allRecommendations.length > 0 && showGame) {
+      setShowGame(false);
+    }
+  }, [isLoading, allRecommendations.length, showGame]);
 
   const executeWorkflow = useCallback(async (
     inputs: { friendDescription: string; budget: string },
