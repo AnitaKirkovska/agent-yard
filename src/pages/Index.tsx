@@ -1,10 +1,9 @@
 import { useState, useCallback } from "react";
-import { Sparkles } from "lucide-react";
+import { Gift, Sparkles } from "lucide-react";
 import { GiftFinderForm } from "@/components/GiftFinderForm";
 import { LoadingState } from "@/components/LoadingState";
 import { RecommendationsDisplay } from "@/components/RecommendationsDisplay";
 import { ErrorDisplay } from "@/components/ErrorDisplay";
-import { Snowflake } from "@/components/ui/Snowflake";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 import santaFace from "@/assets/santa-face.png";
@@ -58,7 +57,6 @@ const Index = () => {
         },
       ];
 
-      // Add previous recommendations context to avoid duplicates
       if (isLoadMore && allRecommendations.length > 0) {
         workflowInputs.push({
           type: "STRING",
@@ -133,14 +131,6 @@ const Index = () => {
     setLastInputs(null);
   };
 
-  // Generate snowflakes
-  const snowflakes = Array.from({ length: 12 }, (_, i) => ({
-    id: i,
-    delay: Math.random() * 10,
-    size: (["sm", "md", "lg"] as const)[Math.floor(Math.random() * 3)],
-    left: `${Math.random() * 100}%`,
-  }));
-
   const hasRecommendations = allRecommendations.length > 0;
 
   return (
@@ -148,16 +138,20 @@ const Index = () => {
       "bg-background relative overflow-hidden flex flex-col",
       hasRecommendations ? "h-screen" : "min-h-screen"
     )}>
-      {/* Snowflakes Background */}
-      <div className="fixed inset-0 pointer-events-none">
-        {snowflakes.map((flake) => (
-          <Snowflake
-            key={flake.id}
-            delay={flake.delay}
-            size={flake.size}
-            left={flake.left}
-          />
-        ))}
+      {/* Ambient Background Orbs */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden">
+        <div 
+          className="absolute -top-40 -right-40 w-96 h-96 rounded-full bg-primary/10 blur-3xl animate-orb-float"
+          style={{ animationDelay: "0s" }}
+        />
+        <div 
+          className="absolute top-1/2 -left-40 w-80 h-80 rounded-full bg-accent/10 blur-3xl animate-orb-float"
+          style={{ animationDelay: "-5s" }}
+        />
+        <div 
+          className="absolute -bottom-20 right-1/3 w-72 h-72 rounded-full bg-secondary/10 blur-3xl animate-orb-float"
+          style={{ animationDelay: "-10s" }}
+        />
       </div>
 
       {/* Main Content */}
@@ -165,43 +159,46 @@ const Index = () => {
         "relative z-10 w-full px-4 transition-all duration-500 flex flex-col",
         hasRecommendations 
           ? "flex-1 py-6 min-h-0" 
-          : "py-12 md:py-20 container max-w-2xl mx-auto"
+          : "py-16 md:py-24 container max-w-xl mx-auto"
       )}>
         {/* Header */}
         {hasRecommendations ? (
           <header className="flex items-center justify-center gap-3 mb-4 animate-fade-in">
-            <img 
-              src={santaFace} 
-              alt="Santa Claus" 
-              className="w-10 h-10 object-contain"
-            />
+            <div className="p-2 rounded-xl bg-gradient-subtle">
+              <Gift className="w-6 h-6 text-primary" />
+            </div>
             <h1 className="text-xl md:text-2xl font-display font-bold text-foreground">
-              Secret Santa <span className="text-gradient-festive">Gift Finder</span>
+              Secret Santa <span className="text-gradient">Gift Finder</span>
             </h1>
           </header>
         ) : (
           <header className="text-center mb-12 animate-fade-in">
             {/* Logo/Icon */}
-            <div className="inline-flex items-center justify-center mb-6">
-              <div className="relative animate-float">
-                <img 
-                  src={santaFace} 
-                  alt="Santa Claus" 
-                  className="w-24 h-24 object-contain"
-                />
-                <Sparkles className="absolute -top-1 -right-1 w-6 h-6 text-accent animate-pulse" />
+            <div className="inline-flex items-center justify-center mb-8">
+              <div className="relative">
+                <div className="absolute inset-0 rounded-3xl bg-gradient-primary opacity-20 blur-2xl scale-150" />
+                <div className="relative p-6 rounded-3xl bg-gradient-subtle border border-border/50 animate-float-gentle">
+                  <img 
+                    src={santaFace} 
+                    alt="Santa Claus" 
+                    className="w-20 h-20 object-contain"
+                  />
+                </div>
+                <div className="absolute -top-2 -right-2 p-2 rounded-full bg-card border border-border shadow-md-custom">
+                  <Sparkles className="w-4 h-4 text-accent" />
+                </div>
               </div>
             </div>
 
             {/* Title */}
-            <h1 className="text-4xl md:text-5xl font-display font-bold text-foreground mb-4">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-foreground mb-5 tracking-tight">
               Secret Santa
-              <span className="block text-gradient-festive">Gift Finder</span>
+              <span className="block text-gradient mt-1">Gift Finder</span>
             </h1>
 
             {/* Subtitle */}
-            <p className="text-lg text-muted-foreground max-w-md mx-auto">
-              Tell us a bit about who you're shopping for, and we'll help you find a gift they'll absolutely love ✨
+            <p className="text-lg text-muted-foreground max-w-md mx-auto leading-relaxed">
+              Describe your friend and we'll find the perfect gift they'll love
             </p>
           </header>
         )}
@@ -209,14 +206,14 @@ const Index = () => {
         {/* Main Card */}
         <main 
           className={cn(
-            "bg-card rounded-2xl border border-border",
-            "shadow-soft backdrop-blur-sm",
+            "rounded-3xl border border-border/60",
+            "shadow-lg-custom",
             "animate-scale-in",
             hasRecommendations 
-              ? "flex-1 min-h-0 flex flex-col overflow-hidden p-4 md:p-6" 
-              : "p-6 md:p-8"
+              ? "flex-1 min-h-0 flex flex-col overflow-hidden p-4 md:p-6 bg-card/90 backdrop-blur-xl" 
+              : "p-8 md:p-10 glass"
           )}
-          style={{ animationDelay: "0.2s" }}
+          style={{ animationDelay: "0.15s" }}
         >
           {isLoading ? (
             <LoadingState />
@@ -236,9 +233,9 @@ const Index = () => {
           )}
         </main>
 
-        {/* Footer - hide when showing results */}
+        {/* Footer */}
         {!hasRecommendations && (
-          <footer className="text-center mt-8 text-sm text-muted-foreground animate-fade-in" style={{ animationDelay: "0.4s" }}>
+          <footer className="text-center mt-10 text-sm text-muted-foreground/60 animate-fade-in" style={{ animationDelay: "0.3s" }}>
             <p>Powered by Vellum AI Workflows</p>
           </footer>
         )}
