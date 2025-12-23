@@ -27,14 +27,42 @@ const Index = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [recommendations, setRecommendations] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [lastInputs, setLastInputs] = useState<{ friendDescription: string; budget: string } | null>(null);
+  const [previousRecommendations, setPreviousRecommendations] = useState<string[]>([]);
   const { toast } = useToast();
 
-  const executeWorkflow = useCallback(async (inputs: { friendDescription: string; budget: string }) => {
+  const executeWorkflow = useCallback(async (
+    inputs: { friendDescription: string; budget: string },
+    excludeContext?: string
+  ) => {
     setIsLoading(true);
     setError(null);
     setRecommendations(null);
+    setLastInputs(inputs);
 
     try {
+      const workflowInputs = [
+        {
+          type: "STRING",
+          name: "friend_description",
+          value: inputs.friendDescription,
+        },
+        {
+          type: "STRING",
+          name: "budget",
+          value: inputs.budget,
+        },
+      ];
+
+      // Add previous recommendations context to avoid duplicates
+      if (excludeContext) {
+        workflowInputs.push({
+          type: "STRING",
+          name: "exclude_previous",
+          value: excludeContext,
+        });
+      }
+
       const response = await fetch(
         `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/execute-workflow`,
         {
@@ -46,18 +74,7 @@ const Index = () => {
           body: JSON.stringify({
             workflowDeploymentName: "secret-santa-gift-finder",
             releaseTag: "LATEST",
-            inputs: [
-              {
-                type: "STRING",
-                name: "friend_description",
-                value: inputs.friendDescription,
-              },
-              {
-                type: "STRING",
-                name: "budget",
-                value: inputs.budget,
-              },
-            ],
+            inputs: workflowInputs,
           }),
         }
       );
@@ -79,6 +96,8 @@ const Index = () => {
 
       if (recommendationsOutput?.value) {
         setRecommendations(recommendationsOutput.value);
+        // Store this recommendation to exclude in future requests
+        setPreviousRecommendations(prev => [...prev, recommendationsOutput.value]);
         toast({
           title: "Gift ideas found! 🎁",
           description: "Check out the personalized recommendations below.",
@@ -99,9 +118,19 @@ const Index = () => {
     }
   }, [toast]);
 
+  const handleFindMore = useCallback(() => {
+    if (lastInputs) {
+      // Create context from previous recommendations to exclude
+      const excludeContext = previousRecommendations.join("\n---\n");
+      executeWorkflow(lastInputs, excludeContext);
+    }
+  }, [lastInputs, previousRecommendations, executeWorkflow]);
+
   const handleReset = () => {
     setRecommendations(null);
     setError(null);
+    setLastInputs(null);
+    setPreviousRecommendations([]);
   };
 
   // Generate snowflakes
@@ -171,7 +200,8 @@ const Index = () => {
           ) : recommendations ? (
             <RecommendationsDisplay 
               recommendations={recommendations} 
-              onReset={handleReset} 
+              onFindMore={handleFindMore}
+              onStartOver={handleReset}
             />
           ) : error ? (
             <ErrorDisplay error={error} onRetry={handleReset} />
