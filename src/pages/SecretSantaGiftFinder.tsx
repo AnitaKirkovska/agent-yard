@@ -1,5 +1,6 @@
 import { useState, useCallback, useMemo } from "react";
-import { Gift, RefreshCw, RotateCcw, Loader2, Gamepad2 } from "lucide-react";
+import { Gift, RefreshCw, RotateCcw, Loader2, Gamepad2, ArrowLeft } from "lucide-react";
+import { Link } from "react-router-dom";
 import { CatchPresentsGame } from "@/components/CatchPresentsGame";
 import { GiftFinderForm } from "@/components/GiftFinderForm";
 import { LoadingState } from "@/components/LoadingState";
@@ -158,7 +159,7 @@ const Index = () => {
   []);
 
   return (
-    <div className="bg-background relative overflow-hidden flex flex-col h-screen">
+    <div className="theme-christmas bg-background relative overflow-hidden flex flex-col h-screen">
       {/* Snowflakes - only show during loading */}
       {isLoading && (
         <div className="fixed inset-0 pointer-events-none z-20 overflow-hidden">
@@ -250,6 +251,15 @@ const Index = () => {
           </header>
         ) : (
           <header className="text-center mb-6 animate-fade-in shrink-0">
+            {/* Back link */}
+            <Link 
+              to="/" 
+              className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors mb-6"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              Back to all apps
+            </Link>
+
             {/* Logo/Icon */}
             <div className="inline-flex items-center justify-center mb-4">
               <img 
