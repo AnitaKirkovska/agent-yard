@@ -37,7 +37,7 @@ export const GiftFinderForm = ({ onSubmit, isLoading }: GiftFinderFormProps) => 
         </Label>
         <Textarea
           id="friend-description"
-          placeholder="Tell us about your Secret Santa recipient... What are their hobbies, interests, favorite things? The more details, the better the recommendations!"
+          placeholder="Hobbies, interests, personality..."
           value={friendDescription}
           onChange={(e) => setFriendDescription(e.target.value)}
           className={cn(
@@ -47,9 +47,6 @@ export const GiftFinderForm = ({ onSubmit, isLoading }: GiftFinderFormProps) => 
           )}
           disabled={isLoading}
         />
-        <p className="text-sm text-muted-foreground">
-          Include personality traits, hobbies, favorite colors, or anything that makes them unique.
-        </p>
       </div>
 
       {/* Budget */}
@@ -64,7 +61,7 @@ export const GiftFinderForm = ({ onSubmit, isLoading }: GiftFinderFormProps) => 
         <Input
           id="budget"
           type="text"
-          placeholder="e.g., $25, $50-75, under $100"
+          placeholder="e.g., $25, $50-75"
           value={budget}
           onChange={(e) => setBudget(e.target.value)}
           className={cn(
@@ -74,9 +71,6 @@ export const GiftFinderForm = ({ onSubmit, isLoading }: GiftFinderFormProps) => 
           )}
           disabled={isLoading}
         />
-        <p className="text-sm text-muted-foreground">
-          Enter your budget as a specific amount or range.
-        </p>
       </div>
 
       {/* Submit Button */}
