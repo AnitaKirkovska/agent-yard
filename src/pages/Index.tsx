@@ -127,8 +127,8 @@ const Index = () => {
 
       {/* Main Content */}
       <div className={cn(
-        "relative z-10 mx-auto px-4 py-12 md:py-20 transition-all duration-500",
-        recommendations ? "max-w-6xl" : "container max-w-2xl"
+        "relative z-10 w-full px-4 py-12 md:py-20 transition-all duration-500",
+        recommendations ? "max-w-none" : "container max-w-2xl mx-auto"
       )}>
         {/* Header */}
         <header className="text-center mb-12 animate-fade-in">
