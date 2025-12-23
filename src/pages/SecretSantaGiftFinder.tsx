@@ -247,55 +247,45 @@ const Index = () => {
                   What I Learned Building This
                 </DialogTitle>
               </DialogHeader>
-              <div className="space-y-6 text-sm text-muted-foreground leading-relaxed mt-4">
+              <div className="space-y-5 text-sm text-muted-foreground leading-relaxed mt-4">
                 <section>
-                  <h3 className="font-semibold text-foreground mb-2">Workflow structure matters a lot</h3>
-                  <p>A <strong className="text-foreground">Map node</strong> takes a list of items and runs the same logic on each one. The catch is that it waits until every item is done before returning anything—fine for batch jobs, but bad if you want results to show up as they're ready.</p>
-                  <p className="mt-2"><strong className="text-foreground">Parallel nodes</strong> are different. Each branch runs on its own and can return results immediately. By splitting searches into parallel nodes instead of one Map node, recommendations started flowing in one by one instead of all at the end. The whole thing felt much faster.</p>
+                  <h3 className="font-semibold text-foreground mb-1">Workflow design matters</h3>
+                  <p>Map nodes wait for everything to finish, which slows things down. Parallel nodes return results as they are ready, so recommendations feel faster and more responsive.</p>
                 </section>
 
                 <section>
-                  <h3 className="font-semibold text-foreground mb-2">Deduplication is mandatory</h3>
-                  <p>When you search the web from multiple angles, you often get the same product back more than once. Without a deduplication step, the final output looks sloppy. We added a simple rule to remove products with the same name or URL before ranking them.</p>
+                  <h3 className="font-semibold text-foreground mb-1">Deduplication is required</h3>
+                  <p>Searching from multiple angles often returns the same products, so duplicates need to be removed before ranking.</p>
                 </section>
 
                 <section>
-                  <h3 className="font-semibold text-foreground mb-2">Diversity doesn't happen by default</h3>
-                  <p>If you ask an AI to "search for gifts," it will reuse similar keywords and categories. To fix that, we added explicit rules like "each search must use a different theme or angle." Without this, the workflow technically works, but the results feel repetitive.</p>
+                  <h3 className="font-semibold text-foreground mb-1">Diversity needs to be forced</h3>
+                  <p>Without explicit rules, the AI reuses similar keywords and categories, which makes results feel repetitive.</p>
                 </section>
 
                 <section>
-                  <h3 className="font-semibold text-foreground mb-2">Gift quality improves by adding constraints</h3>
-                  <p>We slowly added "avoid" rules to guide the system:</p>
-                  <ul className="list-disc list-inside mt-2 space-y-1 ml-2">
-                    <li>No necessities</li>
-                    <li>No personal care items</li>
-                    <li>No core hobby gear</li>
-                    <li>No bundles or packs</li>
-                    <li>No pairs of items</li>
-                  </ul>
-                  <p className="mt-2">Each rule removed a whole class of bad gifts and made the output feel more thoughtful.</p>
+                  <h3 className="font-semibold text-foreground mb-1">Constraints improve gift quality</h3>
+                  <p>Adding clear avoid rules filters out bad gifts and makes recommendations feel more thoughtful.</p>
                 </section>
 
                 <section>
-                  <h3 className="font-semibold text-foreground mb-2">One simple test ended up being the most useful</h3>
-                  <p>We kept asking: <em className="text-foreground">"Would this person buy this themselves?"</em></p>
-                  <p className="mt-1">If yes, it's probably not a great gift. The best gifts are things people didn't know they wanted.</p>
+                  <h3 className="font-semibold text-foreground mb-1">The best filter is simple</h3>
+                  <p>Would they buy this themselves? If yes, it's probably not a good gift.</p>
                 </section>
 
                 <section>
-                  <h3 className="font-semibold text-foreground mb-2">The speed vs quality tradeoff</h3>
-                  <p>We originally fetched multiple products per search and scraped full pages using <strong className="text-foreground">Firecrawl</strong> (a tool that loads and reads website content). That gave better data, but it was slow. Cutting results per search from two to one and skipping scraping when possible made the workflow much faster.</p>
+                  <h3 className="font-semibold text-foreground mb-1">Speed vs quality tradeoff</h3>
+                  <p>Fewer results per search and less scraping make the workflow much faster.</p>
                 </section>
 
                 <section>
-                  <h3 className="font-semibold text-foreground mb-2">Links were harder than expected</h3>
-                  <p>Google Shopping often returns redirect links instead of real store pages. To get clean product URLs, we had to run a normal web search and then use Firecrawl to extract the actual retailer link.</p>
+                  <h3 className="font-semibold text-foreground mb-1">Links are tricky</h3>
+                  <p>Google Shopping often gives redirect URLs, so clean retailer links require extra steps.</p>
                 </section>
 
                 <section className="bg-primary/5 p-4 rounded-xl border border-primary/10">
-                  <h3 className="font-semibold text-foreground mb-2">💡 The big takeaway</h3>
-                  <p className="text-foreground">Good recommendations are not about smarter models. They come from clear workflow design, simple rules, and taste.</p>
+                  <h3 className="font-semibold text-foreground mb-1">💡 Big takeaway</h3>
+                  <p className="text-foreground">Good recommendations come from workflow design, clear rules, and taste—not just better models.</p>
                 </section>
               </div>
             </DialogContent>
