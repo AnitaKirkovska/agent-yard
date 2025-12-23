@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import { Gift, Sparkles } from "lucide-react";
+import { Sparkles } from "lucide-react";
 import { GiftFinderForm } from "@/components/GiftFinderForm";
 import { LoadingState } from "@/components/LoadingState";
 import { RecommendationsDisplay } from "@/components/RecommendationsDisplay";
@@ -7,6 +7,7 @@ import { ErrorDisplay } from "@/components/ErrorDisplay";
 import { Snowflake } from "@/components/ui/Snowflake";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
+import santaFace from "@/assets/santa-face.png";
 
 interface WorkflowOutput {
   name: string;
@@ -134,11 +135,13 @@ const Index = () => {
         <header className="text-center mb-12 animate-fade-in">
           {/* Logo/Icon */}
           <div className="inline-flex items-center justify-center mb-6">
-            <div className="relative">
-              <div className="w-20 h-20 rounded-2xl bg-gradient-festive shadow-festive flex items-center justify-center animate-float">
-                <Gift className="w-10 h-10 text-primary-foreground" />
-              </div>
-              <Sparkles className="absolute -top-2 -right-2 w-6 h-6 text-accent animate-pulse" />
+            <div className="relative animate-float">
+              <img 
+                src={santaFace} 
+                alt="Santa Claus" 
+                className="w-24 h-24 object-contain drop-shadow-lg"
+              />
+              <Sparkles className="absolute -top-1 -right-1 w-6 h-6 text-accent animate-pulse" />
             </div>
           </div>
 
