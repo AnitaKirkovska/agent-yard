@@ -1,23 +1,76 @@
 import { Loader2, Brain, Search, Frown, Sparkles, Scale, ListChecks, Trophy, LucideIcon } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 
 interface LoadingMessage {
   text: string;
   icon: LucideIcon;
 }
 
-const loadingMessages: LoadingMessage[] = [
-  { text: "Hmm, let me think about what they'd actually love...", icon: Brain },
-  { text: "Ooh, searching for something special...", icon: Search },
-  { text: "Nah, that's not quite right for them...", icon: Frown },
-  { text: "Oh wait, this might be fun! ✨", icon: Sparkles },
-  { text: "Actually, let me compare a few more options...", icon: Scale },
-  { text: "Oh no, that's probably not a good choice...", icon: Frown },
-  { text: "Getting closer! These are looking good...", icon: ListChecks },
-  { text: "Ooh yes, I think they'd really like this one! 🏆", icon: Trophy },
-];
+interface LoadingStateProps {
+  description?: string;
+}
 
-export const LoadingState = () => {
+const getLoadingMessages = (description?: string): LoadingMessage[] => {
+  const baseMessages: LoadingMessage[] = [
+    { text: "Hmm, let me think about what they'd actually love...", icon: Brain },
+    { text: "Ooh, searching for something special...", icon: Search },
+    { text: "Nah, that's not quite right for them...", icon: Frown },
+    { text: "Oh wait, this might be fun! ✨", icon: Sparkles },
+    { text: "Actually, let me compare a few more options...", icon: Scale },
+    { text: "Oh no, that's probably not a good choice...", icon: Frown },
+    { text: "Getting closer! These are looking good...", icon: ListChecks },
+    { text: "Ooh yes, I think they'd really like this one! 🏆", icon: Trophy },
+  ];
+
+  if (!description) return baseMessages;
+
+  // Extract keywords from description for personalized messages
+  const lowerDesc = description.toLowerCase();
+  const personalizedMessages: LoadingMessage[] = [];
+
+  if (lowerDesc.includes("cook") || lowerDesc.includes("kitchen") || lowerDesc.includes("baking")) {
+    personalizedMessages.push({ text: "Ooh, a foodie! Maybe a fancy kitchen gadget? 🍳", icon: Sparkles });
+  }
+  if (lowerDesc.includes("read") || lowerDesc.includes("book")) {
+    personalizedMessages.push({ text: "A book lover! Let me find something literary... 📚", icon: Search });
+  }
+  if (lowerDesc.includes("game") || lowerDesc.includes("gaming") || lowerDesc.includes("video game")) {
+    personalizedMessages.push({ text: "A gamer, nice! Checking out some cool options... 🎮", icon: Brain });
+  }
+  if (lowerDesc.includes("music") || lowerDesc.includes("guitar") || lowerDesc.includes("piano")) {
+    personalizedMessages.push({ text: "Music lover detected! This could be fun... 🎵", icon: Sparkles });
+  }
+  if (lowerDesc.includes("travel") || lowerDesc.includes("adventure")) {
+    personalizedMessages.push({ text: "An adventurer! Maybe something for their travels... ✈️", icon: Search });
+  }
+  if (lowerDesc.includes("coffee") || lowerDesc.includes("tea")) {
+    personalizedMessages.push({ text: "A caffeine enthusiast! I know just the thing... ☕", icon: Sparkles });
+  }
+  if (lowerDesc.includes("fitness") || lowerDesc.includes("gym") || lowerDesc.includes("workout") || lowerDesc.includes("yoga")) {
+    personalizedMessages.push({ text: "Fitness focused! Searching for workout-worthy gifts... 💪", icon: Search });
+  }
+  if (lowerDesc.includes("art") || lowerDesc.includes("creative") || lowerDesc.includes("craft")) {
+    personalizedMessages.push({ text: "A creative soul! Let me find something artistic... 🎨", icon: Brain });
+  }
+  if (lowerDesc.includes("tech") || lowerDesc.includes("gadget")) {
+    personalizedMessages.push({ text: "A tech person! Browsing the cool gadgets... 📱", icon: Search });
+  }
+  if (lowerDesc.includes("plant") || lowerDesc.includes("garden")) {
+    personalizedMessages.push({ text: "A plant parent! Looking for something green... 🌱", icon: Sparkles });
+  }
+  if (lowerDesc.includes("pet") || lowerDesc.includes("dog") || lowerDesc.includes("cat")) {
+    personalizedMessages.push({ text: "A pet lover! Maybe something for their furry friend... 🐾", icon: Sparkles });
+  }
+  if (lowerDesc.includes("wine") || lowerDesc.includes("beer") || lowerDesc.includes("cocktail")) {
+    personalizedMessages.push({ text: "Someone who appreciates a good drink! 🍷", icon: Search });
+  }
+
+  // Mix personalized messages with base messages
+  return [...personalizedMessages, ...baseMessages];
+};
+
+export const LoadingState = ({ description }: LoadingStateProps) => {
+  const loadingMessages = useMemo(() => getLoadingMessages(description), [description]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [messageKey, setMessageKey] = useState(0);
   const [progress, setProgress] = useState(0);
@@ -63,7 +116,7 @@ export const LoadingState = () => {
       clearInterval(progressInterval);
       clearTimeout(firstTimeout);
     };
-  }, []);
+  }, [loadingMessages]);
 
   return (
     <div className="flex flex-col items-center justify-center py-16 space-y-8 animate-fade-in">
