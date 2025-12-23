@@ -32,6 +32,11 @@ const parseRecommendations = (text: string): Recommendation[] | null => {
   }
 };
 
+const cleanUrl = (value?: string) => {
+  const trimmed = value?.trim();
+  return trimmed ? trimmed : undefined;
+};
+
 export const RecommendationsDisplay = ({ recommendations, onReset }: RecommendationsDisplayProps) => {
   const parsedRecommendations = useMemo(() => parseRecommendations(recommendations), [recommendations]);
 
@@ -46,113 +51,119 @@ export const RecommendationsDisplay = ({ recommendations, onReset }: Recommendat
         <h3 className="text-2xl md:text-3xl font-display font-bold text-foreground mb-2">
           Gift Recommendations
         </h3>
-        <p className="text-muted-foreground">
-          Curated picks based on your description
-        </p>
+        <p className="text-muted-foreground">Curated picks based on your description</p>
       </div>
 
       {/* Recommendations Grid */}
       {parsedRecommendations ? (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {parsedRecommendations.map((rec, index) => (
-            <div
-              key={index}
-              className={cn(
-                "group relative flex flex-col rounded-2xl bg-card border border-border/50 overflow-hidden",
-                "hover:border-primary/20 hover:shadow-lg transition-all duration-300"
-              )}
-            >
-              {/* Product Image */}
-              {rec.image_url ? (
-                <div className="aspect-square bg-muted/30 flex items-center justify-center p-6 overflow-hidden">
-                  <img
-                    src={rec.image_url}
-                    alt={rec.product_name}
-                    className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
-                    onError={(e) => {
-                      (e.target as HTMLImageElement).parentElement!.innerHTML = `
-                        <div class="w-full h-full flex items-center justify-center text-muted-foreground">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
-                        </div>
-                      `;
-                    }}
-                  />
-                </div>
-              ) : (
-                <div className="aspect-square bg-muted/30 flex items-center justify-center">
-                  <Gift className="w-12 h-12 text-muted-foreground/50" />
-                </div>
-              )}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
+          {parsedRecommendations.map((rec, index) => {
+            const link = cleanUrl(rec.link);
+            const imageUrl = cleanUrl(rec.image_url);
 
-              {/* Product Details */}
-              <div className="flex-1 flex flex-col p-5 gap-4">
-                {/* Title & Price */}
-                <div>
-                  <h4 className="font-display font-semibold text-foreground text-lg leading-tight mb-2">
-                    {rec.product_name}
-                  </h4>
-                  <span className="inline-flex px-3 py-1 rounded-full bg-primary/10 text-primary font-bold text-sm">
-                    {rec.price}
-                  </span>
-                </div>
-
-                {/* Description */}
-                <p className="text-muted-foreground text-sm leading-relaxed line-clamp-2">
-                  {rec.description}
-                </p>
-
-                {/* Why it's perfect */}
-                <div className="flex items-start gap-2 p-3 rounded-xl bg-accent/20 border border-accent/10">
-                  <Sparkles className="w-4 h-4 text-accent shrink-0 mt-0.5" />
-                  <p className="text-sm text-foreground/80 italic line-clamp-2">
-                    {rec.why_its_perfect}
-                  </p>
-                </div>
-
-                {/* View Product Button */}
-                {rec.link && (
-                  <a
-                    href={rec.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={cn(
-                      "inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl mt-auto",
-                      "bg-primary text-primary-foreground font-medium",
-                      "hover:bg-primary/90 transition-all duration-200",
-                      "group-hover:shadow-md"
-                    )}
-                  >
-                    View Product <ExternalLink className="w-4 h-4" />
-                  </a>
+            return (
+              <article
+                key={index}
+                className={cn(
+                  "group relative flex flex-col rounded-2xl bg-card border border-border/50 overflow-hidden",
+                  "hover:border-primary/20 hover:shadow-lg transition-all duration-300"
                 )}
-              </div>
-            </div>
-          ))}
+              >
+                {/* Product Image */}
+                {imageUrl ? (
+                  <div className="aspect-[4/3] bg-muted/30 flex items-center justify-center p-6 overflow-hidden">
+                    <img
+                      src={imageUrl}
+                      alt={rec.product_name}
+                      loading="lazy"
+                      className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
+                      onError={(e) => {
+                        (e.currentTarget as HTMLImageElement).src = "/placeholder.svg";
+                      }}
+                    />
+                  </div>
+                ) : (
+                  <div className="aspect-[4/3] bg-muted/30 flex items-center justify-center">
+                    <Gift className="w-12 h-12 text-muted-foreground/50" />
+                  </div>
+                )}
+
+                {/* Product Details */}
+                <div className="flex-1 flex flex-col p-5 gap-4">
+                  {/* Title & Price */}
+                  <div>
+                    {link ? (
+                      <a
+                        href={link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-start gap-2"
+                      >
+                        <h4 className="font-display font-semibold text-foreground text-lg leading-tight hover:text-primary transition-colors">
+                          {rec.product_name}
+                        </h4>
+                        <ExternalLink className="w-4 h-4 text-muted-foreground mt-1 shrink-0" />
+                      </a>
+                    ) : (
+                      <h4 className="font-display font-semibold text-foreground text-lg leading-tight">
+                        {rec.product_name}
+                      </h4>
+                    )}
+
+                    <span className="inline-flex mt-2 px-3 py-1 rounded-full bg-primary/10 text-primary font-bold text-sm">
+                      {rec.price}
+                    </span>
+                  </div>
+
+                  {/* Description */}
+                  <p className="text-muted-foreground text-sm leading-relaxed line-clamp-2">
+                    {rec.description}
+                  </p>
+
+                  {/* Why it's perfect */}
+                  <div className="flex items-start gap-2 p-3 rounded-xl bg-accent/10 border border-border/40">
+                    <Sparkles className="w-4 h-4 text-accent shrink-0 mt-0.5" />
+                    <p className="text-sm text-foreground/80 line-clamp-2">{rec.why_its_perfect}</p>
+                  </div>
+
+                  {/* View Product Button */}
+                  {link && (
+                    <a
+                      href={link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={cn(
+                        "inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl mt-auto",
+                        "bg-primary text-primary-foreground font-medium",
+                        "hover:bg-primary/90 transition-all duration-200",
+                        "group-hover:shadow-md"
+                      )}
+                    >
+                      View Product <ExternalLink className="w-4 h-4" />
+                    </a>
+                  )}
+                </div>
+              </article>
+            );
+          })}
         </div>
       ) : (
         <div className="p-6 rounded-2xl border border-border bg-card">
           <div className="prose prose-sm max-w-none text-foreground">
-            <div className="whitespace-pre-wrap leading-relaxed">
-              {recommendations}
-            </div>
+            <div className="whitespace-pre-wrap leading-relaxed">{recommendations}</div>
           </div>
         </div>
       )}
 
       {/* Footer */}
-      <div className="flex flex-col items-center gap-4 pt-4">
+      <div className="flex flex-col items-center gap-4 pt-2">
         <div className="flex items-center gap-2 text-accent">
           <Gift className="w-5 h-5" />
           <span className="text-sm font-medium">Happy gifting!</span>
           <Gift className="w-5 h-5" />
         </div>
 
-        <Button
-          onClick={onReset}
-          variant="outline"
-          size="lg"
-          className="px-8"
-        >
+        <Button onClick={onReset} variant="outline" size="lg" className="px-8">
           <RefreshCw className="w-4 h-4 mr-2" />
           Find More Gift Ideas
         </Button>
