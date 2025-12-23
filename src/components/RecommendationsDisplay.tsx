@@ -55,23 +55,23 @@ export const RecommendationsDisplay = ({ recommendations, onReset }: Recommendat
 
       {/* Recommendations Content */}
       {parsedRecommendations ? (
-        <div className="grid gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {parsedRecommendations.map((rec, index) => (
             <div
               key={index}
               className={cn(
-                "flex flex-row gap-6 p-5 rounded-xl border border-border bg-card/50 backdrop-blur-sm",
+                "flex flex-row rounded-xl border border-border bg-card/50 backdrop-blur-sm overflow-hidden",
                 "shadow-soft hover:shadow-md transition-all duration-300",
                 "hover:border-primary/30"
               )}
             >
-              {/* Large Product Image */}
+              {/* Large Product Image - First Half */}
               {rec.image_url && (
-                <div className="shrink-0">
+                <div className="w-1/2 shrink-0 bg-white flex items-center justify-center p-3">
                   <img
                     src={rec.image_url}
                     alt={rec.product_name}
-                    className="w-40 h-40 object-contain rounded-lg border border-border bg-white"
+                    className="w-full h-full object-contain max-h-48"
                     onError={(e) => {
                       (e.target as HTMLImageElement).style.display = 'none';
                     }}
@@ -79,39 +79,42 @@ export const RecommendationsDisplay = ({ recommendations, onReset }: Recommendat
                 </div>
               )}
 
-              {/* Product Details */}
-              <div className="flex-1 flex flex-col gap-3 min-w-0">
+              {/* Product Details - Second Half */}
+              <div className={cn(
+                "flex-1 flex flex-col gap-2 p-4 min-w-0",
+                !rec.image_url && "w-full"
+              )}>
                 {/* Product header */}
-                <div className="flex items-center gap-3 flex-wrap">
+                <div>
                   {rec.link ? (
                     <a
                       href={rec.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="font-display font-semibold text-foreground text-lg hover:text-primary transition-colors inline-flex items-center gap-1"
+                      className="font-display font-semibold text-foreground text-sm hover:text-primary transition-colors inline-flex items-center gap-1 line-clamp-2"
                     >
                       {rec.product_name}
-                      <ExternalLink className="w-4 h-4" />
+                      <ExternalLink className="w-3 h-3 shrink-0" />
                     </a>
                   ) : (
-                    <h4 className="font-display font-semibold text-foreground text-lg">
+                    <h4 className="font-display font-semibold text-foreground text-sm line-clamp-2">
                       {rec.product_name}
                     </h4>
                   )}
-                  <span className="px-3 py-1 rounded-full bg-primary/10 text-primary font-semibold text-sm">
+                  <span className="inline-block mt-1 px-2 py-0.5 rounded-full bg-primary/10 text-primary font-semibold text-xs">
                     {rec.price}
                   </span>
                 </div>
 
                 {/* Description */}
-                <p className="text-muted-foreground text-sm leading-relaxed">
+                <p className="text-muted-foreground text-xs leading-relaxed line-clamp-3">
                   {rec.description}
                 </p>
 
                 {/* Why it's perfect */}
-                <div className="flex items-start gap-2 p-3 rounded-lg bg-accent/30 border border-accent/20">
-                  <Sparkles className="w-4 h-4 text-accent shrink-0 mt-0.5" />
-                  <p className="text-sm text-foreground/80 italic">
+                <div className="flex items-start gap-1.5 p-2 rounded-lg bg-accent/30 border border-accent/20">
+                  <Sparkles className="w-3 h-3 text-accent shrink-0 mt-0.5" />
+                  <p className="text-xs text-foreground/80 italic line-clamp-3">
                     {rec.why_its_perfect}
                   </p>
                 </div>
@@ -123,8 +126,8 @@ export const RecommendationsDisplay = ({ recommendations, onReset }: Recommendat
                     target="_blank"
                     rel="noopener noreferrer"
                     className={cn(
-                      "inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg",
-                      "bg-primary text-primary-foreground font-medium text-sm",
+                      "inline-flex items-center justify-center gap-1 px-3 py-1.5 rounded-lg mt-auto",
+                      "bg-primary text-primary-foreground font-medium text-xs",
                       "hover:bg-primary/90 transition-colors w-fit"
                     )}
                   >
