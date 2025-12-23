@@ -1,6 +1,6 @@
 import { useState, useCallback, useMemo, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
-import { Gift, RefreshCw, RotateCcw, Loader2, Gamepad2, ArrowLeft } from "lucide-react";
+import { Gift, RefreshCw, RotateCcw, Loader2, Gamepad2, ArrowLeft, ExternalLink } from "lucide-react";
 import { Link } from "react-router-dom";
 import { CatchPresentsGame } from "@/components/CatchPresentsGame";
 import { GiftFinderForm } from "@/components/GiftFinderForm";
@@ -346,7 +346,16 @@ const Index = () => {
       </div>
 
       {/* Footer - Always visible */}
-      <footer className="relative z-10 text-center py-4 text-sm text-muted-foreground/60 animate-fade-in shrink-0" style={{ animationDelay: "0.3s" }}>
+      <footer className="relative z-10 text-center py-4 text-sm text-muted-foreground/60 animate-fade-in shrink-0 space-y-2" style={{ animationDelay: "0.3s" }}>
+        <a 
+          href="https://app.vellum.ai/public/workflow-deployments/98d37ca2-5771-4fe7-bd26-01d5f95bea32?releaseTag=LATEST&condensedNodeView=1&showOpenInVellum=1" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary/10 hover:bg-primary/20 text-primary text-xs font-medium transition-colors"
+        >
+          <ExternalLink className="w-3 h-3" />
+          View Agent Blueprint
+        </a>
         <p>Built with love using <a href="https://lovable.dev" target="_blank" rel="noopener noreferrer" className="underline hover:text-muted-foreground transition-colors">Lovable</a> and <a href="https://vellum.ai?utm_medium=tool&utm_content=anita&utm_source=tool&utm_campaign=secret_santa" target="_blank" rel="noopener noreferrer" className="underline hover:text-muted-foreground transition-colors">Vellum</a></p>
       </footer>
 
