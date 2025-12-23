@@ -249,8 +249,8 @@ const Index = () => {
               </DialogHeader>
               <div className="space-y-5 text-sm text-muted-foreground leading-relaxed mt-4">
                 <section>
-                  <h3 className="font-semibold text-foreground mb-1">Workflow design matters</h3>
-                  <p>Map nodes wait for everything to finish, which slows things down. Parallel nodes return results as they are ready, so recommendations feel faster and more responsive.</p>
+                  <h3 className="font-semibold text-foreground mb-1">Map nodes were essential</h3>
+                  <p>Map nodes were needed so that we can concurrently search for products, which resulted in -40s latency cut.</p>
                 </section>
 
                 <section>
