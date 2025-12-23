@@ -1,5 +1,6 @@
 import { useState, useCallback, useMemo } from "react";
-import { Gift, RefreshCw, RotateCcw, Loader2 } from "lucide-react";
+import { Gift, RefreshCw, RotateCcw, Loader2, Gamepad2 } from "lucide-react";
+import { CatchPresentsGame } from "@/components/CatchPresentsGame";
 import { GiftFinderForm } from "@/components/GiftFinderForm";
 import { LoadingState } from "@/components/LoadingState";
 import { RecommendationsDisplay } from "@/components/RecommendationsDisplay";
@@ -30,6 +31,7 @@ const Index = () => {
   const [allRecommendations, setAllRecommendations] = useState<string[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [lastInputs, setLastInputs] = useState<{ friendDescription: string; budget: string } | null>(null);
+  const [showGame, setShowGame] = useState(false);
   const { toast } = useToast();
 
   const executeWorkflow = useCallback(async (
@@ -304,9 +306,19 @@ const Index = () => {
       </div>
 
       {/* Footer - Always visible */}
-      <footer className="relative z-10 text-center py-4 text-sm text-muted-foreground/60 animate-fade-in shrink-0" style={{ animationDelay: "0.3s" }}>
+      <footer className="relative z-10 text-center py-4 text-sm text-muted-foreground/60 animate-fade-in shrink-0 flex items-center justify-center gap-4" style={{ animationDelay: "0.3s" }}>
         <p>Powered by <a href="https://vellum.ai?utm_medium=tool&utm_content=anita&utm_source=tool&utm_campaign=secret_santa" target="_blank" rel="noopener noreferrer" className="underline hover:text-muted-foreground transition-colors">Vellum AI Workflows</a></p>
+        <button
+          onClick={() => setShowGame(true)}
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary/10 hover:bg-primary/20 text-primary text-xs font-medium transition-colors"
+        >
+          <Gamepad2 className="w-3.5 h-3.5" />
+          Play Game
+        </button>
       </footer>
+
+      {/* Mini-game modal */}
+      {showGame && <CatchPresentsGame onClose={() => setShowGame(false)} />}
     </div>
   );
 };
