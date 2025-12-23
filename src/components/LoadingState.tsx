@@ -1,13 +1,31 @@
-import { Gift, Loader2, Sparkles, Search, Brain, Heart } from "lucide-react";
-import { useState, useEffect, useMemo } from "react";
+import { Gift, Loader2, Sparkles, Search, Brain, Heart, Zap, Star, Coffee, Rocket } from "lucide-react";
+import { useState, useEffect, useCallback } from "react";
 
-const stages = [
-  { message: "Analyzing preferences...", subtext: "Consulting with the elves 🎄", icon: Brain, duration: 2500 },
-  { message: "Searching the internet...", subtext: "Looking through millions of options", icon: Search, duration: 3000 },
-  { message: "Hmm, that's not quite right...", subtext: "Let me dig deeper", icon: Search, duration: 1500 },
-  { message: "Oh wait, this is cool!", subtext: "Found some interesting picks ✨", icon: Sparkles, duration: 2000 },
-  { message: "Curating the best options...", subtext: "Quality over quantity", icon: Gift, duration: 2500 },
-  { message: "Almost there...", subtext: "Wrapping up the perfect suggestions 🎁", icon: Heart, duration: 3000 },
+const loadingMessages = [
+  { message: "Analyzing preferences...", subtext: "Consulting with the elves 🎄" },
+  { message: "Searching the internet...", subtext: "Looking through millions of options" },
+  { message: "Checking trending gifts...", subtext: "What's hot this season? 🔥" },
+  { message: "Hmm, that's not quite right...", subtext: "Let me dig deeper" },
+  { message: "Oh wait, this is cool!", subtext: "Found something interesting ✨" },
+  { message: "Browsing top retailers...", subtext: "Amazon, Etsy, and more" },
+  { message: "Reading reviews...", subtext: "Only the best-rated items" },
+  { message: "Comparing prices...", subtext: "Finding the sweet spot 💰" },
+  { message: "Nope, too boring...", subtext: "Your friend deserves better" },
+  { message: "Ooh, this could work!", subtext: "Adding to the shortlist" },
+  { message: "Checking availability...", subtext: "Making sure it ships in time 📦" },
+  { message: "Cross-referencing interests...", subtext: "The algorithm is cooking" },
+  { message: "Wait, found a gem!", subtext: "This one's special ✨" },
+  { message: "Thinking outside the box...", subtext: "Literally and figuratively 🎁" },
+  { message: "Asking the gift gods...", subtext: "They're very wise" },
+  { message: "Almost there...", subtext: "Wrapping up the best picks" },
+  { message: "Quality checking...", subtext: "No duds allowed here" },
+  { message: "Personalizing results...", subtext: "Making it special for them" },
+  { message: "This is exciting!", subtext: "Found some real winners 🏆" },
+  { message: "One sec, double checking...", subtext: "Perfection takes time" },
+  { message: "Curating the list...", subtext: "Only the cream of the crop" },
+  { message: "Getting creative...", subtext: "Unique ideas incoming 🎨" },
+  { message: "Scouring hidden gems...", subtext: "The best stuff isn't obvious" },
+  { message: "Running final checks...", subtext: "Almost ready to reveal!" },
 ];
 
 const finalMessages = [
@@ -16,47 +34,65 @@ const finalMessages = [
   "Found some gems that match perfectly!",
   "Your gift game is about to level up!",
   "These picks are chef's kiss 👌",
+  "Nailed it! Check these out!",
 ];
 
+const icons = [Gift, Sparkles, Search, Brain, Heart, Zap, Star, Coffee, Rocket];
+
 export const LoadingState = () => {
-  const [stageIndex, setStageIndex] = useState(0);
+  const [currentMessage, setCurrentMessage] = useState(loadingMessages[0]);
+  const [messageKey, setMessageKey] = useState(0);
   const [progress, setProgress] = useState(0);
-  const [showFinal, setShowFinal] = useState(false);
+  const [usedIndices, setUsedIndices] = useState<Set<number>>(new Set([0]));
   
-  const randomFinalMessage = useMemo(() => 
-    finalMessages[Math.floor(Math.random() * finalMessages.length)], 
-  []);
+  const getRandomIcon = useCallback(() => {
+    return icons[Math.floor(Math.random() * icons.length)];
+  }, []);
+  
+  const [IconComponent, setIconComponent] = useState(() => getRandomIcon());
 
   useEffect(() => {
-    let elapsed = 0;
-    const totalDuration = stages.reduce((sum, s) => sum + s.duration, 0);
-    
+    // Progress bar - fills to ~90% over 50 seconds
     const progressInterval = setInterval(() => {
-      elapsed += 50;
-      const newProgress = Math.min((elapsed / totalDuration) * 85, 85);
-      setProgress(newProgress);
-    }, 50);
+      setProgress(prev => {
+        if (prev >= 90) return 90;
+        // Slow, variable progress
+        return prev + (Math.random() * 1.5 + 0.5);
+      });
+    }, 1000);
 
-    let currentStage = 0;
-    const advanceStage = () => {
-      if (currentStage < stages.length - 1) {
-        currentStage++;
-        setStageIndex(currentStage);
-        setTimeout(advanceStage, stages[currentStage].duration);
-      } else {
-        setTimeout(() => setShowFinal(true), 1500);
-      }
+    // Message rotation - every 2-4 seconds randomly
+    const rotateMessage = () => {
+      setUsedIndices(prev => {
+        // Reset if we've used most messages
+        if (prev.size >= loadingMessages.length - 2) {
+          return new Set();
+        }
+        return prev;
+      });
+      
+      let newIndex: number;
+      do {
+        newIndex = Math.floor(Math.random() * loadingMessages.length);
+      } while (usedIndices.has(newIndex));
+      
+      setUsedIndices(prev => new Set([...prev, newIndex]));
+      setCurrentMessage(loadingMessages[newIndex]);
+      setIconComponent(() => getRandomIcon());
+      setMessageKey(prev => prev + 1);
+      
+      // Schedule next rotation with random interval (2-4s)
+      const nextInterval = 2000 + Math.random() * 2000;
+      setTimeout(rotateMessage, nextInterval);
     };
-    
-    setTimeout(advanceStage, stages[0].duration);
+
+    const firstTimeout = setTimeout(rotateMessage, 2500);
 
     return () => {
       clearInterval(progressInterval);
+      clearTimeout(firstTimeout);
     };
   }, []);
-
-  const currentStage = stages[stageIndex];
-  const IconComponent = currentStage.icon;
 
   return (
     <div className="flex flex-col items-center justify-center py-16 space-y-8 animate-fade-in">
@@ -67,7 +103,7 @@ export const LoadingState = () => {
         
         {/* Icon container */}
         <div className="relative w-20 h-20 rounded-2xl bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center shadow-lg">
-          <IconComponent className="w-8 h-8 text-primary-foreground animate-bounce-gentle" />
+          <IconComponent key={messageKey} className="w-8 h-8 text-primary-foreground animate-bounce-gentle" />
         </div>
         
         {/* Spinner ring */}
@@ -79,16 +115,16 @@ export const LoadingState = () => {
       {/* Loading text */}
       <div className="text-center space-y-2 min-h-[80px]">
         <h3 
-          key={`title-${stageIndex}`}
+          key={`title-${messageKey}`}
           className="text-xl font-display font-semibold text-foreground animate-fade-in"
         >
-          {showFinal ? "Ready!" : currentStage.message}
+          {currentMessage.message}
         </h3>
         <p 
-          key={`sub-${stageIndex}-${showFinal}`}
+          key={`sub-${messageKey}`}
           className="text-muted-foreground text-sm animate-fade-in"
         >
-          {showFinal ? randomFinalMessage : currentStage.subtext}
+          {currentMessage.subtext}
         </p>
       </div>
 
@@ -96,13 +132,10 @@ export const LoadingState = () => {
       <div className="w-64 space-y-2">
         <div className="h-1.5 rounded-full bg-muted overflow-hidden">
           <div 
-            className="h-full bg-gradient-to-r from-primary to-primary/70 rounded-full transition-all duration-300 ease-out"
-            style={{ width: `${showFinal ? 100 : progress}%` }}
+            className="h-full bg-gradient-to-r from-primary to-primary/70 rounded-full transition-all duration-500 ease-out"
+            style={{ width: `${progress}%` }}
           />
         </div>
-        <p className="text-xs text-muted-foreground/60 text-center">
-          Stage {stageIndex + 1} of {stages.length}
-        </p>
       </div>
     </div>
   );
