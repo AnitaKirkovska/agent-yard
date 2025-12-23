@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Helmet } from "react-helmet-async";
 import { Calendar, Sparkles, ArrowRight, Heart, Twitter } from "lucide-react";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
@@ -136,7 +137,12 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background relative overflow-hidden">
+    <>
+      <Helmet>
+        <title>30 Days of AI Agents</title>
+        <meta name="description" content="Every day for the next 30 days I'm building a new AI agent app. Follow along and try each one as they launch." />
+      </Helmet>
+      <div className="min-h-screen bg-background relative overflow-hidden">
       {/* Ambient Background Orbs */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
         <div 
@@ -209,6 +215,7 @@ const Index = () => {
         </footer>
       </div>
     </div>
+    </>
   );
 };
 
