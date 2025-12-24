@@ -8,7 +8,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Package, Truck, ArrowRight, Gift, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
-
+import SwagLoadingScreen from "@/components/SwagLoadingScreen";
 const CustomerGifts = () => {
   const [step, setStep] = useState<1 | 2>(1);
   const [hobby, setHobby] = useState("");
@@ -219,7 +219,13 @@ const CustomerGifts = () => {
           </div>
 
           {/* Main Form / Result */}
-          {!swagResult ? (
+          {isLoading ? (
+            <Card className="bg-white/5 border-white/10 backdrop-blur-xl shadow-2xl shadow-black/20">
+              <CardContent className="p-8">
+                <SwagLoadingScreen />
+              </CardContent>
+            </Card>
+          ) : !swagResult ? (
             <Card className="bg-white/5 border-white/10 backdrop-blur-xl shadow-2xl shadow-black/20">
               <CardContent className="p-8">
                 {step === 1 ? (
