@@ -210,7 +210,7 @@ const CustomerGifts = () => {
           <div className="absolute bottom-0 left-1/4 w-[800px] h-[300px] bg-indigo-800/20 rounded-full blur-3xl rotate-12" />
         </div>
 
-        <div className="relative z-10 container mx-auto px-4 py-12 max-w-4xl">
+        <div className="relative z-10 container mx-auto px-4 py-12 max-w-xl">
           {/* Header */}
           <div className="text-center mb-12">
             {/* Partner Logos */}
