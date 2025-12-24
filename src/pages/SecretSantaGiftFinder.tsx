@@ -360,6 +360,72 @@ const Index = () => {
         ) : (
           <header className="text-center mb-6 animate-fade-in shrink-0">
 
+            {/* Partner Logos */}
+            <div className="flex items-center justify-center gap-4 mb-6">
+              {/* Santa */}
+              <div className="group relative">
+                <img 
+                  src={santaFace} 
+                  alt="Santa's Magic" 
+                  className="w-8 h-8 object-contain opacity-60 group-hover:opacity-100 transition-opacity cursor-pointer"
+                />
+                <span className="absolute -bottom-5 left-1/2 -translate-x-1/2 text-xs text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                  Santa's Magic
+                </span>
+              </div>
+
+              {/* Vellum */}
+              <a 
+                href="https://vellum.ai?utm_medium=tool&utm_content=anita&utm_source=tool&utm_campaign=secret_santa" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="group relative"
+              >
+                <img 
+                  src={vellumLogo} 
+                  alt="Vellum" 
+                  className="w-8 h-8 object-contain opacity-60 group-hover:opacity-100 transition-opacity"
+                />
+                <span className="absolute -bottom-5 left-1/2 -translate-x-1/2 text-xs text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                  vellum.ai
+                </span>
+              </a>
+
+              {/* Firecrawl */}
+              <a 
+                href="https://firecrawl.com" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="group relative"
+              >
+                <img 
+                  src={firecrawlLogo} 
+                  alt="Firecrawl" 
+                  className="w-8 h-8 object-contain opacity-60 group-hover:opacity-100 transition-opacity"
+                />
+                <span className="absolute -bottom-5 left-1/2 -translate-x-1/2 text-xs text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                  firecrawl.com
+                </span>
+              </a>
+
+              {/* Lovable */}
+              <a 
+                href="https://lovable.dev" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="group relative"
+              >
+                <img 
+                  src={lovableLogo} 
+                  alt="Lovable" 
+                  className="w-8 h-8 object-contain opacity-60 group-hover:opacity-100 transition-opacity"
+                />
+                <span className="absolute -bottom-5 left-1/2 -translate-x-1/2 text-xs text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                  lovable.dev
+                </span>
+              </a>
+            </div>
+
             {/* Logo/Icon */}
             <div className="inline-flex items-center justify-center mb-4">
               <img 
@@ -426,71 +492,8 @@ const Index = () => {
       </div>
 
       {/* Footer - Always visible */}
-      <footer className="relative z-10 py-4 animate-fade-in shrink-0" style={{ animationDelay: "0.3s" }}>
-        <div className="flex items-center justify-center gap-6">
-          {/* Santa */}
-          <div className="group relative flex flex-col items-center">
-            <img 
-              src={santaFace} 
-              alt="Santa's Magic" 
-              className="w-8 h-8 object-contain opacity-60 group-hover:opacity-100 transition-opacity cursor-pointer"
-            />
-            <span className="absolute -bottom-5 text-xs text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-              Santa's Magic
-            </span>
-          </div>
-
-          {/* Vellum */}
-          <a 
-            href="https://vellum.ai?utm_medium=tool&utm_content=anita&utm_source=tool&utm_campaign=secret_santa" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="group flex flex-col items-center"
-          >
-            <img 
-              src={vellumLogo} 
-              alt="Vellum" 
-              className="w-8 h-8 object-contain opacity-60 group-hover:opacity-100 transition-opacity"
-            />
-            <span className="absolute -bottom-5 text-xs text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-              vellum.ai
-            </span>
-          </a>
-
-          {/* Firecrawl */}
-          <a 
-            href="https://firecrawl.com" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="group relative flex flex-col items-center"
-          >
-            <img 
-              src={firecrawlLogo} 
-              alt="Firecrawl" 
-              className="w-8 h-8 object-contain opacity-60 group-hover:opacity-100 transition-opacity"
-            />
-            <span className="absolute -bottom-5 text-xs text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-              firecrawl.com
-            </span>
-          </a>
-
-          {/* Lovable */}
-          <a 
-            href="https://lovable.dev" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="group relative flex flex-col items-center"
-          >
-            <img 
-              src={lovableLogo} 
-              alt="Lovable" 
-              className="w-8 h-8 object-contain opacity-60 group-hover:opacity-100 transition-opacity"
-            />
-            <span className="absolute -bottom-5 text-xs text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-              lovable.dev
-            </span>
-          </a>
-        </div>
+      <footer className="relative z-10 text-center py-4 text-sm text-muted-foreground/60 animate-fade-in shrink-0" style={{ animationDelay: "0.3s" }}>
+        <p>Built with love using <a href="https://lovable.dev" target="_blank" rel="noopener noreferrer" className="underline hover:text-muted-foreground transition-colors">Lovable</a> and <a href="https://vellum.ai?utm_medium=tool&utm_content=anita&utm_source=tool&utm_campaign=secret_santa" target="_blank" rel="noopener noreferrer" className="underline hover:text-muted-foreground transition-colors">Vellum</a></p>
       </footer>
 
       {/* Mini-game modal */}
