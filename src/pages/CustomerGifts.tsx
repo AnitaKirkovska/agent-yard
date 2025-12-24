@@ -161,7 +161,7 @@ const CustomerGifts = () => {
                         placeholder="e.g., I love rock climbing on weekends and collect vintage vinyl records..."
                         value={hobby}
                         onChange={(e) => setHobby(e.target.value)}
-                        className="bg-white/10 border-white/20 text-white placeholder:text-purple-300/50 min-h-[120px] focus:border-fuchsia-400 focus:ring-fuchsia-400/20"
+                        className="bg-white/5 border-white/10 text-white placeholder:text-white/40 min-h-[120px] focus:border-fuchsia-400 focus:ring-fuchsia-400/20"
                       />
                     </div>
 
@@ -199,7 +199,7 @@ const CustomerGifts = () => {
                           placeholder="John Doe"
                           value={fullName}
                           onChange={(e) => setFullName(e.target.value)}
-                          className="bg-white/10 border-white/20 text-white placeholder:text-purple-300/50 focus:border-fuchsia-400 focus:ring-fuchsia-400/20"
+                          className="bg-white/5 border-white/10 text-white placeholder:text-white/40 focus:border-fuchsia-400 focus:ring-fuchsia-400/20"
                           disabled={isLoading}
                         />
                       </div>
@@ -213,7 +213,7 @@ const CustomerGifts = () => {
                           placeholder="john@example.com"
                           value={email}
                           onChange={(e) => setEmail(e.target.value)}
-                          className="bg-white/10 border-white/20 text-white placeholder:text-purple-300/50 focus:border-fuchsia-400 focus:ring-fuchsia-400/20"
+                          className="bg-white/5 border-white/10 text-white placeholder:text-white/40 focus:border-fuchsia-400 focus:ring-fuchsia-400/20"
                           disabled={isLoading}
                         />
                       </div>
@@ -228,7 +228,7 @@ const CustomerGifts = () => {
                         placeholder="123 Main Street, Apt 4B"
                         value={streetAddress}
                         onChange={(e) => setStreetAddress(e.target.value)}
-                        className="bg-white/10 border-white/20 text-white placeholder:text-purple-300/50 focus:border-fuchsia-400 focus:ring-fuchsia-400/20"
+                        className="bg-white/5 border-white/10 text-white placeholder:text-white/40 focus:border-fuchsia-400 focus:ring-fuchsia-400/20"
                         disabled={isLoading}
                       />
                     </div>
@@ -243,7 +243,7 @@ const CustomerGifts = () => {
                           placeholder="San Francisco"
                           value={city}
                           onChange={(e) => setCity(e.target.value)}
-                          className="bg-white/10 border-white/20 text-white placeholder:text-purple-300/50 focus:border-fuchsia-400 focus:ring-fuchsia-400/20"
+                          className="bg-white/5 border-white/10 text-white placeholder:text-white/40 focus:border-fuchsia-400 focus:ring-fuchsia-400/20"
                           disabled={isLoading}
                         />
                       </div>
@@ -256,7 +256,7 @@ const CustomerGifts = () => {
                           placeholder="CA"
                           value={state}
                           onChange={(e) => setState(e.target.value)}
-                          className="bg-white/10 border-white/20 text-white placeholder:text-purple-300/50 focus:border-fuchsia-400 focus:ring-fuchsia-400/20"
+                          className="bg-white/5 border-white/10 text-white placeholder:text-white/40 focus:border-fuchsia-400 focus:ring-fuchsia-400/20"
                           disabled={isLoading}
                         />
                       </div>
@@ -269,7 +269,7 @@ const CustomerGifts = () => {
                           placeholder="94102"
                           value={zipCode}
                           onChange={(e) => setZipCode(e.target.value)}
-                          className="bg-white/10 border-white/20 text-white placeholder:text-purple-300/50 focus:border-fuchsia-400 focus:ring-fuchsia-400/20"
+                          className="bg-white/5 border-white/10 text-white placeholder:text-white/40 focus:border-fuchsia-400 focus:ring-fuchsia-400/20"
                           disabled={isLoading}
                         />
                       </div>
@@ -282,7 +282,7 @@ const CustomerGifts = () => {
                           placeholder="United States"
                           value={country}
                           onChange={(e) => setCountry(e.target.value)}
-                          className="bg-white/10 border-white/20 text-white placeholder:text-purple-300/50 focus:border-fuchsia-400 focus:ring-fuchsia-400/20"
+                          className="bg-white/5 border-white/10 text-white placeholder:text-white/40 focus:border-fuchsia-400 focus:ring-fuchsia-400/20"
                           disabled={isLoading}
                         />
                       </div>
