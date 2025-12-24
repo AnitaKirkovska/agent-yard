@@ -19,13 +19,13 @@ const CustomerGifts = () => {
   const [expandedImage, setExpandedImage] = useState<string | null>(null);
   const [step, setStep] = useState<1 | 2>(1);
   const [hobby, setHobby] = useState("");
-  const [fullName, setFullName] = useState("");
-  const [email, setEmail] = useState("");
-  const [streetAddress, setStreetAddress] = useState("");
-  const [city, setCity] = useState("");
-  const [state, setState] = useState("");
-  const [zipCode, setZipCode] = useState("");
-  const [country, setCountry] = useState("");
+  const [fullName, setFullName] = useState("Jane Doe");
+  const [email, setEmail] = useState("jane@example.com");
+  const [streetAddress, setStreetAddress] = useState("123 Main Street");
+  const [city, setCity] = useState("San Francisco");
+  const [state, setState] = useState("CA");
+  const [zipCode, setZipCode] = useState("94102");
+  const [country, setCountry] = useState("United States");
   const [isLoading, setIsLoading] = useState(false);
   const [swagResult, setSwagResult] = useState<{
     message: string;
