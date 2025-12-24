@@ -21,9 +21,10 @@ const CustomerGifts = () => {
   const [country, setCountry] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [swagResult, setSwagResult] = useState<{
-    itemName: string;
-    description: string;
-    estimatedDelivery: string;
+    message: string;
+    orderId: string;
+    productId: string;
+    mockupImages: string[];
   } | null>(null);
 
   const handleNextStep = () => {
@@ -136,10 +137,20 @@ const CustomerGifts = () => {
       const outputs = data?.data?.outputs || [];
       const getOutput = (name: string) => outputs.find((o: any) => o.name === name)?.value;
 
+      // Extract mockup images array
+      const mockupImagesRaw = getOutput("mockup_images");
+      const mockupImages: string[] = [];
+      if (Array.isArray(mockupImagesRaw)) {
+        mockupImagesRaw.forEach((img: any) => {
+          if (img?.src) mockupImages.push(img.src);
+        });
+      }
+
       setSwagResult({
-        itemName: getOutput("item_name") || "Custom Swag Item",
-        description: getOutput("description") || `A personalized item inspired by your love of ${hobby}`,
-        estimatedDelivery: getOutput("estimated_delivery") || "7-14 business days",
+        message: getOutput("message") || `A personalized item inspired by your love of ${hobby}`,
+        orderId: getOutput("order_id") || "",
+        productId: getOutput("product_id") || "",
+        mockupImages,
       });
       
       toast.success("Your custom swag order is confirmed!");
@@ -378,18 +389,36 @@ const CustomerGifts = () => {
               
               <CardContent className="p-8">
                 <div className="space-y-6">
+                  {/* Mockup Images */}
+                  {swagResult.mockupImages.length > 0 && (
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                      {swagResult.mockupImages.map((img, idx) => (
+                        <div key={idx} className="aspect-square rounded-xl overflow-hidden bg-white/5 border border-white/10">
+                          <img 
+                            src={img} 
+                            alt={`Product mockup ${idx + 1}`}
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {/* Message */}
                   <div className="p-6 rounded-xl bg-white/5 border border-white/10">
-                    <h3 className="text-2xl font-bold text-white mb-2">{swagResult.itemName}</h3>
-                    <p className="text-purple-200/80 leading-relaxed">{swagResult.description}</p>
+                    <p className="text-purple-200/80 leading-relaxed whitespace-pre-line">{swagResult.message}</p>
                   </div>
 
-                  <div className="flex items-center gap-4 p-4 rounded-xl bg-fuchsia-500/10 border border-fuchsia-500/20">
-                    <Truck className="w-6 h-6 text-fuchsia-400" />
-                    <div>
-                      <p className="font-medium text-white">Estimated Delivery</p>
-                      <p className="text-sm text-fuchsia-300">{swagResult.estimatedDelivery}</p>
+                  {/* Order Details */}
+                  {swagResult.orderId && (
+                    <div className="flex items-center gap-4 p-4 rounded-xl bg-fuchsia-500/10 border border-fuchsia-500/20">
+                      <Truck className="w-6 h-6 text-fuchsia-400" />
+                      <div>
+                        <p className="font-medium text-white">Order ID</p>
+                        <p className="text-sm text-fuchsia-300 font-mono">{swagResult.orderId}</p>
+                      </div>
                     </div>
-                  </div>
+                  )}
 
                   <div className="text-center pt-4">
                     <p className="text-purple-300/70 text-sm mb-4">
