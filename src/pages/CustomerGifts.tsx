@@ -9,6 +9,7 @@ import { Package, Truck, ArrowRight, Gift, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import SwagLoadingScreen from "@/components/SwagLoadingScreen";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import vellumLogo from "@/assets/vellum-logo.png";
 import printifyLogo from "@/assets/printify-logo.png";
 import lovableLogo from "@/assets/lovable-logo.png";
@@ -214,18 +215,59 @@ const CustomerGifts = () => {
           {/* Header */}
           <div className="text-center mb-12">
             {/* Partner Logos */}
-            <div className="flex items-center justify-center gap-4 mb-8">
-              <span className="text-purple-300/70 text-sm font-medium">Built with</span>
-              <div className="w-14 h-14 rounded-xl bg-white flex items-center justify-center shadow-lg shadow-black/20 overflow-hidden">
-                <img src={vellumLogo} alt="Vellum" className="w-10 h-10 object-contain" />
+            <TooltipProvider>
+              <div className="flex items-center justify-center gap-4 mb-8">
+                <span className="text-purple-300/70 text-sm font-medium">Built with</span>
+                
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <a 
+                      href="https://vellum.ai" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="w-14 h-14 rounded-xl bg-white flex items-center justify-center shadow-lg shadow-black/20 overflow-hidden hover:scale-110 transition-transform cursor-pointer"
+                    >
+                      <img src={vellumLogo} alt="Vellum" className="w-10 h-10 object-contain" />
+                    </a>
+                  </TooltipTrigger>
+                  <TooltipContent className="bg-white text-gray-900">
+                    <p className="font-medium">Agent Builder</p>
+                  </TooltipContent>
+                </Tooltip>
+
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <a 
+                      href="https://printify.com" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="w-14 h-14 rounded-xl overflow-hidden shadow-lg shadow-black/20 hover:scale-110 transition-transform cursor-pointer"
+                    >
+                      <img src={printifyLogo} alt="Printify" className="w-full h-full object-cover" />
+                    </a>
+                  </TooltipTrigger>
+                  <TooltipContent className="bg-white text-gray-900">
+                    <p className="font-medium">Order/Shipping</p>
+                  </TooltipContent>
+                </Tooltip>
+
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <a 
+                      href="https://lovable.com" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="w-14 h-14 rounded-xl overflow-hidden shadow-lg shadow-black/20 hover:scale-110 transition-transform cursor-pointer"
+                    >
+                      <img src={lovableLogo} alt="Lovable" className="w-full h-full object-cover" />
+                    </a>
+                  </TooltipTrigger>
+                  <TooltipContent className="bg-white text-gray-900">
+                    <p className="font-medium">App UI</p>
+                  </TooltipContent>
+                </Tooltip>
               </div>
-              <div className="w-14 h-14 rounded-xl overflow-hidden shadow-lg shadow-black/20">
-                <img src={printifyLogo} alt="Printify" className="w-full h-full object-cover" />
-              </div>
-              <div className="w-14 h-14 rounded-xl overflow-hidden shadow-lg shadow-black/20">
-                <img src={lovableLogo} alt="Lovable" className="w-full h-full object-cover" />
-              </div>
-            </div>
+            </TooltipProvider>
             
             <h1 className="text-5xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-white via-fuchsia-200 to-violet-200 bg-clip-text text-transparent">
               Surprise Drop
