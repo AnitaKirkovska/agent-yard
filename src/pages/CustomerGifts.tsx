@@ -451,8 +451,7 @@ const CustomerGifts = () => {
                     <Package className="w-6 h-6 text-fuchsia-300" />
                   </div>
                   <div>
-                    <h2 className="text-xl font-bold text-white">Order Confirmed</h2>
-                    <p className="text-purple-300/70 text-sm">Shipping to your address</p>
+                    <h2 className="text-xl font-bold text-white">Order Created in your Printify account</h2>
                   </div>
                 </div>
               </div>
