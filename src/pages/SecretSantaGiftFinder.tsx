@@ -368,6 +368,17 @@ const Index = () => {
                 
                 <Tooltip>
                   <TooltipTrigger asChild>
+                    <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center shadow-lg shadow-black/20 overflow-hidden hover:scale-110 transition-transform cursor-pointer">
+                      <img src={santaFace} alt="Santa's Magic" className="w-8 h-8 object-contain" />
+                    </div>
+                  </TooltipTrigger>
+                  <TooltipContent className="bg-card text-foreground border-border">
+                    <p className="font-medium">Santa's Magic</p>
+                  </TooltipContent>
+                </Tooltip>
+
+                <Tooltip>
+                  <TooltipTrigger asChild>
                     <a 
                       href="https://vellum.ai?utm_medium=tool&utm_content=anita&utm_source=tool&utm_campaign=secret_santa" 
                       target="_blank" 
