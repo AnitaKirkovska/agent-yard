@@ -17,63 +17,58 @@ serve(async (req) => {
     
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-    // Fetch the Vellum logo from a reliable external source
-    // Using the Vellum website's logo
-    const imageUrl = "https://images.squarespace-cdn.com/content/v1/642a6b6a78f5be0a6752eb68/7a55e143-efa1-4f0b-a4c2-20b9cda4edbc/vellum-dark.png";
-    
-    console.log("Fetching Vellum logo from:", imageUrl);
-    
-    const imageResponse = await fetch(imageUrl, {
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
-      }
-    });
-    
-    if (!imageResponse.ok) {
-      console.error("Failed to fetch from primary source, trying fallback...");
-      // Fallback: Create a simple text-based SVG logo
-      const svgLogo = `<svg width="400" height="100" viewBox="0 0 400 100" xmlns="http://www.w3.org/2000/svg">
-        <rect width="400" height="100" fill="white"/>
-        <text x="200" y="65" font-family="Arial, sans-serif" font-size="48" font-weight="bold" fill="#1a1a4e" text-anchor="middle">vellum</text>
-      </svg>`;
-      
-      const { data, error } = await supabase.storage
-        .from("assets")
-        .upload("vellum-workflow-logo.svg", svgLogo, {
-          contentType: "image/svg+xml",
-          upsert: true,
+    // Try multiple sources for the Vellum logo
+    const imageSources = [
+      "https://cdn.prod.website-files.com/642a6b6a78f5be0a6752eb68/642a6b6a78f5be0a6752eb7d_vellum-logo.svg",
+      "https://vellum.ai/images/vellum-logo.png",
+      "https://avatars.githubusercontent.com/u/115021304?s=200&v=4", // Vellum GitHub avatar
+    ];
+
+    let imageData: Uint8Array | null = null;
+    let contentType = "image/png";
+
+    for (const url of imageSources) {
+      try {
+        console.log("Trying to fetch logo from:", url);
+        const response = await fetch(url, {
+          headers: {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+          }
         });
-
-      if (error) {
-        console.error("Upload error:", error);
-        return new Response(
-          JSON.stringify({ error: error.message }),
-          { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
-        );
+        
+        if (response.ok) {
+          const blob = await response.blob();
+          const arrayBuffer = await blob.arrayBuffer();
+          imageData = new Uint8Array(arrayBuffer);
+          contentType = response.headers.get("content-type") || "image/png";
+          console.log("Successfully fetched from:", url, "Size:", imageData.length, "bytes");
+          break;
+        }
+      } catch (e) {
+        console.log("Failed to fetch from:", url, e);
+        continue;
       }
-
-      const { data: urlData } = supabase.storage
-        .from("assets")
-        .getPublicUrl("vellum-workflow-logo.svg");
-
-      console.log("SVG Logo uploaded successfully:", urlData.publicUrl);
-
-      return new Response(
-        JSON.stringify({ url: urlData.publicUrl, type: "svg" }),
-        { headers: { ...corsHeaders, "Content-Type": "application/json" } }
-      );
     }
-    
-    const imageBlob = await imageResponse.blob();
-    const imageArrayBuffer = await imageBlob.arrayBuffer();
-    const imageUint8Array = new Uint8Array(imageArrayBuffer);
 
-    console.log("Image fetched, size:", imageUint8Array.length, "bytes");
+    if (!imageData) {
+      // Create a simple placeholder PNG if all sources fail
+      // This is a minimal valid PNG (1x1 pixel, navy blue)
+      console.log("All sources failed, creating placeholder...");
+      const placeholder = new Uint8Array([
+        0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A, 0x00, 0x00, 0x00, 0x0D,
+        0x49, 0x48, 0x44, 0x52, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x01,
+        0x08, 0x02, 0x00, 0x00, 0x00, 0x90, 0x77, 0x53, 0xDE, 0x00, 0x00, 0x00,
+        0x0C, 0x49, 0x44, 0x41, 0x54, 0x08, 0xD7, 0x63, 0x18, 0x05, 0xA3, 0x60,
+        0x00, 0x00, 0x00, 0x02, 0x00, 0x01, 0xE2, 0x21, 0xBC, 0x33, 0x00, 0x00,
+        0x00, 0x00, 0x49, 0x45, 0x4E, 0x44, 0xAE, 0x42, 0x60, 0x82
+      ]);
+      imageData = placeholder;
+    }
 
     const { data, error } = await supabase.storage
       .from("assets")
-      .upload("vellum-workflow-logo.png", imageUint8Array, {
-        contentType: "image/png",
+      .upload("vellum-workflow-logo.png", imageData, {
+        contentType: contentType.includes("svg") ? "image/png" : contentType,
         upsert: true,
       });
 
@@ -85,7 +80,6 @@ serve(async (req) => {
       );
     }
 
-    // Get the public URL
     const { data: urlData } = supabase.storage
       .from("assets")
       .getPublicUrl("vellum-workflow-logo.png");
@@ -93,7 +87,7 @@ serve(async (req) => {
     console.log("Logo uploaded successfully:", urlData.publicUrl);
 
     return new Response(
-      JSON.stringify({ url: urlData.publicUrl }),
+      JSON.stringify({ url: urlData.publicUrl, size: imageData.length }),
       { headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
   } catch (error) {
