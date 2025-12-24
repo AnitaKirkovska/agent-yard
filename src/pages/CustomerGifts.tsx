@@ -330,7 +330,7 @@ const CustomerGifts = () => {
                         </Label>
                         <Input
                           id="fullName"
-                          placeholder="Anita Kirkovska"
+                          placeholder="Jane Doe"
                           value={fullName}
                           onChange={(e) => setFullName(e.target.value)}
                           className="bg-white/5 border-white/10 text-white placeholder:text-white/40 focus:border-fuchsia-400 focus:ring-fuchsia-400/20"
@@ -344,7 +344,7 @@ const CustomerGifts = () => {
                         <Input
                           id="email"
                           type="email"
-                          placeholder="anitakirkovska@gmail.com"
+                          placeholder="jane@example.com"
                           value={email}
                           onChange={(e) => setEmail(e.target.value)}
                           className="bg-white/5 border-white/10 text-white placeholder:text-white/40 focus:border-fuchsia-400 focus:ring-fuchsia-400/20"
@@ -359,7 +359,7 @@ const CustomerGifts = () => {
                       </Label>
                       <Input
                         id="streetAddress"
-                        placeholder="1S 1ST Street"
+                        placeholder="123 Main Street"
                         value={streetAddress}
                         onChange={(e) => setStreetAddress(e.target.value)}
                         className="bg-white/5 border-white/10 text-white placeholder:text-white/40 focus:border-fuchsia-400 focus:ring-fuchsia-400/20"
@@ -374,7 +374,7 @@ const CustomerGifts = () => {
                         </Label>
                         <Input
                           id="city"
-                          placeholder="Brooklyn"
+                          placeholder="San Francisco"
                           value={city}
                           onChange={(e) => setCity(e.target.value)}
                           className="bg-white/5 border-white/10 text-white placeholder:text-white/40 focus:border-fuchsia-400 focus:ring-fuchsia-400/20"
@@ -387,7 +387,7 @@ const CustomerGifts = () => {
                         </Label>
                         <Input
                           id="state"
-                          placeholder="NY"
+                          placeholder="CA"
                           value={state}
                           onChange={(e) => setState(e.target.value)}
                           className="bg-white/5 border-white/10 text-white placeholder:text-white/40 focus:border-fuchsia-400 focus:ring-fuchsia-400/20"
@@ -400,7 +400,7 @@ const CustomerGifts = () => {
                         </Label>
                         <Input
                           id="zipCode"
-                          placeholder="11249"
+                          placeholder="94102"
                           value={zipCode}
                           onChange={(e) => setZipCode(e.target.value)}
                           className="bg-white/5 border-white/10 text-white placeholder:text-white/40 focus:border-fuchsia-400 focus:ring-fuchsia-400/20"
