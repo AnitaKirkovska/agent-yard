@@ -13,7 +13,10 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import vellumLogo from "@/assets/vellum-logo.png";
 import printifyLogo from "@/assets/printify-logo.png";
 import lovableLogo from "@/assets/lovable-logo.png";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
+
 const CustomerGifts = () => {
+  const [expandedImage, setExpandedImage] = useState<string | null>(null);
   const [step, setStep] = useState<1 | 2>(1);
   const [hobby, setHobby] = useState("");
   const [fullName, setFullName] = useState("");
@@ -448,8 +451,8 @@ const CustomerGifts = () => {
                     <Package className="w-6 h-6 text-fuchsia-300" />
                   </div>
                   <div>
-                    <h2 className="text-xl font-bold text-white">Your Swag is Being Created!</h2>
-                    <p className="text-purple-300/70 text-sm">Order confirmed • Shipping to your address</p>
+                    <h2 className="text-xl font-bold text-white">Order Confirmed</h2>
+                    <p className="text-purple-300/70 text-sm">Shipping to your address</p>
                   </div>
                 </div>
               </div>
@@ -460,7 +463,11 @@ const CustomerGifts = () => {
                   {swagResult.mockupImages.length > 0 && (
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                       {swagResult.mockupImages.map((img, idx) => (
-                        <div key={idx} className="aspect-square rounded-xl overflow-hidden bg-white/5 border border-white/10">
+                        <div 
+                          key={idx} 
+                          className="aspect-square rounded-xl overflow-hidden bg-white/5 border border-white/10 cursor-pointer hover:scale-105 hover:border-fuchsia-400/50 transition-all"
+                          onClick={() => setExpandedImage(img)}
+                        >
                           <img 
                             src={img} 
                             alt={`Product mockup ${idx + 1}`}
@@ -513,6 +520,19 @@ const CustomerGifts = () => {
           </div>
         </div>
       </div>
+
+      {/* Expanded Image Dialog */}
+      <Dialog open={!!expandedImage} onOpenChange={() => setExpandedImage(null)}>
+        <DialogContent className="max-w-3xl bg-[#0a0a12] border-white/10 p-2">
+          {expandedImage && (
+            <img 
+              src={expandedImage} 
+              alt="Expanded product mockup" 
+              className="w-full h-auto rounded-lg"
+            />
+          )}
+        </DialogContent>
+      </Dialog>
     </>
   );
 };
