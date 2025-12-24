@@ -276,7 +276,7 @@ const CustomerGifts = () => {
               Swag Agent
             </h1>
             <p className="text-xl text-purple-200/80 max-w-2xl mx-auto">
-              Demo only. This shows what the agent can do: pick the swag, design it with a placeholder logo, and create a draft order for human approval.
+              Demo only. This shows what the agent can do: pick the swag based on the recipient's hobby, design it with a placeholder logo, and create a draft order for human approval.
             </p>
           </div>
 
