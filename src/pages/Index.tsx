@@ -1,11 +1,10 @@
 import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
-import { Calendar, Sparkles, ArrowRight, Heart, Twitter, Gift } from "lucide-react";
+import { Calendar, Sparkles, ArrowRight, Heart, Twitter, Shirt } from "lucide-react";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import santaFace from "@/assets/santa-face.png";
-import vellumLogo from "@/assets/vellum-logo.png";
 
 interface DayApp {
   day: number;
@@ -33,7 +32,7 @@ const apps: DayApp[] = [
     title: "Swag Agent",
     description: "AI picks custom swag based on your hobby and creates a draft order",
     route: "/customer-gifts",
-    icon: <img src={vellumLogo} alt="Vellum" className="w-8 h-8 object-contain" />,
+    icon: <Shirt className="w-6 h-6 text-fuchsia-500" />,
     available: true,
   },
   // Future days will be added here
