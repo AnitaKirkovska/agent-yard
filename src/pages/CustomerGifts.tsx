@@ -137,19 +137,33 @@ const CustomerGifts = () => {
       const outputs = data?.data?.outputs || [];
       const getOutput = (name: string) => outputs.find((o: any) => o.name === name)?.value;
 
-      // Extract mockup images array
-      const mockupImagesRaw = getOutput("mockup_images");
+      // The response is nested inside agent_response
+      const agentResponse = getOutput("agent_response");
+      console.log("Agent response:", agentResponse);
+
+      // Extract values from agent_response object
+      const message = agentResponse?.message || `A personalized item inspired by your love of ${hobby}`;
+      const orderId = agentResponse?.order_id || "";
+      const productId = agentResponse?.product_id || "";
+      
+      // Extract mockup images - they're direct URLs in the array
+      const mockupImagesRaw = agentResponse?.mockup_images || [];
       const mockupImages: string[] = [];
       if (Array.isArray(mockupImagesRaw)) {
         mockupImagesRaw.forEach((img: any) => {
-          if (img?.src) mockupImages.push(img.src);
+          // Handle both direct URL strings and objects with src property
+          if (typeof img === 'string') {
+            mockupImages.push(img);
+          } else if (img?.src) {
+            mockupImages.push(img.src);
+          }
         });
       }
 
       setSwagResult({
-        message: getOutput("message") || `A personalized item inspired by your love of ${hobby}`,
-        orderId: getOutput("order_id") || "",
-        productId: getOutput("product_id") || "",
+        message,
+        orderId,
+        productId,
         mockupImages,
       });
       
