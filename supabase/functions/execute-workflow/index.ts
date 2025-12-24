@@ -5,6 +5,12 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
+interface WorkflowRequest {
+  workflowDeploymentName: string;
+  releaseTag?: string;
+  inputs: Array<{ type: string; name: string; value: string }>;
+}
+
 interface SwagOrderRequest {
   recipientName: string;
   address1: string;
@@ -32,22 +38,40 @@ serve(async (req) => {
       );
     }
 
-    const body: SwagOrderRequest = await req.json();
-    console.log("Processing swag order for:", body.recipientName);
-    console.log("Hobby:", body.hobby);
+    const body = await req.json();
+    
+    // Check if this is a direct workflow request (has workflowDeploymentName and inputs array)
+    // or a legacy swag order request
+    let workflowName: string;
+    let releaseTag: string;
+    let inputs: Array<{ type: string; name: string; value: string }>;
 
-    // Build inputs for Vellum workflow
-    const inputs = [
-      { type: "STRING", name: "recipient_name", value: body.recipientName },
-      { type: "STRING", name: "address1", value: body.address1 },
-      { type: "STRING", name: "city", value: body.city },
-      { type: "STRING", name: "state_code", value: body.stateCode || "" },
-      { type: "STRING", name: "country_code", value: body.countryCode },
-      { type: "STRING", name: "zip_code", value: body.zipCode },
-      { type: "STRING", name: "hobby", value: body.hobby },
-    ];
+    if (body.workflowDeploymentName && body.inputs) {
+      // Direct workflow request format
+      const workflowRequest = body as WorkflowRequest;
+      workflowName = workflowRequest.workflowDeploymentName;
+      releaseTag = workflowRequest.releaseTag || "LATEST";
+      inputs = workflowRequest.inputs;
+      console.log("Direct workflow request for:", workflowName);
+    } else {
+      // Legacy swag order format
+      const swagOrder = body as SwagOrderRequest;
+      workflowName = "printful-printing-agent";
+      releaseTag = "LATEST";
+      inputs = [
+        { type: "STRING", name: "recipient_name", value: swagOrder.recipientName },
+        { type: "STRING", name: "address1", value: swagOrder.address1 },
+        { type: "STRING", name: "city", value: swagOrder.city },
+        { type: "STRING", name: "state_code", value: swagOrder.stateCode || "" },
+        { type: "STRING", name: "country_code", value: swagOrder.countryCode },
+        { type: "STRING", name: "zip_code", value: swagOrder.zipCode },
+        { type: "STRING", name: "hobby", value: swagOrder.hobby },
+      ];
+      console.log("Legacy swag order for:", swagOrder.recipientName);
+    }
 
-    console.log("Calling Vellum workflow with inputs:", JSON.stringify(inputs, null, 2));
+    console.log("Calling Vellum workflow:", workflowName);
+    console.log("Inputs:", JSON.stringify(inputs, null, 2));
 
     const response = await fetch("https://predict.vellum.ai/v1/execute-workflow", {
       method: "POST",
@@ -56,8 +80,8 @@ serve(async (req) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        workflow_deployment_name: "printful-printing-agent",
-        release_tag: "LATEST",
+        workflow_deployment_name: workflowName,
+        release_tag: releaseTag,
         inputs,
       }),
     });
