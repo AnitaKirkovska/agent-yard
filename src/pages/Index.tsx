@@ -20,7 +20,7 @@ const apps: DayApp[] = [
   {
     day: 1,
     date: "Dec 23",
-    title: "Secret Santa Agent",
+    title: "Santa Agent",
     description: "AI-powered gift recommendations based on your friend's personality",
     route: "/secret-ai-santa",
     icon: <img src={santaFace} alt="Santa" className="w-8 h-8 object-contain" />,
