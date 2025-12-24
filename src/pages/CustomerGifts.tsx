@@ -276,7 +276,7 @@ const CustomerGifts = () => {
               Swag Agent
             </h1>
             <p className="text-xl text-purple-200/80 max-w-2xl mx-auto">
-              Demo only. Creates draft orders using Vellum's logo to showcase the agent's capabilities.
+              Demo only, to showcase the agent's capabilities. This agent will choose the swag, design it using a placeholder logo, and will create a draft order that a human should approve.
             </p>
           </div>
 
