@@ -17,14 +17,51 @@ serve(async (req) => {
     
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-    // Fetch the Vellum text logo from an external source
-    const imageUrl = "https://raw.githubusercontent.com/vellum-ai/vellum-client-python/main/docs/images/logo.png";
+    // Fetch the Vellum logo from a reliable external source
+    // Using the Vellum website's logo
+    const imageUrl = "https://images.squarespace-cdn.com/content/v1/642a6b6a78f5be0a6752eb68/7a55e143-efa1-4f0b-a4c2-20b9cda4edbc/vellum-dark.png";
     
     console.log("Fetching Vellum logo from:", imageUrl);
     
-    const imageResponse = await fetch(imageUrl);
+    const imageResponse = await fetch(imageUrl, {
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+      }
+    });
+    
     if (!imageResponse.ok) {
-      throw new Error(`Failed to fetch image: ${imageResponse.status}`);
+      console.error("Failed to fetch from primary source, trying fallback...");
+      // Fallback: Create a simple text-based SVG logo
+      const svgLogo = `<svg width="400" height="100" viewBox="0 0 400 100" xmlns="http://www.w3.org/2000/svg">
+        <rect width="400" height="100" fill="white"/>
+        <text x="200" y="65" font-family="Arial, sans-serif" font-size="48" font-weight="bold" fill="#1a1a4e" text-anchor="middle">vellum</text>
+      </svg>`;
+      
+      const { data, error } = await supabase.storage
+        .from("assets")
+        .upload("vellum-workflow-logo.svg", svgLogo, {
+          contentType: "image/svg+xml",
+          upsert: true,
+        });
+
+      if (error) {
+        console.error("Upload error:", error);
+        return new Response(
+          JSON.stringify({ error: error.message }),
+          { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        );
+      }
+
+      const { data: urlData } = supabase.storage
+        .from("assets")
+        .getPublicUrl("vellum-workflow-logo.svg");
+
+      console.log("SVG Logo uploaded successfully:", urlData.publicUrl);
+
+      return new Response(
+        JSON.stringify({ url: urlData.publicUrl, type: "svg" }),
+        { headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
     }
     
     const imageBlob = await imageResponse.blob();
@@ -35,7 +72,7 @@ serve(async (req) => {
 
     const { data, error } = await supabase.storage
       .from("assets")
-      .upload("vellum-text-logo.png", imageUint8Array, {
+      .upload("vellum-workflow-logo.png", imageUint8Array, {
         contentType: "image/png",
         upsert: true,
       });
@@ -51,7 +88,7 @@ serve(async (req) => {
     // Get the public URL
     const { data: urlData } = supabase.storage
       .from("assets")
-      .getPublicUrl("vellum-text-logo.png");
+      .getPublicUrl("vellum-workflow-logo.png");
 
     console.log("Logo uploaded successfully:", urlData.publicUrl);
 
