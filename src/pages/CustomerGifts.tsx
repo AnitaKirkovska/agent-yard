@@ -244,15 +244,9 @@ const CustomerGifts = () => {
             </Card>
           ) : !swagResult ? (
             <Card className="bg-white/5 border-white/10 backdrop-blur-xl shadow-2xl shadow-black/20">
-              <CardContent className="p-8">
+              <CardContent className="p-6">
                 {step === 1 ? (
-                  <div className="space-y-6">
-                    {/* Step indicator */}
-                    <div className="flex items-center gap-2 text-sm text-purple-300/70 mb-2">
-                      <span className="w-6 h-6 rounded-full bg-fuchsia-500 text-white flex items-center justify-center text-xs font-medium">1</span>
-                      <span>Step 1 of 2</span>
-                    </div>
-                    
+                  <div className="space-y-4">
                     <div className="space-y-2">
                       <Label htmlFor="hobby" className="text-white text-base">
                         What's your favorite hobby or passion?
@@ -262,7 +256,7 @@ const CustomerGifts = () => {
                         placeholder="e.g., I love rock climbing on weekends and collect vintage vinyl records..."
                         value={hobby}
                         onChange={(e) => setHobby(e.target.value)}
-                        className="bg-white/5 border-white/10 text-white placeholder:text-white/40 min-h-[120px] focus:border-fuchsia-400 focus:ring-fuchsia-400/20"
+                        className="bg-white/5 border-white/10 text-white placeholder:text-white/40 min-h-[100px] focus:border-fuchsia-400 focus:ring-fuchsia-400/20"
                       />
                     </div>
 
@@ -277,17 +271,11 @@ const CustomerGifts = () => {
                     </Button>
                   </div>
                 ) : (
-                  <form onSubmit={handleSubmit} className="space-y-6">
-                    {/* Step indicator */}
-                    <div className="flex items-center gap-2 text-sm text-purple-300/70 mb-2">
-                      <span className="w-6 h-6 rounded-full bg-fuchsia-500 text-white flex items-center justify-center text-xs font-medium">2</span>
-                      <span>Step 2 of 2</span>
-                    </div>
-
+                  <form onSubmit={handleSubmit} className="space-y-4">
                     {/* Hobby summary */}
-                    <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                    <div className="p-3 rounded-lg bg-white/5 border border-white/10">
                       <p className="text-xs text-purple-300/70 uppercase tracking-wide mb-1">Your Hobby</p>
-                      <p className="text-white">{hobby}</p>
+                      <p className="text-white text-sm">{hobby}</p>
                     </div>
                     
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
