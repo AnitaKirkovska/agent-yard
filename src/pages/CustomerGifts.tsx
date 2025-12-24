@@ -215,6 +215,7 @@ const CustomerGifts = () => {
           <div className="text-center mb-12">
             {/* Partner Logos */}
             <div className="flex items-center justify-center gap-4 mb-8">
+              <span className="text-purple-300/70 text-sm font-medium">Built with</span>
               <div className="w-14 h-14 rounded-xl bg-white flex items-center justify-center shadow-lg shadow-black/20 overflow-hidden">
                 <img src={vellumLogo} alt="Vellum" className="w-10 h-10 object-contain" />
               </div>
@@ -457,16 +458,9 @@ const CustomerGifts = () => {
                   )}
 
                   <div className="text-center pt-4">
-                    <p className="text-purple-300/70 text-sm mb-4">
+                    <p className="text-purple-300/70 text-sm">
                       We'll send you a confirmation email with tracking details.
                     </p>
-                    <Button
-                      onClick={resetForm}
-                      variant="outline"
-                      className="border-white/20 text-white hover:bg-white/10"
-                    >
-                      Create Another Swag
-                    </Button>
                   </div>
                 </div>
               </CardContent>
