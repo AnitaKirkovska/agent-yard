@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
-import { Sparkles, Package, Truck, ArrowRight, ArrowLeft, Gift, Loader2 } from "lucide-react";
+import { Package, Truck, ArrowRight, ArrowLeft, Gift, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 
 const CustomerGifts = () => {
@@ -86,22 +86,17 @@ const CustomerGifts = () => {
         <div className="relative z-10 container mx-auto px-4 py-12 max-w-4xl">
           {/* Header */}
           <div className="text-center mb-12">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-fuchsia-500/20 border border-fuchsia-500/30 mb-6">
-              <Sparkles className="w-4 h-4 text-fuchsia-400" />
-              <span className="text-sm text-fuchsia-300">Powered by AI</span>
-            </div>
-            
             <h1 className="text-5xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-white via-fuchsia-200 to-violet-200 bg-clip-text text-transparent">
               Surprise Drop
             </h1>
             <p className="text-xl text-purple-200/80 max-w-2xl mx-auto">
-              Tell us your hobby, and we'll craft unique, personalized swag just for you — shipped free to your door.
+              Tell us your hobby, and we'll craft unique, personalized swag just for you - shipped free to your door.
             </p>
           </div>
 
           {/* Main Form / Result */}
           {!swagResult ? (
-            <Card className="bg-white/10 border-white/20 backdrop-blur-sm">
+            <Card className="bg-white/5 border-white/10 backdrop-blur-xl shadow-2xl shadow-black/20">
               <CardContent className="p-8">
                 {step === 1 ? (
                   <div className="space-y-6">
