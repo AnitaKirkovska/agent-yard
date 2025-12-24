@@ -136,7 +136,7 @@ const CustomerGifts = () => {
               Surprise Drop
             </h1>
             <p className="text-xl text-purple-200/80 max-w-2xl mx-auto">
-              Tell us your hobby, and we'll craft unique, personalized swag just for you - shipped free to your door.
+              Share your hobby with our "swag" agent and it'll turn that idea into a custom swag item you'd actually want.
             </p>
           </div>
 
