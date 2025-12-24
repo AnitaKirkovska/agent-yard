@@ -121,12 +121,12 @@ const CustomerGifts = () => {
         />
       </Helmet>
 
-      <div className="min-h-screen bg-gradient-to-br from-violet-950 via-purple-900 to-fuchsia-900 text-white flex items-center justify-center">
+      <div className="min-h-screen bg-[#0a0a12] text-white flex items-center justify-center">
         {/* Decorative elements */}
         <div className="fixed inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-20 left-10 w-72 h-72 bg-fuchsia-500/20 rounded-full blur-3xl" />
-          <div className="absolute bottom-20 right-10 w-96 h-96 bg-violet-500/20 rounded-full blur-3xl" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-purple-500/10 rounded-full blur-3xl" />
+          <div className="absolute top-20 left-10 w-72 h-72 bg-fuchsia-600/10 rounded-full blur-3xl" />
+          <div className="absolute bottom-20 right-10 w-96 h-96 bg-indigo-600/10 rounded-full blur-3xl" />
+          <div className="absolute bottom-0 left-1/4 w-[800px] h-[300px] bg-indigo-800/20 rounded-full blur-3xl rotate-12" />
         </div>
 
         <div className="relative z-10 container mx-auto px-4 py-12 max-w-4xl">
