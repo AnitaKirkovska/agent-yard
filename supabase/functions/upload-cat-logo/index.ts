@@ -17,8 +17,8 @@ serve(async (req) => {
     
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-    // Fetch the cat image from an external source
-    const catImageResponse = await fetch("https://i.imgur.com/mCHMpLT.jpeg");
+    // Fetch the cat image from the app's public folder
+    const catImageResponse = await fetch("https://512196e1-15b4-4d03-9fef-fb5ab2871b3b.lovableproject.com/images/grumpy-cat-logo.jpg");
     const catImageBlob = await catImageResponse.arrayBuffer();
 
     // Upload the cat image to storage
