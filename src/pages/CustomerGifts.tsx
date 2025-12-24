@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
-import { Package, Truck, ArrowRight, ArrowLeft, Gift, Loader2 } from "lucide-react";
+import { Package, Truck, ArrowRight, Gift, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 
 const CustomerGifts = () => {
@@ -288,35 +288,23 @@ const CustomerGifts = () => {
                       </div>
                     </div>
 
-                    <div className="flex gap-3">
-                      <Button
-                        type="button"
-                        onClick={() => setStep(1)}
-                        disabled={isLoading}
-                        variant="outline"
-                        className="border-white/20 text-white hover:bg-white/10"
-                      >
-                        <ArrowLeft className="w-4 h-4 mr-2" />
-                        Back
-                      </Button>
-                      <Button
-                        type="submit"
-                        disabled={isLoading || !fullName.trim() || !email.trim() || !streetAddress.trim() || !city.trim() || !zipCode.trim() || !country.trim()}
-                        className="flex-1 bg-gradient-to-r from-fuchsia-500 to-violet-500 hover:from-fuchsia-600 hover:to-violet-600 text-white font-semibold py-6 text-lg rounded-xl transition-all duration-300 shadow-lg shadow-fuchsia-500/25"
-                      >
-                        {isLoading ? (
-                          <>
-                            <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-                            Creating Your Swag...
-                          </>
-                        ) : (
-                          <>
-                            <Gift className="w-5 h-5 mr-2" />
-                            Create My Custom Swag
-                          </>
-                        )}
-                      </Button>
-                    </div>
+                    <Button
+                      type="submit"
+                      disabled={isLoading || !fullName.trim() || !email.trim() || !streetAddress.trim() || !city.trim() || !zipCode.trim() || !country.trim()}
+                      className="w-full bg-gradient-to-r from-fuchsia-500 to-violet-500 hover:from-fuchsia-600 hover:to-violet-600 text-white font-semibold py-6 text-lg rounded-xl transition-all duration-300 shadow-lg shadow-fuchsia-500/25"
+                    >
+                      {isLoading ? (
+                        <>
+                          <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                          Creating Your Swag...
+                        </>
+                      ) : (
+                        <>
+                          <Gift className="w-5 h-5 mr-2" />
+                          Create My Custom Swag
+                        </>
+                      )}
+                    </Button>
                   </form>
                 )}
               </CardContent>
