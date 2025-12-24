@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
 import { Package, Truck, ArrowRight, Gift, Loader2 } from "lucide-react";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 
 const CustomerGifts = () => {
   const [step, setStep] = useState<1 | 2>(1);
@@ -31,6 +32,30 @@ const CustomerGifts = () => {
       return;
     }
     setStep(2);
+  };
+
+  // Helper to convert country name to ISO code
+  const getCountryCode = (countryName: string): string => {
+    const countryMap: Record<string, string> = {
+      "united states": "US",
+      "usa": "US",
+      "us": "US",
+      "canada": "CA",
+      "uk": "GB",
+      "united kingdom": "GB",
+      "australia": "AU",
+      "germany": "DE",
+      "france": "FR",
+      "spain": "ES",
+      "italy": "IT",
+      "mexico": "MX",
+      "brazil": "BR",
+      "japan": "JP",
+      "china": "CN",
+      "india": "IN",
+    };
+    const normalized = countryName.toLowerCase().trim();
+    return countryMap[normalized] || countryName.toUpperCase().slice(0, 2);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -76,26 +101,54 @@ const CustomerGifts = () => {
 
     setIsLoading(true);
     
-    // Mock API call - simulate processing
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    
-    // Mock result based on hobby
-    const swagItems = [
-      { itemName: "Custom Embroidered Hoodie", description: `A cozy premium hoodie with a unique ${hobby}-inspired design embroidered on the front. Made from 100% organic cotton.` },
-      { itemName: "Personalized Canvas Tote", description: `An eco-friendly canvas tote featuring hand-drawn artwork celebrating your love for ${hobby}. Perfect for everyday use.` },
-      { itemName: "Custom Enamel Pin Set", description: `A set of 3 collectible enamel pins with ${hobby}-themed designs. Each pin is individually crafted and comes in a velvet pouch.` },
-      { itemName: "Bespoke Notebook & Sticker Pack", description: `A premium hardcover notebook with ${hobby}-inspired cover art, plus a matching sticker pack with 12 unique designs.` },
-    ];
-    
-    const randomSwag = swagItems[Math.floor(Math.random() * swagItems.length)];
-    
-    setSwagResult({
-      ...randomSwag,
-      estimatedDelivery: "5-7 business days",
-    });
-    
-    setIsLoading(false);
-    toast.success("Your custom swag is being created!");
+    try {
+      // Call the Vellum workflow via edge function
+      const { data, error } = await supabase.functions.invoke('execute-workflow', {
+        body: {
+          recipientName: fullName.trim(),
+          address1: streetAddress.trim(),
+          city: city.trim(),
+          stateCode: state.trim(),
+          countryCode: getCountryCode(country),
+          zipCode: zipCode.trim(),
+          hobby: hobby.trim(),
+        }
+      });
+
+      if (error) {
+        console.error("Edge function error:", error);
+        toast.error("Failed to create your swag. Please try again.");
+        setIsLoading(false);
+        return;
+      }
+
+      console.log("Vellum workflow response:", data);
+
+      // Check workflow state
+      if (data?.data?.state === "REJECTED") {
+        const errorOutput = data.data.outputs?.find((o: any) => o.name === "error");
+        toast.error(errorOutput?.value || "The workflow was unable to process your request.");
+        setIsLoading(false);
+        return;
+      }
+
+      // Extract outputs from the workflow response
+      const outputs = data?.data?.outputs || [];
+      const getOutput = (name: string) => outputs.find((o: any) => o.name === name)?.value;
+
+      setSwagResult({
+        itemName: getOutput("item_name") || "Custom Swag Item",
+        description: getOutput("description") || `A personalized item inspired by your love of ${hobby}`,
+        estimatedDelivery: getOutput("estimated_delivery") || "7-14 business days",
+      });
+      
+      toast.success("Your custom swag order is confirmed!");
+    } catch (err) {
+      console.error("Error submitting order:", err);
+      toast.error("Something went wrong. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const resetForm = () => {

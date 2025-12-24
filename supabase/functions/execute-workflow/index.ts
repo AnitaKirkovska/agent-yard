@@ -5,16 +5,15 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
-interface WorkflowInput {
-  type: string;
-  name: string;
-  value: string;
-}
-
-interface ExecuteWorkflowRequest {
-  workflowDeploymentName: string;
-  releaseTag?: string;
-  inputs: WorkflowInput[];
+interface SwagOrderRequest {
+  recipientName: string;
+  address1: string;
+  city: string;
+  stateCode: string;
+  countryCode: string;
+  zipCode: string;
+  hobby: string;
+  logoUrl?: string;
 }
 
 serve(async (req) => {
@@ -33,9 +32,23 @@ serve(async (req) => {
       );
     }
 
-    const body: ExecuteWorkflowRequest = await req.json();
-    console.log("Executing workflow:", body.workflowDeploymentName);
-    console.log("Inputs:", JSON.stringify(body.inputs, null, 2));
+    const body: SwagOrderRequest = await req.json();
+    console.log("Processing swag order for:", body.recipientName);
+    console.log("Hobby:", body.hobby);
+
+    // Build inputs for Vellum workflow
+    const inputs = [
+      { type: "STRING", name: "recipient_name", value: body.recipientName },
+      { type: "STRING", name: "address1", value: body.address1 },
+      { type: "STRING", name: "city", value: body.city },
+      { type: "STRING", name: "state_code", value: body.stateCode || "" },
+      { type: "STRING", name: "country_code", value: body.countryCode },
+      { type: "STRING", name: "zip_code", value: body.zipCode },
+      { type: "STRING", name: "hobby", value: body.hobby },
+      { type: "IMAGE", name: "logo", value: { src: body.logoUrl || "https://www.vellum.ai/hubfs/Logo%20(1).svg" } },
+    ];
+
+    console.log("Calling Vellum workflow with inputs:", JSON.stringify(inputs, null, 2));
 
     const response = await fetch("https://predict.vellum.ai/v1/execute-workflow", {
       method: "POST",
@@ -44,9 +57,9 @@ serve(async (req) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        workflow_deployment_name: body.workflowDeploymentName,
-        release_tag: body.releaseTag || "LATEST",
-        inputs: body.inputs,
+        workflow_deployment_name: "printful-printing-agent",
+        release_tag: "LATEST",
+        inputs,
       }),
     });
 
