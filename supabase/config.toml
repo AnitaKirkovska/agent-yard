@@ -5,3 +5,6 @@ verify_jwt = false
 
 [functions.upload-logo]
 verify_jwt = false
+
+[functions.upload-cat-logo]
+verify_jwt = false
