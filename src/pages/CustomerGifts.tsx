@@ -500,7 +500,15 @@ const CustomerGifts = () => {
           {/* Footer */}
           <div className="mt-12 text-center">
             <p className="text-purple-300/50 text-sm">
-              Built with ❤️ by Vellum • All swag is 100% free for our customers
+              Built with ❤️ by{" "}
+              <a 
+                href="https://twitter.com/anitakirkovska" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-fuchsia-400 hover:text-fuchsia-300 transition-colors"
+              >
+                @anitakirkovska
+              </a>
             </p>
           </div>
         </div>
