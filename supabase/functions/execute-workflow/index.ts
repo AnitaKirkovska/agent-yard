@@ -45,7 +45,7 @@ serve(async (req) => {
       { type: "STRING", name: "country_code", value: body.countryCode },
       { type: "STRING", name: "zip_code", value: body.zipCode },
       { type: "STRING", name: "hobby", value: body.hobby },
-      { type: "IMAGE", name: "logo", value: { src: "https://bicorrclgguttsgwxksi.supabase.co/storage/v1/object/public/assets/vellum-workflow-logo.svg" } },
+      { type: "IMAGE", name: "logo", value: { src: "https://bicorrclgguttsgwxksi.supabase.co/storage/v1/object/public/assets/vellum-workflow-logo.png" } },
     ];
 
     console.log("Calling Vellum workflow with inputs:", JSON.stringify(inputs, null, 2));
