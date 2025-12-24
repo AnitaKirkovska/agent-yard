@@ -20,7 +20,7 @@ const apps: DayApp[] = [
   {
     day: 1,
     date: "Dec 23",
-    title: "Secret Santa Gift Finder",
+    title: "Secret Santa Agent",
     description: "AI-powered gift recommendations based on your friend's personality",
     route: "/secret-ai-santa",
     icon: <img src={santaFace} alt="Santa" className="w-8 h-8 object-contain" />,
@@ -246,7 +246,7 @@ const AppCard = ({ app, votes, hasVoted, isVoting, onVote }: AppCardProps) => {
         <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-muted/30 mb-3">
           {app.icon}
         </div>
-        <h3 className="text-sm font-medium text-muted-foreground/60 line-clamp-1">
+        <h3 className="text-sm font-medium text-muted-foreground/60 truncate">
           {app.title}
         </h3>
         <p className="text-xs text-muted-foreground/40 mt-1 line-clamp-2">
@@ -275,7 +275,7 @@ const AppCard = ({ app, votes, hasVoted, isVoting, onVote }: AppCardProps) => {
         {app.icon}
       </div>
       
-      <h3 className="text-sm font-semibold text-foreground line-clamp-2 group-hover:text-primary transition-colors">
+      <h3 className="text-sm font-semibold text-foreground truncate group-hover:text-primary transition-colors">
         {app.title}
       </h3>
       
