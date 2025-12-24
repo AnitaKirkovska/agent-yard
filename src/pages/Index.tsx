@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
-import { Calendar, Sparkles, ArrowRight, Heart, Twitter } from "lucide-react";
+import { Calendar, Sparkles, ArrowRight, Heart, Twitter, Gift } from "lucide-react";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import santaFace from "@/assets/santa-face.png";
+import vellumLogo from "@/assets/vellum-logo.png";
 
 interface DayApp {
   day: number;
@@ -26,10 +27,19 @@ const apps: DayApp[] = [
     icon: <img src={santaFace} alt="Santa" className="w-8 h-8 object-contain" />,
     available: true,
   },
+  {
+    day: 2,
+    date: "Dec 26",
+    title: "Swag Agent",
+    description: "AI picks custom swag based on your hobby and creates a draft order",
+    route: "/customer-gifts",
+    icon: <img src={vellumLogo} alt="Vellum" className="w-8 h-8 object-contain" />,
+    available: true,
+  },
   // Future days will be added here
-  ...Array.from({ length: 29 }, (_, i) => ({
-    day: i + 2,
-    date: `Dec ${24 + i > 31 ? (24 + i - 31) : 24 + i}`,
+  ...Array.from({ length: 28 }, (_, i) => ({
+    day: i + 3,
+    date: `Dec ${25 + i > 31 ? (25 + i - 31) : 25 + i}`,
     title: "Coming Soon",
     description: "A new AI agent app will be revealed",
     route: "#",
