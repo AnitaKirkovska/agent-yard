@@ -431,7 +431,7 @@ const Index = () => {
             {/* Title */}
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-foreground mb-3 tracking-tight">
               Secret Santa
-              <span className="block text-gradient mt-1">Gift Finder</span>
+              <span className="block text-gradient mt-1">Agent</span>
             </h1>
 
             {/* Subtitle */}
