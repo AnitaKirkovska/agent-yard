@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
-import { Sparkles, Package, Truck, Palette, ArrowRight, Gift, Loader2 } from "lucide-react";
+import { Sparkles, Package, Truck, Palette, ArrowRight, ArrowLeft, Gift, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 
 const CustomerGifts = () => {
+  const [step, setStep] = useState<1 | 2>(1);
   const [hobby, setHobby] = useState("");
   const [address, setAddress] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -18,11 +18,19 @@ const CustomerGifts = () => {
     estimatedDelivery: string;
   } | null>(null);
 
+  const handleNextStep = () => {
+    if (!hobby.trim()) {
+      toast.error("Please tell us about your hobby");
+      return;
+    }
+    setStep(2);
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!hobby.trim() || !address.trim()) {
-      toast.error("Please fill in all fields");
+    if (!address.trim()) {
+      toast.error("Please enter your shipping address");
       return;
     }
 
@@ -54,12 +62,13 @@ const CustomerGifts = () => {
     setSwagResult(null);
     setHobby("");
     setAddress("");
+    setStep(1);
   };
 
   return (
     <>
       <Helmet>
-        <title>SwagForge | Custom Hobby-Based Swag Creator</title>
+        <title>Custom Hobby-Based Swag Creator</title>
         <meta
           name="description"
           content="Get personalized swag created just for you based on your hobbies. Free custom merchandise shipped to your door."
@@ -83,7 +92,7 @@ const CustomerGifts = () => {
             </div>
             
             <h1 className="text-5xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-white via-fuchsia-200 to-violet-200 bg-clip-text text-transparent">
-              SwagForge
+              Custom Swag
             </h1>
             <p className="text-xl text-purple-200/80 max-w-2xl mx-auto">
               Tell us your hobby, and we'll craft unique, personalized swag just for you — shipped free to your door.
@@ -93,20 +102,26 @@ const CustomerGifts = () => {
           {/* How it works */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12">
             {[
-              { icon: Palette, title: "Share Your Hobby", description: "Tell us what you love doing" },
-              { icon: Package, title: "We Create", description: "AI designs custom swag for you" },
-              { icon: Truck, title: "Free Shipping", description: "Delivered to your doorstep" },
-            ].map((step, index) => (
+              { icon: Palette, title: "Share Your Hobby", description: "Tell us what you love doing", active: step === 1 && !swagResult },
+              { icon: Package, title: "Add Shipping", description: "Where should we send it?", active: step === 2 && !swagResult },
+              { icon: Truck, title: "Free Delivery", description: "We'll ship it to you", active: !!swagResult },
+            ].map((stepItem, index) => (
               <div
                 key={index}
-                className="flex items-center gap-3 p-4 rounded-xl bg-white/5 border border-white/10"
+                className={`flex items-center gap-3 p-4 rounded-xl border transition-all duration-300 ${
+                  stepItem.active 
+                    ? "bg-fuchsia-500/20 border-fuchsia-500/40 scale-[1.02]" 
+                    : "bg-white/5 border-white/10"
+                }`}
               >
-                <div className="w-10 h-10 rounded-lg bg-fuchsia-500/20 flex items-center justify-center flex-shrink-0">
-                  <step.icon className="w-5 h-5 text-fuchsia-400" />
+                <div className={`w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 ${
+                  stepItem.active ? "bg-fuchsia-500/40" : "bg-fuchsia-500/20"
+                }`}>
+                  <stepItem.icon className={`w-5 h-5 ${stepItem.active ? "text-fuchsia-200" : "text-fuchsia-400"}`} />
                 </div>
                 <div>
-                  <h3 className="font-medium text-white">{step.title}</h3>
-                  <p className="text-sm text-purple-300/70">{step.description}</p>
+                  <h3 className="font-medium text-white">{stepItem.title}</h3>
+                  <p className="text-sm text-purple-300/70">{stepItem.description}</p>
                 </div>
               </div>
             ))}
@@ -116,54 +131,96 @@ const CustomerGifts = () => {
           {!swagResult ? (
             <Card className="bg-white/10 border-white/20 backdrop-blur-sm">
               <CardContent className="p-8">
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div className="space-y-2">
-                    <Label htmlFor="hobby" className="text-white text-base">
-                      What's your favorite hobby or passion?
-                    </Label>
-                    <Textarea
-                      id="hobby"
-                      placeholder="e.g., I love rock climbing on weekends and collect vintage vinyl records..."
-                      value={hobby}
-                      onChange={(e) => setHobby(e.target.value)}
-                      className="bg-white/10 border-white/20 text-white placeholder:text-purple-300/50 min-h-[100px] focus:border-fuchsia-400 focus:ring-fuchsia-400/20"
-                      disabled={isLoading}
-                    />
-                  </div>
+                {step === 1 ? (
+                  <div className="space-y-6">
+                    {/* Step indicator */}
+                    <div className="flex items-center gap-2 text-sm text-purple-300/70 mb-2">
+                      <span className="w-6 h-6 rounded-full bg-fuchsia-500 text-white flex items-center justify-center text-xs font-medium">1</span>
+                      <span>Step 1 of 2</span>
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <Label htmlFor="hobby" className="text-white text-base">
+                        What's your favorite hobby or passion?
+                      </Label>
+                      <Textarea
+                        id="hobby"
+                        placeholder="e.g., I love rock climbing on weekends and collect vintage vinyl records..."
+                        value={hobby}
+                        onChange={(e) => setHobby(e.target.value)}
+                        className="bg-white/10 border-white/20 text-white placeholder:text-purple-300/50 min-h-[120px] focus:border-fuchsia-400 focus:ring-fuchsia-400/20"
+                      />
+                    </div>
 
-                  <div className="space-y-2">
-                    <Label htmlFor="address" className="text-white text-base">
-                      Shipping Address
-                    </Label>
-                    <Textarea
-                      id="address"
-                      placeholder="123 Main Street, Apt 4B&#10;San Francisco, CA 94102&#10;United States"
-                      value={address}
-                      onChange={(e) => setAddress(e.target.value)}
-                      className="bg-white/10 border-white/20 text-white placeholder:text-purple-300/50 min-h-[100px] focus:border-fuchsia-400 focus:ring-fuchsia-400/20"
-                      disabled={isLoading}
-                    />
+                    <Button
+                      type="button"
+                      onClick={handleNextStep}
+                      disabled={!hobby.trim()}
+                      className="w-full bg-gradient-to-r from-fuchsia-500 to-violet-500 hover:from-fuchsia-600 hover:to-violet-600 text-white font-semibold py-6 text-lg rounded-xl transition-all duration-300 shadow-lg shadow-fuchsia-500/25"
+                    >
+                      Continue to Shipping
+                      <ArrowRight className="w-5 h-5 ml-2" />
+                    </Button>
                   </div>
+                ) : (
+                  <form onSubmit={handleSubmit} className="space-y-6">
+                    {/* Step indicator */}
+                    <div className="flex items-center gap-2 text-sm text-purple-300/70 mb-2">
+                      <span className="w-6 h-6 rounded-full bg-fuchsia-500 text-white flex items-center justify-center text-xs font-medium">2</span>
+                      <span>Step 2 of 2</span>
+                    </div>
 
-                  <Button
-                    type="submit"
-                    disabled={isLoading || !hobby.trim() || !address.trim()}
-                    className="w-full bg-gradient-to-r from-fuchsia-500 to-violet-500 hover:from-fuchsia-600 hover:to-violet-600 text-white font-semibold py-6 text-lg rounded-xl transition-all duration-300 shadow-lg shadow-fuchsia-500/25"
-                  >
-                    {isLoading ? (
-                      <>
-                        <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-                        Creating Your Swag...
-                      </>
-                    ) : (
-                      <>
-                        <Gift className="w-5 h-5 mr-2" />
-                        Create My Custom Swag
-                        <ArrowRight className="w-5 h-5 ml-2" />
-                      </>
-                    )}
-                  </Button>
-                </form>
+                    {/* Hobby summary */}
+                    <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                      <p className="text-xs text-purple-300/70 uppercase tracking-wide mb-1">Your Hobby</p>
+                      <p className="text-white">{hobby}</p>
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <Label htmlFor="address" className="text-white text-base">
+                        Where should we ship your swag?
+                      </Label>
+                      <Textarea
+                        id="address"
+                        placeholder="123 Main Street, Apt 4B&#10;San Francisco, CA 94102&#10;United States"
+                        value={address}
+                        onChange={(e) => setAddress(e.target.value)}
+                        className="bg-white/10 border-white/20 text-white placeholder:text-purple-300/50 min-h-[120px] focus:border-fuchsia-400 focus:ring-fuchsia-400/20"
+                        disabled={isLoading}
+                      />
+                    </div>
+
+                    <div className="flex gap-3">
+                      <Button
+                        type="button"
+                        onClick={() => setStep(1)}
+                        disabled={isLoading}
+                        variant="outline"
+                        className="border-white/20 text-white hover:bg-white/10"
+                      >
+                        <ArrowLeft className="w-4 h-4 mr-2" />
+                        Back
+                      </Button>
+                      <Button
+                        type="submit"
+                        disabled={isLoading || !address.trim()}
+                        className="flex-1 bg-gradient-to-r from-fuchsia-500 to-violet-500 hover:from-fuchsia-600 hover:to-violet-600 text-white font-semibold py-6 text-lg rounded-xl transition-all duration-300 shadow-lg shadow-fuchsia-500/25"
+                      >
+                        {isLoading ? (
+                          <>
+                            <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                            Creating Your Swag...
+                          </>
+                        ) : (
+                          <>
+                            <Gift className="w-5 h-5 mr-2" />
+                            Create My Custom Swag
+                          </>
+                        )}
+                      </Button>
+                    </div>
+                  </form>
+                )}
               </CardContent>
             </Card>
           ) : (
