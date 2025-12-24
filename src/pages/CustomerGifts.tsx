@@ -36,8 +36,41 @@ const CustomerGifts = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!fullName.trim() || !email.trim() || !streetAddress.trim() || !city.trim() || !zipCode.trim() || !country.trim()) {
-      toast.error("Please fill in all required fields");
+    // Validate required fields
+    if (!fullName.trim()) {
+      toast.error("Please enter your full name");
+      return;
+    }
+    
+    if (!email.trim()) {
+      toast.error("Please enter your email address");
+      return;
+    }
+    
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email.trim())) {
+      toast.error("Please enter a valid email address");
+      return;
+    }
+    
+    if (!streetAddress.trim()) {
+      toast.error("Please enter your street address");
+      return;
+    }
+    
+    if (!city.trim()) {
+      toast.error("Please enter your city");
+      return;
+    }
+    
+    if (!zipCode.trim()) {
+      toast.error("Please enter your zip/postal code");
+      return;
+    }
+    
+    if (!country.trim()) {
+      toast.error("Please enter your country");
       return;
     }
 
