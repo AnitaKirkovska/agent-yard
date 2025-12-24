@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
@@ -10,7 +11,13 @@ import { toast } from "sonner";
 const CustomerGifts = () => {
   const [step, setStep] = useState<1 | 2>(1);
   const [hobby, setHobby] = useState("");
-  const [address, setAddress] = useState("");
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [streetAddress, setStreetAddress] = useState("");
+  const [city, setCity] = useState("");
+  const [state, setState] = useState("");
+  const [zipCode, setZipCode] = useState("");
+  const [country, setCountry] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [swagResult, setSwagResult] = useState<{
     itemName: string;
@@ -29,8 +36,8 @@ const CustomerGifts = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!address.trim()) {
-      toast.error("Please enter your shipping address");
+    if (!fullName.trim() || !email.trim() || !streetAddress.trim() || !city.trim() || !zipCode.trim() || !country.trim()) {
+      toast.error("Please fill in all required fields");
       return;
     }
 
@@ -61,7 +68,13 @@ const CustomerGifts = () => {
   const resetForm = () => {
     setSwagResult(null);
     setHobby("");
-    setAddress("");
+    setFullName("");
+    setEmail("");
+    setStreetAddress("");
+    setCity("");
+    setState("");
+    setZipCode("");
+    setCountry("");
     setStep(1);
   };
 
@@ -143,18 +156,103 @@ const CustomerGifts = () => {
                       <p className="text-white">{hobby}</p>
                     </div>
                     
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="fullName" className="text-white text-sm">
+                          Full Name *
+                        </Label>
+                        <Input
+                          id="fullName"
+                          placeholder="John Doe"
+                          value={fullName}
+                          onChange={(e) => setFullName(e.target.value)}
+                          className="bg-white/10 border-white/20 text-white placeholder:text-purple-300/50 focus:border-fuchsia-400 focus:ring-fuchsia-400/20"
+                          disabled={isLoading}
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="email" className="text-white text-sm">
+                          Email *
+                        </Label>
+                        <Input
+                          id="email"
+                          type="email"
+                          placeholder="john@example.com"
+                          value={email}
+                          onChange={(e) => setEmail(e.target.value)}
+                          className="bg-white/10 border-white/20 text-white placeholder:text-purple-300/50 focus:border-fuchsia-400 focus:ring-fuchsia-400/20"
+                          disabled={isLoading}
+                        />
+                      </div>
+                    </div>
+
                     <div className="space-y-2">
-                      <Label htmlFor="address" className="text-white text-base">
-                        Where should we ship your swag?
+                      <Label htmlFor="streetAddress" className="text-white text-sm">
+                        Street Address *
                       </Label>
-                      <Textarea
-                        id="address"
-                        placeholder="123 Main Street, Apt 4B&#10;San Francisco, CA 94102&#10;United States"
-                        value={address}
-                        onChange={(e) => setAddress(e.target.value)}
-                        className="bg-white/10 border-white/20 text-white placeholder:text-purple-300/50 min-h-[120px] focus:border-fuchsia-400 focus:ring-fuchsia-400/20"
+                      <Input
+                        id="streetAddress"
+                        placeholder="123 Main Street, Apt 4B"
+                        value={streetAddress}
+                        onChange={(e) => setStreetAddress(e.target.value)}
+                        className="bg-white/10 border-white/20 text-white placeholder:text-purple-300/50 focus:border-fuchsia-400 focus:ring-fuchsia-400/20"
                         disabled={isLoading}
                       />
+                    </div>
+
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="city" className="text-white text-sm">
+                          City *
+                        </Label>
+                        <Input
+                          id="city"
+                          placeholder="San Francisco"
+                          value={city}
+                          onChange={(e) => setCity(e.target.value)}
+                          className="bg-white/10 border-white/20 text-white placeholder:text-purple-300/50 focus:border-fuchsia-400 focus:ring-fuchsia-400/20"
+                          disabled={isLoading}
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="state" className="text-white text-sm">
+                          State
+                        </Label>
+                        <Input
+                          id="state"
+                          placeholder="CA"
+                          value={state}
+                          onChange={(e) => setState(e.target.value)}
+                          className="bg-white/10 border-white/20 text-white placeholder:text-purple-300/50 focus:border-fuchsia-400 focus:ring-fuchsia-400/20"
+                          disabled={isLoading}
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="zipCode" className="text-white text-sm">
+                          Zip Code *
+                        </Label>
+                        <Input
+                          id="zipCode"
+                          placeholder="94102"
+                          value={zipCode}
+                          onChange={(e) => setZipCode(e.target.value)}
+                          className="bg-white/10 border-white/20 text-white placeholder:text-purple-300/50 focus:border-fuchsia-400 focus:ring-fuchsia-400/20"
+                          disabled={isLoading}
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="country" className="text-white text-sm">
+                          Country *
+                        </Label>
+                        <Input
+                          id="country"
+                          placeholder="United States"
+                          value={country}
+                          onChange={(e) => setCountry(e.target.value)}
+                          className="bg-white/10 border-white/20 text-white placeholder:text-purple-300/50 focus:border-fuchsia-400 focus:ring-fuchsia-400/20"
+                          disabled={isLoading}
+                        />
+                      </div>
                     </div>
 
                     <div className="flex gap-3">
@@ -170,7 +268,7 @@ const CustomerGifts = () => {
                       </Button>
                       <Button
                         type="submit"
-                        disabled={isLoading || !address.trim()}
+                        disabled={isLoading || !fullName.trim() || !email.trim() || !streetAddress.trim() || !city.trim() || !zipCode.trim() || !country.trim()}
                         className="flex-1 bg-gradient-to-r from-fuchsia-500 to-violet-500 hover:from-fuchsia-600 hover:to-violet-600 text-white font-semibold py-6 text-lg rounded-xl transition-all duration-300 shadow-lg shadow-fuchsia-500/25"
                       >
                         {isLoading ? (
