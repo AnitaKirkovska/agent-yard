@@ -136,29 +136,29 @@ const CustomerGifts = () => {
       // Extract outputs from the workflow response
       const outputs = data?.data?.outputs || [];
       const getOutput = (name: string) => outputs.find((o: any) => o.name === name)?.value;
+      console.log("Workflow outputs:", outputs);
 
-      // The response is nested inside agent_response
-      const agentResponse = getOutput("agent_response");
-      console.log("Agent response:", agentResponse);
-
-      // Extract values from agent_response object
-      const message = agentResponse?.message || `A personalized item inspired by your love of ${hobby}`;
-      const orderId = agentResponse?.order_id || "";
-      const productId = agentResponse?.product_id || "";
+      // Extract values directly from outputs
+      const message = getOutput("message") || `A personalized item inspired by your love of ${hobby}`;
+      const orderId = getOutput("order_id") || "";
+      const productId = getOutput("product_id") || "";
       
-      // Extract mockup images - they're direct URLs in the array
-      const mockupImagesRaw = agentResponse?.mockup_images || [];
+      // Extract mockup images - they're objects with {type: "STRING", value: "url"}
+      const mockupImagesRaw = getOutput("mockup_images") || [];
       const mockupImages: string[] = [];
       if (Array.isArray(mockupImagesRaw)) {
         mockupImagesRaw.forEach((img: any) => {
-          // Handle both direct URL strings and objects with src property
+          // Handle {type: "STRING", value: "url"} format from Vellum
           if (typeof img === 'string') {
             mockupImages.push(img);
+          } else if (img?.value && typeof img.value === 'string') {
+            mockupImages.push(img.value);
           } else if (img?.src) {
             mockupImages.push(img.src);
           }
         });
       }
+      console.log("Parsed mockup images:", mockupImages);
 
       setSwagResult({
         message,
