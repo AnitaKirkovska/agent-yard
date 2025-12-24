@@ -505,7 +505,10 @@ const CustomerGifts = () => {
           )}
 
           {/* Footer */}
-          <div className="mt-12 text-center">
+          <div className="mt-12 text-center space-y-2">
+            <p className="text-purple-300/40 text-xs max-w-md mx-auto">
+              Demo only — creates draft orders to showcase the agent's capabilities.
+            </p>
             <p className="text-purple-300/50 text-sm">
               Built with ❤️ by{" "}
               <a 
