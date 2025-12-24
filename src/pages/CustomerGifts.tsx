@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
-import { Sparkles, Package, Truck, Palette, ArrowRight, ArrowLeft, Gift, Loader2 } from "lucide-react";
+import { Sparkles, Package, Truck, ArrowRight, ArrowLeft, Gift, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 
 const CustomerGifts = () => {
@@ -68,7 +68,7 @@ const CustomerGifts = () => {
   return (
     <>
       <Helmet>
-        <title>Custom Hobby-Based Swag Creator</title>
+        <title>Surprise Drop | Custom Hobby-Based Swag</title>
         <meta
           name="description"
           content="Get personalized swag created just for you based on your hobbies. Free custom merchandise shipped to your door."
@@ -92,39 +92,11 @@ const CustomerGifts = () => {
             </div>
             
             <h1 className="text-5xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-white via-fuchsia-200 to-violet-200 bg-clip-text text-transparent">
-              Custom Swag
+              Surprise Drop
             </h1>
             <p className="text-xl text-purple-200/80 max-w-2xl mx-auto">
               Tell us your hobby, and we'll craft unique, personalized swag just for you — shipped free to your door.
             </p>
-          </div>
-
-          {/* How it works */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12">
-            {[
-              { icon: Palette, title: "Share Your Hobby", description: "Tell us what you love doing", active: step === 1 && !swagResult },
-              { icon: Package, title: "Add Shipping", description: "Where should we send it?", active: step === 2 && !swagResult },
-              { icon: Truck, title: "Free Delivery", description: "We'll ship it to you", active: !!swagResult },
-            ].map((stepItem, index) => (
-              <div
-                key={index}
-                className={`flex items-center gap-3 p-4 rounded-xl border transition-all duration-300 ${
-                  stepItem.active 
-                    ? "bg-fuchsia-500/20 border-fuchsia-500/40 scale-[1.02]" 
-                    : "bg-white/5 border-white/10"
-                }`}
-              >
-                <div className={`w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 ${
-                  stepItem.active ? "bg-fuchsia-500/40" : "bg-fuchsia-500/20"
-                }`}>
-                  <stepItem.icon className={`w-5 h-5 ${stepItem.active ? "text-fuchsia-200" : "text-fuchsia-400"}`} />
-                </div>
-                <div>
-                  <h3 className="font-medium text-white">{stepItem.title}</h3>
-                  <p className="text-sm text-purple-300/70">{stepItem.description}</p>
-                </div>
-              </div>
-            ))}
           </div>
 
           {/* Main Form / Result */}
