@@ -427,14 +427,6 @@ const Index = () => {
               </div>
             </TooltipProvider>
 
-            {/* Logo/Icon */}
-            <div className="inline-flex items-center justify-center mb-4">
-              <img 
-                src={santaFace} 
-                alt="Santa Claus" 
-                className="w-20 h-20 md:w-24 md:h-24 object-contain animate-float-gentle"
-              />
-            </div>
 
             {/* Title */}
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-foreground mb-3 tracking-tight">
