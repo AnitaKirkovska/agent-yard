@@ -492,12 +492,6 @@ const CustomerGifts = () => {
                       </div>
                     </div>
                   )}
-
-                  <div className="text-center pt-4">
-                    <p className="text-purple-300/70 text-sm">
-                      We'll send you a confirmation email with tracking details.
-                    </p>
-                  </div>
                 </div>
               </CardContent>
             </Card>
