@@ -64,22 +64,6 @@ const SwagLoadingScreen = () => {
       <p className="text-fuchsia-300/80 text-lg font-mono min-w-[40px]">
         {dots || "\u00A0"}
       </p>
-
-      {/* Progress bar */}
-      <div className="w-64 h-1.5 bg-white/10 rounded-full mt-8 overflow-hidden">
-        <div 
-          className="h-full bg-gradient-to-r from-fuchsia-500 to-violet-500 rounded-full animate-pulse"
-          style={{
-            width: `${((messageIndex + 1) / loadingMessages.length) * 100}%`,
-            transition: "width 0.5s ease-out"
-          }}
-        />
-      </div>
-
-      {/* Fun footer message */}
-      <p className="text-purple-300/60 text-sm mt-6 text-center max-w-sm">
-        Our AI is handpicking something special based on your interests. This usually takes about 30-60 seconds.
-      </p>
     </div>
   );
 };
