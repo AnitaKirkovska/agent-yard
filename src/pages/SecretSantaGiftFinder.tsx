@@ -7,6 +7,7 @@ import { GiftFinderForm } from "@/components/GiftFinderForm";
 import { LoadingState } from "@/components/LoadingState";
 import { RecommendationsDisplay } from "@/components/RecommendationsDisplay";
 import { ErrorDisplay } from "@/components/ErrorDisplay";
+import { ExecutionCounter } from "@/components/ExecutionCounter";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 import { triggerCelebration, triggerSubtleSparkle } from "@/lib/confetti";
@@ -227,13 +228,16 @@ const Index = () => {
 
       {/* Top bar - fixed at top */}
       <div className="relative z-10 px-4 pt-4 flex items-center justify-between">
-        <Link 
-          to="/" 
-          className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          Back to all apps
-        </Link>
+        <div className="flex items-center gap-3">
+          <Link 
+            to="/" 
+            className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            Back to all apps
+          </Link>
+          <ExecutionCounter workflowName="secret-santa-gift-finder" />
+        </div>
         <div className="flex items-center gap-2">
           <Dialog>
             <DialogTrigger asChild>
