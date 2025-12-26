@@ -62,9 +62,9 @@ serve(async (req) => {
     const deploymentId = deployment.id;
     console.log("Found deployment ID:", deploymentId);
 
-    // Step 2: List executions using the UUID
+    // Step 2: List executions using the UUID - endpoint is execution-events, not executions
     const executionsResponse = await fetch(
-      `https://api.vellum.ai/v1/workflow-deployments/${deploymentId}/executions?limit=1`,
+      `https://api.vellum.ai/v1/workflow-deployments/${deploymentId}/execution-events?limit=1`,
       {
         method: "GET",
         headers: {
