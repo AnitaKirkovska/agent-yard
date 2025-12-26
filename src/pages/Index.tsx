@@ -282,14 +282,8 @@ const AppCard = ({ app, votes, runs, hasVoted, isVoting, onVote }: AppCardProps)
       to={app.route}
       className="group relative p-4 rounded-2xl border border-border/60 bg-card/60 backdrop-blur-sm hover:bg-card/80 hover:border-primary/30 hover:shadow-glow transition-all duration-300"
     >
-      <div className="absolute top-2 right-2">
-        <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-primary/10 text-primary">
-          Live
-        </span>
-      </div>
-      
       <div className="text-xs font-medium text-muted-foreground mb-2">
-        Day {app.day} · {app.date}
+        Day {app.day}
       </div>
       
       <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-subtle mb-3 group-hover:scale-110 transition-transform duration-300">
@@ -308,7 +302,7 @@ const AppCard = ({ app, votes, runs, hasVoted, isVoting, onVote }: AppCardProps)
         {runs > 0 ? (
           <div className="flex items-center gap-1 text-xs text-muted-foreground">
             <Activity className="w-3 h-3" />
-            <span>{runs.toLocaleString()}</span>
+            <span>{runs.toLocaleString()} runs</span>
           </div>
         ) : (
           <div className="flex items-center gap-1 text-xs text-primary opacity-0 group-hover:opacity-100 transition-opacity">
