@@ -36,7 +36,12 @@ export const ExecutionCounter = ({ workflowName, className = "" }: ExecutionCoun
 
   if (isLoading) {
     return (
-      <div className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-foreground/5 text-muted-foreground text-xs font-medium ${className}`}>
+      <div
+        className={
+          `inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-border/60 bg-card/60 backdrop-blur-sm text-muted-foreground text-xs font-medium shadow-sm ${className}`
+        }
+        aria-label="Loading execution count"
+      >
         <Activity className="w-3 h-3 animate-pulse" />
         <span className="animate-pulse">...</span>
       </div>
@@ -46,7 +51,12 @@ export const ExecutionCounter = ({ workflowName, className = "" }: ExecutionCoun
   if (count === null) return null;
 
   return (
-    <div className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-foreground/10 text-foreground/80 text-xs font-medium ${className}`}>
+    <div
+      className={
+        `inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-border/60 bg-card/80 backdrop-blur-sm text-foreground text-xs font-medium shadow-sm ${className}`
+      }
+      aria-label={`${count} workflow runs`}
+    >
       <Activity className="w-3 h-3" />
       <span>{count.toLocaleString()} runs</span>
     </div>
