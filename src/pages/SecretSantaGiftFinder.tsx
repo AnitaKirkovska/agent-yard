@@ -1,24 +1,16 @@
 import { useState, useCallback, useMemo, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
-import { Gift, RefreshCw, RotateCcw, Loader2, Gamepad2, ArrowLeft, ExternalLink, Lightbulb } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Gift, RefreshCw, RotateCcw, Loader2, Gamepad2 } from "lucide-react";
 import { CatchPresentsGame } from "@/components/CatchPresentsGame";
 import { GiftFinderForm } from "@/components/GiftFinderForm";
 import { LoadingState } from "@/components/LoadingState";
 import { RecommendationsDisplay } from "@/components/RecommendationsDisplay";
 import { ErrorDisplay } from "@/components/ErrorDisplay";
-import { ExecutionCounter } from "@/components/ExecutionCounter";
+import { ToolHeader } from "@/components/ToolHeader";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 import { triggerCelebration, triggerSubtleSparkle } from "@/lib/confetti";
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import santaFace from "@/assets/santa-face.png";
 import vellumLogo from "@/assets/vellum-logo.png";
@@ -227,88 +219,55 @@ const Index = () => {
       </div>
 
       {/* Top bar - fixed at top */}
-      <div className="relative z-10 px-4 pt-4 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <Link
-            to="/"
-            className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Back to all apps
-          </Link>
-        </div>
-        <div className="flex items-center gap-2">
-          <ExecutionCounter workflowName="secret-santa-gift-finder" />
-          <Dialog>
-            <DialogTrigger asChild>
-              <button
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-foreground/10 hover:bg-foreground/20 text-foreground text-xs font-medium transition-colors"
-              >
-                <Lightbulb className="w-3 h-3" />
-                What I Learned
-              </button>
-            </DialogTrigger>
-            <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
-              <DialogHeader>
-                <DialogTitle className="text-xl font-display flex items-center gap-2">
-                  <Lightbulb className="w-5 h-5 text-primary" />
-                  What I Learned Building This
-                </DialogTitle>
-              </DialogHeader>
-              <div className="space-y-5 text-sm text-muted-foreground leading-relaxed mt-4">
-                <section>
-                  <h3 className="font-semibold text-foreground mb-1">Map nodes were essential</h3>
-                  <p>Map nodes were needed so that we can concurrently search for products, which resulted in -40s latency cut.</p>
-                </section>
+      <ToolHeader
+        workflowName="secret-santa-gift-finder"
+        whatILearned={{
+          content: (
+            <div className="space-y-5 text-sm text-muted-foreground leading-relaxed">
+              <section>
+                <h3 className="font-semibold text-foreground mb-1">Map nodes were essential</h3>
+                <p>Map nodes were needed so that we can concurrently search for products, which resulted in -40s latency cut.</p>
+              </section>
 
-                <section>
-                  <h3 className="font-semibold text-foreground mb-1">Deduplication is required</h3>
-                  <p>Searching from multiple angles often returns the same products, so duplicates need to be removed before ranking.</p>
-                </section>
+              <section>
+                <h3 className="font-semibold text-foreground mb-1">Deduplication is required</h3>
+                <p>Searching from multiple angles often returns the same products, so duplicates need to be removed before ranking.</p>
+              </section>
 
-                <section>
-                  <h3 className="font-semibold text-foreground mb-1">Diversity needs to be forced</h3>
-                  <p>Without explicit rules, the AI reuses similar keywords and categories, which makes results feel repetitive.</p>
-                </section>
+              <section>
+                <h3 className="font-semibold text-foreground mb-1">Diversity needs to be forced</h3>
+                <p>Without explicit rules, the AI reuses similar keywords and categories, which makes results feel repetitive.</p>
+              </section>
 
-                <section>
-                  <h3 className="font-semibold text-foreground mb-1">Constraints improve gift quality</h3>
-                  <p>Adding clear avoid rules filters out bad gifts and makes recommendations feel more thoughtful.</p>
-                </section>
+              <section>
+                <h3 className="font-semibold text-foreground mb-1">Constraints improve gift quality</h3>
+                <p>Adding clear avoid rules filters out bad gifts and makes recommendations feel more thoughtful.</p>
+              </section>
 
-                <section>
-                  <h3 className="font-semibold text-foreground mb-1">The best filter is simple</h3>
-                  <p>Would they buy this themselves? If yes, it's probably not a good gift.</p>
-                </section>
+              <section>
+                <h3 className="font-semibold text-foreground mb-1">The best filter is simple</h3>
+                <p>Would they buy this themselves? If yes, it's probably not a good gift.</p>
+              </section>
 
-                <section>
-                  <h3 className="font-semibold text-foreground mb-1">Speed vs quality tradeoff</h3>
-                  <p>Fewer results per search and less scraping make the workflow much faster.</p>
-                </section>
+              <section>
+                <h3 className="font-semibold text-foreground mb-1">Speed vs quality tradeoff</h3>
+                <p>Fewer results per search and less scraping make the workflow much faster.</p>
+              </section>
 
-                <section>
-                  <h3 className="font-semibold text-foreground mb-1">Links are tricky</h3>
-                  <p>Google Shopping often gives redirect URLs, so clean retailer links require extra steps.</p>
-                </section>
+              <section>
+                <h3 className="font-semibold text-foreground mb-1">Links are tricky</h3>
+                <p>Google Shopping often gives redirect URLs, so clean retailer links require extra steps.</p>
+              </section>
 
-                <section className="bg-primary/5 p-4 rounded-xl border border-primary/10">
-                  <h3 className="font-semibold text-foreground mb-1">💡 Big takeaway</h3>
-                  <p className="text-foreground">Good recommendations come from workflow design, clear rules, and taste—not just better models.</p>
-                </section>
-              </div>
-            </DialogContent>
-          </Dialog>
-          <a 
-            href="https://app.vellum.ai/public/workflow-deployments/98d37ca2-5771-4fe7-bd26-01d5f95bea32?releaseTag=LATEST&condensedNodeView=1&showOpenInVellum=1" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary/10 hover:bg-primary/20 text-primary text-xs font-medium transition-colors"
-          >
-            <ExternalLink className="w-3 h-3" />
-            Fork this Agent
-          </a>
-        </div>
-      </div>
+              <section className="bg-primary/5 p-4 rounded-xl border border-primary/10">
+                <h3 className="font-semibold text-foreground mb-1">💡 Big takeaway</h3>
+                <p className="text-foreground">Good recommendations come from workflow design, clear rules, and taste—not just better models.</p>
+              </section>
+            </div>
+          ),
+        }}
+        forkAgentUrl="https://app.vellum.ai/public/workflow-deployments/98d37ca2-5771-4fe7-bd26-01d5f95bea32?releaseTag=LATEST&condensedNodeView=1&showOpenInVellum=1"
+      />
 
       {/* Main Content */}
       <div className={cn(

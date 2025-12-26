@@ -9,7 +9,7 @@ import { Package, Truck, ArrowRight, Gift, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import SwagLoadingScreen from "@/components/SwagLoadingScreen";
-import { ExecutionCounter } from "@/components/ExecutionCounter";
+import { ToolHeader } from "@/components/ToolHeader";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import vellumLogo from "@/assets/vellum-logo.png";
 import printifyLogo from "@/assets/printify-logo.png";
@@ -216,10 +216,11 @@ const CustomerGifts = () => {
         </div>
 
         <div className="relative z-10 container mx-auto px-4 py-12 max-w-xl">
-          {/* Execution Counter - Top Right */}
-          <div className="absolute top-4 right-4">
-            <ExecutionCounter workflowName="printful-printing-agent" />
-          </div>
+          {/* Tool Header - Top Right */}
+          <ToolHeader
+            workflowName="printful-printing-agent"
+            className="absolute top-0 left-0 right-0"
+          />
 
           {/* Header */}
           <div className="text-center mb-12">
