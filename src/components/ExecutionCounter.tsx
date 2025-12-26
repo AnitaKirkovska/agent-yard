@@ -14,6 +14,37 @@ export const ExecutionCounter = ({ workflowName, className = "" }: ExecutionCoun
   useEffect(() => {
     const fetchCount = async () => {
       try {
+        // First, try to get cached count directly from database (instant)
+        const { data: cached, error: cacheError } = await supabase
+          .from("workflow_stats_cache")
+          .select("execution_count, cached_at")
+          .eq("workflow_name", workflowName)
+          .maybeSingle();
+
+        if (!cacheError && cached) {
+          // Show cached count immediately
+          setCount(cached.execution_count);
+          setIsLoading(false);
+
+          // Check if cache needs refresh (older than 24 hours)
+          const cachedAt = new Date(cached.cached_at);
+          const now = new Date();
+          const hoursSinceCached = (now.getTime() - cachedAt.getTime()) / (1000 * 60 * 60);
+
+          if (hoursSinceCached >= 24) {
+            // Refresh in background, don't wait
+            supabase.functions.invoke('get-workflow-stats', {
+              body: { workflowDeploymentName: workflowName }
+            }).then(({ data }) => {
+              if (data?.count !== undefined) {
+                setCount(data.count);
+              }
+            }).catch(console.error);
+          }
+          return;
+        }
+
+        // No cache, call edge function (will populate cache)
         const { data, error } = await supabase.functions.invoke('get-workflow-stats', {
           body: { workflowDeploymentName: workflowName }
         });
