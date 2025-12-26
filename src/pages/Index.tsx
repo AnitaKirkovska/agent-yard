@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
-import { Calendar, Sparkles, ArrowRight, Heart, Twitter, Shirt } from "lucide-react";
+import { Calendar, Sparkles, ArrowRight, Heart, Twitter, Shirt, Activity } from "lucide-react";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
@@ -14,6 +14,7 @@ interface DayApp {
   route: string;
   icon: React.ReactNode;
   available: boolean;
+  workflowName?: string;
 }
 
 const apps: DayApp[] = [
@@ -25,6 +26,7 @@ const apps: DayApp[] = [
     route: "/secret-ai-santa",
     icon: <img src={santaFace} alt="Santa" className="w-8 h-8 object-contain" />,
     available: true,
+    workflowName: "secret-santa-gift-finder",
   },
   {
     day: 2,
@@ -34,6 +36,7 @@ const apps: DayApp[] = [
     route: "/customer-gifts",
     icon: <Shirt className="w-6 h-6 text-fuchsia-500" />,
     available: true,
+    workflowName: "printful-printing-agent",
   },
   // Future days will be added here
   ...Array.from({ length: 28 }, (_, i) => ({
@@ -67,6 +70,7 @@ const setVotedApp = (day: number) => {
 
 const Index = () => {
   const [votes, setVotes] = useState<Record<number, number>>({});
+  const [runs, setRuns] = useState<Record<string, number>>({});
   const [votedApps, setVotedApps] = useState<number[]>([]);
   const [isVoting, setIsVoting] = useState<number | null>(null);
   const { toast } = useToast();
@@ -74,6 +78,7 @@ const Index = () => {
   useEffect(() => {
     setVotedApps(getVotedApps());
     fetchVotes();
+    fetchRuns();
   }, []);
 
   const fetchVotes = async () => {
@@ -87,6 +92,20 @@ const Index = () => {
         votesMap[row.app_day] = row.vote_count;
       });
       setVotes(votesMap);
+    }
+  };
+
+  const fetchRuns = async () => {
+    const { data, error } = await supabase
+      .from("workflow_stats_cache")
+      .select("workflow_name, execution_count");
+    
+    if (!error && data) {
+      const runsMap: Record<string, number> = {};
+      data.forEach((row) => {
+        runsMap[row.workflow_name] = row.execution_count;
+      });
+      setRuns(runsMap);
     }
   };
 
@@ -210,6 +229,7 @@ const Index = () => {
                 key={app.day} 
                 app={app} 
                 votes={votes[app.day] || 0}
+                runs={app.workflowName ? runs[app.workflowName] || 0 : 0}
                 hasVoted={votedApps.includes(app.day)}
                 isVoting={isVoting === app.day}
                 onVote={handleVote}
@@ -231,12 +251,13 @@ const Index = () => {
 interface AppCardProps {
   app: DayApp;
   votes: number;
+  runs: number;
   hasVoted: boolean;
   isVoting: boolean;
   onVote: (day: number, e: React.MouseEvent) => void;
 }
 
-const AppCard = ({ app, votes, hasVoted, isVoting, onVote }: AppCardProps) => {
+const AppCard = ({ app, votes, runs, hasVoted, isVoting, onVote }: AppCardProps) => {
   if (!app.available) {
     return (
       <div className="group relative p-4 rounded-2xl border border-border/40 bg-card/30 backdrop-blur-sm opacity-60">
@@ -284,10 +305,17 @@ const AppCard = ({ app, votes, hasVoted, isVoting, onVote }: AppCardProps) => {
       </p>
       
       <div className="flex items-center justify-between mt-3">
-        <div className="flex items-center gap-1 text-xs text-primary opacity-0 group-hover:opacity-100 transition-opacity">
-          <span>Try it</span>
-          <ArrowRight className="w-3 h-3" />
-        </div>
+        {runs > 0 ? (
+          <div className="flex items-center gap-1 text-xs text-muted-foreground">
+            <Activity className="w-3 h-3" />
+            <span>{runs.toLocaleString()}</span>
+          </div>
+        ) : (
+          <div className="flex items-center gap-1 text-xs text-primary opacity-0 group-hover:opacity-100 transition-opacity">
+            <span>Try it</span>
+            <ArrowRight className="w-3 h-3" />
+          </div>
+        )}
         
         <button
           onClick={(e) => onVote(app.day, e)}
