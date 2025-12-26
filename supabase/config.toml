@@ -8,3 +8,6 @@ verify_jwt = false
 
 [functions.upload-cat-logo]
 verify_jwt = false
+
+[functions.get-workflow-stats]
+verify_jwt = false
