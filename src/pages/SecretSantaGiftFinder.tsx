@@ -229,16 +229,16 @@ const Index = () => {
       {/* Top bar - fixed at top */}
       <div className="relative z-10 px-4 pt-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <Link 
-            to="/" 
+          <Link
+            to="/"
             className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
             Back to all apps
           </Link>
-          <ExecutionCounter workflowName="secret-santa-gift-finder" />
         </div>
         <div className="flex items-center gap-2">
+          <ExecutionCounter workflowName="secret-santa-gift-finder" />
           <Dialog>
             <DialogTrigger asChild>
               <button
