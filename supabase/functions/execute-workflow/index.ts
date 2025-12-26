@@ -58,7 +58,9 @@ serve(async (req) => {
       const swagOrder = body as SwagOrderRequest;
       workflowName = "printful-printing-agent";
       releaseTag = "LATEST";
-      inputs = [
+      
+      // Build inputs array with all required fields including logo
+      const workflowInputs: Array<{ type: string; name: string; value: string | { src: string } }> = [
         { type: "STRING", name: "recipient_name", value: swagOrder.recipientName },
         { type: "STRING", name: "address1", value: swagOrder.address1 },
         { type: "STRING", name: "city", value: swagOrder.city },
@@ -67,6 +69,16 @@ serve(async (req) => {
         { type: "STRING", name: "zip_code", value: swagOrder.zipCode },
         { type: "STRING", name: "hobby", value: swagOrder.hobby },
       ];
+      
+      // Add logo if provided, otherwise use default placeholder
+      if (swagOrder.logoUrl) {
+        workflowInputs.push({ type: "IMAGE", name: "logo", value: { src: swagOrder.logoUrl } });
+      } else {
+        // Use a default placeholder logo
+        workflowInputs.push({ type: "IMAGE", name: "logo", value: { src: "https://bicorrclgguttsgwxksi.supabase.co/storage/v1/object/public/assets/cat-logo.png" } });
+      }
+      
+      inputs = workflowInputs as Array<{ type: string; name: string; value: string }>;
       console.log("Legacy swag order for:", swagOrder.recipientName);
     }
 
