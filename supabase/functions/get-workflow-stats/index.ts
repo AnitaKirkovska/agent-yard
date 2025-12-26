@@ -37,9 +37,9 @@ serve(async (req) => {
 
     console.log("Fetching stats for workflow:", workflowDeploymentName);
 
-    // Call Vellum API to list workflow executions - we just need the count
-    const response = await fetch(
-      `https://api.vellum.ai/v1/workflow-deployments/${workflowDeploymentName}/executions?limit=1`,
+    // Step 1: Get the workflow deployment details to retrieve its UUID
+    const deploymentResponse = await fetch(
+      `https://api.vellum.ai/v1/workflow-deployments/${workflowDeploymentName}`,
       {
         method: "GET",
         headers: {
@@ -49,16 +49,41 @@ serve(async (req) => {
       }
     );
 
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error("Vellum API error:", response.status, errorText);
+    if (!deploymentResponse.ok) {
+      const errorText = await deploymentResponse.text();
+      console.error("Vellum deployment lookup error:", deploymentResponse.status, errorText);
       return new Response(
-        JSON.stringify({ error: `Vellum API error: ${response.status}`, details: errorText }),
-        { status: response.status, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        JSON.stringify({ error: `Vellum API error: ${deploymentResponse.status}`, details: errorText }),
+        { status: deploymentResponse.status, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
 
-    const result = await response.json();
+    const deployment = await deploymentResponse.json();
+    const deploymentId = deployment.id;
+    console.log("Found deployment ID:", deploymentId);
+
+    // Step 2: List executions using the UUID
+    const executionsResponse = await fetch(
+      `https://api.vellum.ai/v1/workflow-deployments/${deploymentId}/executions?limit=1`,
+      {
+        method: "GET",
+        headers: {
+          "X-API-KEY": VELLUM_API_KEY,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    if (!executionsResponse.ok) {
+      const errorText = await executionsResponse.text();
+      console.error("Vellum executions API error:", executionsResponse.status, errorText);
+      return new Response(
+        JSON.stringify({ error: `Vellum API error: ${executionsResponse.status}`, details: errorText }),
+        { status: executionsResponse.status, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    const result = await executionsResponse.json();
     console.log("Workflow stats result:", { count: result.count });
 
     return new Response(
