@@ -38,6 +38,33 @@ export type Database = {
         }
         Relationships: []
       }
+      workflow_stats_cache: {
+        Row: {
+          cached_at: string
+          created_at: string
+          execution_count: number
+          id: string
+          updated_at: string
+          workflow_name: string
+        }
+        Insert: {
+          cached_at?: string
+          created_at?: string
+          execution_count?: number
+          id?: string
+          updated_at?: string
+          workflow_name: string
+        }
+        Update: {
+          cached_at?: string
+          created_at?: string
+          execution_count?: number
+          id?: string
+          updated_at?: string
+          workflow_name?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
