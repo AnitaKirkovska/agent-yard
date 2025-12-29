@@ -21,6 +21,7 @@ interface BookRecommendation {
   why_relevant?: string;
   cover_url?: string;
   amazon_link?: string;
+  amazon_url?: string;
   publication_year?: number;
   rating?: number;
   review_quote?: string;
@@ -462,31 +463,23 @@ const AgentReads = () => {
                       )}
                     </div>
                     
-                    {book.description && (
-                      <p className="text-sm text-gray-600 mb-4">
-                        {book.description}
-                      </p>
-                    )}
-
                     {(book.why_perfect || book.why_relevant) && (
                       <WhyThisBookSection content={book.why_perfect || book.why_relevant || ""} />
                     )}
 
                     {book.review_quote && (
-                      <div className="p-3 rounded-xl bg-gray-50 border border-gray-200/50 mb-4">
-                        <div className="flex items-start gap-2">
-                          <Quote className="w-4 h-4 text-gray-400 shrink-0 mt-0.5" />
-                          <p className="text-sm text-gray-600 italic">{book.review_quote}</p>
-                        </div>
+                      <div className="flex items-start gap-2 text-gray-500 mb-3">
+                        <Quote className="w-3.5 h-3.5 shrink-0 mt-0.5" />
+                        <p className="text-xs italic line-clamp-2">{book.review_quote}</p>
                       </div>
                     )}
 
-                    {book.amazon_link && (
+                    {(book.amazon_url || book.amazon_link) && (
                       <a
-                        href={book.amazon_link}
+                        href={book.amazon_url || book.amazon_link}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 text-sm font-medium text-amber-600 hover:text-amber-700 transition-colors"
+                        className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-amber-100 text-sm font-medium text-amber-700 hover:bg-amber-200 transition-colors"
                       >
                         View on Amazon
                         <ExternalLink className="w-3.5 h-3.5" />
