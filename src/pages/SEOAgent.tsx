@@ -194,15 +194,19 @@ const SEOAgent = () => {
 
           {/* Fullscreen Workflow Dialog */}
           <Dialog open={isPreviewOpen} onOpenChange={setIsPreviewOpen}>
-            <DialogContent className="max-w-[95vw] w-[95vw] h-[90vh] p-0 bg-slate-900 border-white/10">
-              <div className="relative w-full h-full">
+            <DialogContent className="max-w-[95vw] w-[95vw] h-[90vh] p-0 bg-slate-900 border-white/10 flex flex-col">
+              {/* Header bar with close button */}
+              <div className="flex items-center justify-between px-4 py-3 border-b border-white/10 bg-slate-800/50 flex-shrink-0">
+                <span className="text-white/70 text-sm font-medium">SEO Agent Workflow</span>
                 <button
                   onClick={() => setIsPreviewOpen(false)}
-                  className="absolute top-4 right-4 z-50 p-2 bg-black/50 hover:bg-black/70 rounded-full text-white transition-colors"
+                  className="p-2 bg-white/10 hover:bg-white/20 rounded-lg text-white transition-colors"
                 >
-                  <X className="w-5 h-5" />
+                  <X className="w-4 h-4" />
                 </button>
-                
+              </div>
+              
+              <div className="relative flex-1 min-h-0">
                 {/* Loading State */}
                 {isIframeLoading && (
                   <div className="absolute inset-0 flex flex-col items-center justify-center bg-slate-900 rounded-lg z-40">
@@ -216,7 +220,7 @@ const SEOAgent = () => {
                 
                 <iframe
                   src="https://app.vellum.ai/public/workflow-deployments/781c2781-7158-42d4-ad0b-de3a05855fb2?releaseTag=LATEST&condensedNodeView=1&showOpenInVellum=1"
-                  className="w-full h-full rounded-lg"
+                  className="w-full h-full"
                   title="SEO Agent Workflow"
                   allow="clipboard-write"
                   onLoad={() => setIsIframeLoading(false)}
