@@ -267,6 +267,7 @@ const AgentReads = () => {
             title: "Building a Fast Book Recommender",
             content: <AgentReadsLearnings />
           }}
+          forkAgentUrl="https://app.vellum.ai/public/workflow-deployments/4c0d8f19-90b4-4d91-a663-874e782656aa?releaseTag=LATEST&condensedNodeView=1&showOpenInVellum=1"
         />
 
         {/* Main Content */}
