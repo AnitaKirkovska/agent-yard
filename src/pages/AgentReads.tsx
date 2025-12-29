@@ -10,6 +10,7 @@ import vellumLogo from "@/assets/vellum-logo.png";
 import lovableLogo from "@/assets/lovable-logo.png";
 import serpApiLogo from "@/assets/serp-api-logo.png";
 import googleBooksLogo from "@/assets/google-books-logo.png";
+import libraryBackground from "@/assets/library-background.png";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 interface BookRecommendation {
@@ -178,14 +179,23 @@ const AgentReads = () => {
         <meta name="twitter:card" content="summary_large_image" />
       </Helmet>
       
-      <div className="min-h-screen bg-gradient-to-b from-amber-950/20 via-background to-background relative overflow-hidden">
+      <div className="min-h-screen relative overflow-hidden">
+        {/* Library background image */}
+        <div 
+          className="fixed inset-0 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: `url(${libraryBackground})` }}
+        />
+        
+        {/* Dark overlay for readability */}
+        <div className="fixed inset-0 bg-black/60" />
+        
         {/* Floating book decorations during loading */}
         {isLoading && (
           <div className="fixed inset-0 pointer-events-none z-20 overflow-hidden">
             {floatingBooks.map((book) => (
               <div
                 key={book.id}
-                className="absolute animate-float-up opacity-30"
+                className="absolute animate-float-up opacity-50"
                 style={{
                   left: `${book.left}%`,
                   bottom: '-40px',
@@ -199,22 +209,6 @@ const AgentReads = () => {
             ))}
           </div>
         )}
-
-        {/* Rustic ambient background */}
-        <div className="fixed inset-0 pointer-events-none overflow-hidden">
-          <div 
-            className="absolute -top-40 -right-40 w-96 h-96 rounded-full bg-amber-900/10 blur-3xl animate-orb-float"
-            style={{ animationDelay: "0s" }}
-          />
-          <div 
-            className="absolute top-1/2 -left-40 w-80 h-80 rounded-full bg-orange-900/10 blur-3xl animate-orb-float"
-            style={{ animationDelay: "-5s" }}
-          />
-          <div 
-            className="absolute -bottom-20 right-1/3 w-72 h-72 rounded-full bg-yellow-900/10 blur-3xl animate-orb-float"
-            style={{ animationDelay: "-10s" }}
-          />
-        </div>
 
         {/* Header */}
         <ToolHeader
@@ -234,7 +228,7 @@ const AgentReads = () => {
               {/* Partner Logos */}
               <TooltipProvider>
                 <div className="flex items-center justify-center gap-4 mb-6 flex-wrap">
-                  <span className="text-muted-foreground/70 text-sm font-medium">Built with</span>
+                  <span className="text-white/70 text-sm font-medium">Built with</span>
                   
                   <Tooltip>
                     <TooltipTrigger asChild>
@@ -302,11 +296,11 @@ const AgentReads = () => {
                 </div>
               </TooltipProvider>
 
-              <h1 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-foreground mb-3 tracking-tight">
-                Agent <span className="text-amber-600 dark:text-amber-400">Reads</span>
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-white mb-3 tracking-tight drop-shadow-lg">
+                Agent <span className="text-amber-400">Reads</span>
               </h1>
 
-              <p className="text-base md:text-lg text-muted-foreground max-w-lg mx-auto">
+              <p className="text-base md:text-lg text-white/80 max-w-lg mx-auto drop-shadow">
                 Share your goals or current situation, and get personalized book recommendations
               </p>
             </header>
@@ -316,18 +310,18 @@ const AgentReads = () => {
           {hasRecommendations && (
             <header className="flex items-center justify-between gap-3 mb-6 animate-fade-in">
               <div className="flex items-center gap-3">
-                <div className="p-2 rounded-xl bg-amber-100 dark:bg-amber-900/30 border border-amber-200/50 dark:border-amber-800/50">
-                  <BookOpen className="w-6 h-6 text-amber-700 dark:text-amber-400" />
+                <div className="p-2 rounded-xl bg-amber-900/50 border border-amber-700/50">
+                  <BookOpen className="w-6 h-6 text-amber-400" />
                 </div>
-                <h1 className="text-xl md:text-2xl font-display font-bold text-foreground">
-                  Your <span className="text-amber-600 dark:text-amber-400">Reading List</span>
+                <h1 className="text-xl md:text-2xl font-display font-bold text-white drop-shadow-lg">
+                  Your <span className="text-amber-400">Reading List</span>
                 </h1>
               </div>
               <Button 
                 onClick={handleReset} 
                 variant="outline"
                 size="sm"
-                className="h-9 px-4 text-sm font-medium rounded-xl border-amber-200/60 dark:border-amber-800/60 hover:bg-amber-50 dark:hover:bg-amber-900/20 transition-all duration-300"
+                className="h-9 px-4 text-sm font-medium rounded-xl border-amber-700/60 text-white hover:bg-amber-900/40 transition-all duration-300"
               >
                 <RotateCcw className="w-4 h-4 mr-2" />
                 New Search
