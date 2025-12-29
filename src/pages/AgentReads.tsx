@@ -1,6 +1,6 @@
 import { useState, useCallback, useMemo } from "react";
 import { Helmet } from "react-helmet-async";
-import { BookOpen, Send, Loader2, RotateCcw, ExternalLink, Star, Calendar, Quote, Info, ChevronDown, ChevronUp } from "lucide-react";
+import { BookOpen, Send, Loader2, RotateCcw, ExternalLink, Star, Calendar, Quote, Info } from "lucide-react";
 import { ToolHeader } from "@/components/ToolHeader";
 import { AgentReadsLearnings } from "@/components/AgentReadsLearnings";
 import { useToast } from "@/hooks/use-toast";
@@ -85,33 +85,6 @@ const parseBookRecommendations = (value: unknown): BookRecommendation[] => {
   return [];
 };
 
-// Collapsible "Why this book?" section
-const WhyThisBookSection = ({ content }: { content: string }) => {
-  const [isExpanded, setIsExpanded] = useState(false);
-  
-  return (
-    <div className="mb-4">
-      <button
-        onClick={() => setIsExpanded(!isExpanded)}
-        className="flex items-center gap-2 text-xs font-medium text-amber-700 hover:text-amber-800 transition-colors"
-      >
-        <Info className="w-4 h-4" />
-        <span>Why this book?</span>
-        {isExpanded ? (
-          <ChevronUp className="w-3 h-3" />
-        ) : (
-          <ChevronDown className="w-3 h-3" />
-        )}
-      </button>
-      
-      {isExpanded && (
-        <div className="mt-2 p-3 rounded-xl bg-amber-50 border border-amber-200/50 animate-fade-in">
-          <p className="text-sm text-gray-700">{content}</p>
-        </div>
-      )}
-    </div>
-  );
-};
 
 const AgentReads = () => {
   const [lifeSituation, setLifeSituation] = useState("");
@@ -493,7 +466,13 @@ const AgentReads = () => {
                     </p>
                     
                     {(book.why_perfect || book.why_relevant) && (
-                      <WhyThisBookSection content={book.why_perfect || book.why_relevant || ""} />
+                      <div className="p-3 rounded-xl bg-amber-50 border border-amber-200/50">
+                        <div className="flex items-center gap-2 text-xs font-medium text-amber-700 mb-1">
+                          <Info className="w-4 h-4" />
+                          <span>Why this book?</span>
+                        </div>
+                        <p className="text-sm text-gray-700">{book.why_perfect || book.why_relevant}</p>
+                      </div>
                     )}
                   </div>
                 </a>
