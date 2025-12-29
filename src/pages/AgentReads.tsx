@@ -449,11 +449,11 @@ const AgentReads = () => {
                 >
                   {/* Book Cover */}
                   {book.cover_url && (
-                    <div className="aspect-[3/4] bg-gradient-to-br from-amber-100 to-orange-100 dark:from-amber-900/30 dark:to-orange-900/30 overflow-hidden">
+                    <div className="aspect-[2/3] bg-gray-100 flex items-center justify-center overflow-hidden">
                       <img 
                         src={book.cover_url} 
                         alt={`Cover of ${book.title}`}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500"
                         onError={(e) => {
                           e.currentTarget.style.display = 'none';
                         }}
