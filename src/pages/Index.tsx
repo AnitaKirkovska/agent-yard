@@ -209,6 +209,11 @@ const Index = () => {
 
       {/* Main Content */}
       <div className="relative z-10 container max-w-4xl mx-auto px-4 py-12 md:py-16">
+        {/* Built with - Top */}
+        <div className="text-center mb-8 text-sm text-muted-foreground/60 animate-fade-in">
+          <p>Built with love using <a href="https://lovable.dev" target="_blank" rel="noopener noreferrer" className="underline hover:text-muted-foreground transition-colors">Lovable</a> and <a href="https://vellum.ai" target="_blank" rel="noopener noreferrer" className="underline hover:text-muted-foreground transition-colors">Vellum</a></p>
+        </div>
+
         {/* Header */}
         <header className="text-center mb-12 animate-fade-in">
           <div className="inline-flex items-center justify-center p-3 rounded-2xl bg-gradient-subtle mb-6">
@@ -227,7 +232,7 @@ const Index = () => {
           <div className="flex flex-wrap items-center justify-center gap-4 mt-6 text-sm text-muted-foreground">
             <div className="flex items-center gap-2">
               <Calendar className="w-4 h-4" />
-              <span>Started December 23, 2024</span>
+              <span>Started December 23 2025</span>
             </div>
             <a 
               href="https://x.com/anitakirkovska" 
@@ -257,11 +262,6 @@ const Index = () => {
             ))}
           </div>
         </section>
-
-        {/* Footer */}
-        <footer className="text-center mt-16 text-sm text-muted-foreground/60 animate-fade-in" style={{ animationDelay: "0.3s" }}>
-          <p>Built with love using <a href="https://lovable.dev" target="_blank" rel="noopener noreferrer" className="underline hover:text-muted-foreground transition-colors">Lovable</a> and <a href="https://vellum.ai" target="_blank" rel="noopener noreferrer" className="underline hover:text-muted-foreground transition-colors">Vellum</a></p>
-        </footer>
       </div>
     </div>
     </>
