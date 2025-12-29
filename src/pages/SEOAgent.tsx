@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Helmet } from "react-helmet-async";
-import { FileText, Search, Clock, Zap, FileEdit, MessageSquare, Database, ExternalLink, X, Play } from "lucide-react";
+import { FileText, Search, Clock, Zap, FileEdit, MessageSquare, Database, ExternalLink, X, Play, Loader2 } from "lucide-react";
 import { ToolHeader } from "@/components/ToolHeader";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
@@ -23,6 +23,12 @@ const tools = [
 
 const SEOAgent = () => {
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
+  const [isIframeLoading, setIsIframeLoading] = useState(true);
+
+  const handleOpenPreview = () => {
+    setIsIframeLoading(true);
+    setIsPreviewOpen(true);
+  };
 
   return (
     <>
@@ -176,7 +182,7 @@ const SEOAgent = () => {
               {/* Overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20 flex items-center justify-center">
                 <button
-                  onClick={() => setIsPreviewOpen(true)}
+                  onClick={handleOpenPreview}
                   className="inline-flex items-center gap-2 px-6 py-3 bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 rounded-xl text-white font-medium transition-all hover:scale-105"
                 >
                   <Play className="w-5 h-5" />
@@ -196,11 +202,24 @@ const SEOAgent = () => {
                 >
                   <X className="w-5 h-5" />
                 </button>
+                
+                {/* Loading State */}
+                {isIframeLoading && (
+                  <div className="absolute inset-0 flex flex-col items-center justify-center bg-slate-900 rounded-lg z-40">
+                    <Loader2 className="w-10 h-10 text-emerald-400 animate-spin mb-4" />
+                    <p className="text-white/70 text-sm mb-4">Loading workflow...</p>
+                    <div className="w-48 h-1.5 bg-white/10 rounded-full overflow-hidden">
+                      <div className="h-full bg-gradient-to-r from-emerald-500 to-teal-400 rounded-full animate-pulse" style={{ width: '60%' }} />
+                    </div>
+                  </div>
+                )}
+                
                 <iframe
                   src="https://app.vellum.ai/public/workflow-deployments/781c2781-7158-42d4-ad0b-de3a05855fb2?releaseTag=LATEST&condensedNodeView=1&showOpenInVellum=1"
                   className="w-full h-full rounded-lg"
                   title="SEO Agent Workflow"
                   allow="clipboard-write"
+                  onLoad={() => setIsIframeLoading(false)}
                 />
               </div>
             </DialogContent>
