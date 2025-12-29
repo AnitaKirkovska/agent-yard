@@ -200,7 +200,7 @@ const AgentReads = () => {
         <meta name="twitter:card" content="summary_large_image" />
       </Helmet>
       
-      <div className="h-screen relative overflow-hidden">
+      <div className="min-h-screen relative overflow-x-hidden">
         {/* Gradient background */}
         <div 
           className="fixed inset-0"
@@ -245,10 +245,10 @@ const AgentReads = () => {
 
         {/* Main Content */}
         <div className={cn(
-          "relative z-10 w-full px-4 transition-all duration-500 min-h-screen flex flex-col",
+          "relative z-10 w-full px-4 transition-all duration-500 flex flex-col",
           hasRecommendations 
-            ? "justify-center py-16" 
-            : "justify-center container max-w-xl mx-auto py-8 md:py-16"
+            ? "justify-start py-16 min-h-screen" 
+            : "justify-center min-h-screen container max-w-xl mx-auto py-8 md:py-16"
         )}>
           {/* Page Header */}
           {!hasRecommendations && (
