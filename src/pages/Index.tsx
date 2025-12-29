@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
-import { Calendar, Sparkles, ArrowRight, Heart, Twitter, Shirt, Activity } from "lucide-react";
+import { Calendar, Sparkles, ArrowRight, Heart, Twitter, Shirt, Activity, BookOpen } from "lucide-react";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
@@ -38,10 +38,20 @@ const apps: DayApp[] = [
     available: true,
     workflowName: "printful-printing-agent",
   },
+  {
+    day: 3,
+    date: "Dec 29",
+    title: "Agent Reads",
+    description: "AI librarian recommends books based on your goals and life situation",
+    route: "/agent-reads",
+    icon: <BookOpen className="w-6 h-6 text-amber-600" />,
+    available: true,
+    workflowName: "life-context-book-recommender",
+  },
   // Future days will be added here
-  ...Array.from({ length: 28 }, (_, i) => ({
-    day: i + 3,
-    date: `Dec ${25 + i > 31 ? (25 + i - 31) : 25 + i}`,
+  ...Array.from({ length: 27 }, (_, i) => ({
+    day: i + 4,
+    date: `Dec ${26 + i > 31 ? (26 + i - 31) : 26 + i}`,
     title: "Coming Soon",
     description: "A new AI agent app will be revealed",
     route: "#",
