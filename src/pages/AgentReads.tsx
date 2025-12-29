@@ -227,14 +227,16 @@ const AgentReads = () => {
       </Helmet>
       
       <div className="min-h-screen relative overflow-hidden">
-        {/* Library background image */}
+        {/* Gradient background */}
         <div 
-          className="fixed inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: `url(${libraryBackground})` }}
+          className="fixed inset-0"
+          style={{ 
+            background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 25%, #0f3460 50%, #1a1a2e 75%, #0d1b2a 100%)'
+          }}
         />
         
-        {/* Dark overlay for readability */}
-        <div className="fixed inset-0 bg-black/60" />
+        {/* Subtle overlay for depth */}
+        <div className="fixed inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/40" />
         
         {/* Floating book decorations during loading */}
         {isLoading && (
