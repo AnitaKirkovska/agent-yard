@@ -266,9 +266,9 @@ const AgentReads = () => {
 
         {/* Main Content */}
         <div className={cn(
-          "relative z-10 w-full px-4 transition-all duration-500",
+          "relative z-10 w-full px-4 transition-all duration-500 min-h-screen flex flex-col justify-center",
           hasRecommendations 
-            ? "min-h-screen flex flex-col justify-center py-16" 
+            ? "py-16" 
             : "py-8 md:py-16 container max-w-xl mx-auto"
         )}>
           {/* Page Header */}
