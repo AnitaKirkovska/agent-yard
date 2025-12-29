@@ -263,6 +263,10 @@ const AgentReads = () => {
         {/* Header */}
         <ToolHeader
           workflowName="life-context-book-recommender"
+          whatILearned={{
+            title: "Building a Fast Book Recommender",
+            content: <AgentReadsLearnings />
+          }}
         />
 
         {/* Main Content */}
@@ -415,10 +419,6 @@ const AgentReads = () => {
             </main>
           )}
 
-          {/* What I Learned Section */}
-          {!hasRecommendations && !isLoading && (
-            <AgentReadsLearnings />
-          )}
 
           {isLoading && (
             <main className="rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 p-8 md:p-12 shadow-2xl animate-scale-in text-center">
