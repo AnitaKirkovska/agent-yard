@@ -380,26 +380,26 @@ const AgentReads = () => {
           {/* Main Form */}
           {!hasRecommendations && !isLoading && (
             <main 
-              className="rounded-3xl border border-amber-200/40 dark:border-amber-800/40 bg-card/80 backdrop-blur-xl p-6 md:p-8 shadow-lg animate-scale-in"
+              className="rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 p-6 md:p-8 shadow-2xl animate-scale-in"
               style={{ animationDelay: "0.15s" }}
             >
-              <div className="space-y-4">
+              <div className="space-y-5">
                 <label className="block">
-                  <span className="text-sm font-medium text-foreground mb-2 block">
+                  <span className="text-sm font-medium text-white/90 mb-3 block">
                     What's going on in your life?
                   </span>
                   <Textarea
                     value={lifeSituation}
                     onChange={(e) => setLifeSituation(e.target.value)}
-                    placeholder="I'm starting a new business and feeling overwhelmed... / Going through a career change at 40... / Want to understand investing better... / Looking for inspiration after a difficult year..."
-                    className="min-h-[140px] resize-none rounded-xl border-amber-200/60 dark:border-amber-800/60 bg-background/50 focus:border-amber-500 focus:ring-amber-500/20 font-serif"
+                    placeholder="I'm starting a new business and feeling overwhelmed... / Going through a career change at 40... / Want to understand investing better..."
+                    className="min-h-[120px] resize-none rounded-xl border-white/20 bg-white/10 text-white placeholder:text-white/40 focus:border-amber-400 focus:ring-amber-400/20"
                   />
                 </label>
 
                 <Button
                   onClick={executeWorkflow}
                   disabled={isLoading || !lifeSituation.trim()}
-                  className="w-full h-12 rounded-xl bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white font-medium shadow-lg shadow-amber-900/20 transition-all duration-300"
+                  className="w-full h-12 rounded-xl bg-amber-500 hover:bg-amber-400 text-gray-900 font-semibold shadow-lg shadow-amber-500/25 transition-all duration-300 disabled:opacity-50"
                 >
                   <Send className="w-4 h-4 mr-2" />
                   Find My Next Read
@@ -407,7 +407,7 @@ const AgentReads = () => {
               </div>
 
               {error && (
-                <div className="mt-4 p-4 rounded-xl bg-destructive/10 border border-destructive/20 text-destructive text-sm">
+                <div className="mt-4 p-4 rounded-xl bg-red-500/20 border border-red-500/30 text-red-200 text-sm">
                   {error}
                 </div>
               )}
@@ -416,14 +416,14 @@ const AgentReads = () => {
 
           {/* Loading State */}
           {isLoading && (
-            <main className="rounded-3xl border border-amber-200/40 dark:border-amber-800/40 bg-card/80 backdrop-blur-xl p-8 md:p-12 shadow-lg animate-scale-in text-center">
-              <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-amber-100 dark:bg-amber-900/30 mb-6">
-                <Loader2 className="w-8 h-8 text-amber-600 dark:text-amber-400 animate-spin" />
+            <main className="rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 p-8 md:p-12 shadow-2xl animate-scale-in text-center">
+              <div className="inline-flex items-center justify-center w-14 h-14 rounded-xl bg-amber-500/20 mb-5">
+                <Loader2 className="w-7 h-7 text-amber-400 animate-spin" />
               </div>
-              <h3 className="text-xl font-display font-semibold text-foreground mb-2">
+              <h3 className="text-lg font-display font-semibold text-white mb-1">
                 Consulting the shelves...
               </h3>
-              <p className="text-muted-foreground font-serif italic">
+              <p className="text-white/60 text-sm">
                 Finding the perfect reads for you...
               </p>
             </main>
