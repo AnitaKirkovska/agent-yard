@@ -2,6 +2,7 @@ import { useState, useCallback, useMemo } from "react";
 import { Helmet } from "react-helmet-async";
 import { BookOpen, Send, Loader2, RotateCcw, ExternalLink, Star, Calendar, Quote, Info, ChevronDown, ChevronUp } from "lucide-react";
 import { ToolHeader } from "@/components/ToolHeader";
+import { AgentReadsLearnings } from "@/components/AgentReadsLearnings";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -414,7 +415,11 @@ const AgentReads = () => {
             </main>
           )}
 
-          {/* Loading State */}
+          {/* What I Learned Section */}
+          {!hasRecommendations && !isLoading && (
+            <AgentReadsLearnings />
+          )}
+
           {isLoading && (
             <main className="rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 p-8 md:p-12 shadow-2xl animate-scale-in text-center">
               <div className="inline-flex items-center justify-center w-14 h-14 rounded-xl bg-amber-500/20 mb-5">
