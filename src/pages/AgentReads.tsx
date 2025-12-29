@@ -462,52 +462,25 @@ const AgentReads = () => {
                   )}
                   
                   {/* Book Info */}
-                  <div className="p-5">
-                    <div className="flex items-start justify-between gap-2 mb-1">
-                      <h3 className="font-display font-bold text-lg text-gray-900 line-clamp-2 group-hover:text-amber-600 transition-colors">
+                  <div className="p-4">
+                    <div className="flex items-start justify-between gap-2 mb-2">
+                      <h3 className="font-semibold text-base text-gray-900 line-clamp-2">
                         {book.title}
                       </h3>
                       {book.rating && (
-                        <div className="flex items-center gap-1 shrink-0 bg-amber-100 px-2 py-0.5 rounded-full">
-                          <Star className="w-3.5 h-3.5 text-amber-500 fill-amber-500" />
-                          <span className="text-sm font-medium text-amber-700">{book.rating}</span>
+                        <div className="flex items-center gap-1 shrink-0 text-amber-600">
+                          <Star className="w-3.5 h-3.5 fill-amber-500" />
+                          <span className="text-sm font-medium">{book.rating}</span>
                         </div>
                       )}
                     </div>
                     
-                    <div className="flex items-center gap-2 mb-3">
-                      <p className="text-sm text-gray-600 font-serif italic">
-                        by {book.author}
-                      </p>
-                      {book.publication_year && (
-                        <span className="flex items-center gap-1 text-xs text-gray-500">
-                          <Calendar className="w-3 h-3" />
-                          {book.publication_year}
-                        </span>
-                      )}
-                    </div>
+                    <p className="text-sm text-gray-500 mb-3">
+                      {book.author}{book.publication_year && ` · ${book.publication_year}`}
+                    </p>
                     
                     {(book.why_perfect || book.why_relevant) && (
                       <WhyThisBookSection content={book.why_perfect || book.why_relevant || ""} />
-                    )}
-
-                    {book.review_quote && (
-                      <div className="flex items-start gap-2 text-gray-500 mb-3">
-                        <Quote className="w-3.5 h-3.5 shrink-0 mt-0.5" />
-                        <p className="text-xs italic line-clamp-2">{book.review_quote}</p>
-                      </div>
-                    )}
-
-                    {(book.amazon_url || book.amazon_link) && (
-                      <a
-                        href={book.amazon_url || book.amazon_link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-amber-100 text-sm font-medium text-amber-700 hover:bg-amber-200 transition-colors"
-                      >
-                        View on Amazon
-                        <ExternalLink className="w-3.5 h-3.5" />
-                      </a>
                     )}
                   </div>
                 </a>
