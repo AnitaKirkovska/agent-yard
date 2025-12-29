@@ -1,20 +1,25 @@
 import { Helmet } from "react-helmet-async";
-import { ArrowLeft, FileText, Search, Clock, Zap, FileEdit, MessageSquare, Database, HardDrive, FileSpreadsheet, Hash, MessageCircle, Flame, Workflow } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Badge } from "@/components/ui/badge";
+import { FileText, Search, Clock, Zap, FileEdit, MessageSquare, Database } from "lucide-react";
+import { ToolHeader } from "@/components/ToolHeader";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
+import googleDriveLogo from "@/assets/google-drive-logo.png";
+import googleDocsLogo from "@/assets/google-docs-logo.png";
+import googleSheetsLogo from "@/assets/google-sheets-logo.png";
 import serpApiLogo from "@/assets/serp-api-logo.png";
+import slackLogo from "@/assets/slack-logo.png";
 import firecrawlLogo from "@/assets/firecrawl-logo.png";
 import vellumLogo from "@/assets/vellum-logo.png";
+import lovableLogo from "@/assets/lovable-logo.png";
 
 const tools = [
-  { name: "Google Drive", icon: HardDrive, color: "text-yellow-400" },
-  { name: "Google Docs", icon: FileText, color: "text-blue-400" },
-  { name: "Google Sheets", icon: FileSpreadsheet, color: "text-green-400" },
-  { name: "SERP API", logo: serpApiLogo },
-  { name: "Slack", icon: Hash, color: "text-purple-400" },
-  { name: "Firecrawl", logo: firecrawlLogo },
-  { name: "Vellum", logo: vellumLogo },
+  { name: "Google Drive", logo: googleDriveLogo, url: "https://drive.google.com" },
+  { name: "Google Docs", logo: googleDocsLogo, url: "https://docs.google.com" },
+  { name: "Google Sheets", logo: googleSheetsLogo, url: "https://sheets.google.com" },
+  { name: "SERP API", logo: serpApiLogo, url: "https://serpapi.com" },
+  { name: "Slack", logo: slackLogo, url: "https://slack.com" },
+  { name: "Firecrawl", logo: firecrawlLogo, url: "https://firecrawl.dev" },
+  { name: "Vellum", logo: vellumLogo, url: "https://vellum.ai" },
 ];
 
 const SEOAgent = () => {
@@ -25,38 +30,118 @@ const SEOAgent = () => {
         <meta name="description" content="Automated SEO content creation agent that analyzes top-ranking content and generates optimized articles daily." />
       </Helmet>
 
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
-        {/* Header */}
-        <div className="border-b border-white/10 bg-black/20 backdrop-blur-sm">
-          <div className="container mx-auto px-4 py-4">
-            <div className="flex items-center justify-between">
-              <Link 
-                to="/" 
-                className="flex items-center gap-2 text-white/70 hover:text-white transition-colors"
-              >
-                <ArrowLeft className="w-4 h-4" />
-                <span className="text-sm">Back to all apps</span>
-              </Link>
-              <Badge variant="outline" className="border-emerald-500/50 text-emerald-400 bg-emerald-500/10">
-                Day 4
-              </Badge>
-            </div>
-          </div>
-        </div>
+      <div className="min-h-screen relative overflow-x-hidden">
+        {/* Gradient background */}
+        <div 
+          className="fixed inset-0"
+          style={{ 
+            background: 'linear-gradient(135deg, #0f2027 0%, #203a43 25%, #2c5364 50%, #203a43 75%, #0f2027 100%)'
+          }}
+        />
+        
+        {/* Subtle overlay for depth */}
+        <div className="fixed inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/40" />
 
-        {/* Content */}
-        <div className="container mx-auto px-4 py-8 md:py-12">
+        {/* Header */}
+        <ToolHeader
+          workflowName="seo-content-agent"
+          forkAgentUrl="https://app.vellum.ai/public/workflow-deployments/781c2781-7158-42d4-ad0b-de3a05855fb2?releaseTag=LATEST&condensedNodeView=1&showOpenInVellum=1"
+        />
+
+        {/* Main Content */}
+        <div className="relative z-10 container max-w-5xl mx-auto px-4 py-8 md:py-12">
           {/* Title Section */}
-          <div className="text-center mb-8">
-            <div className="inline-flex items-center gap-3 mb-4">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center">
-                <FileText className="w-6 h-6 text-white" />
+          <header className="text-center mb-8 animate-fade-in">
+            {/* Built with logos */}
+            <TooltipProvider>
+              <div className="flex items-center justify-center gap-4 mb-6 flex-wrap">
+                <span className="text-white/70 text-sm font-medium">Built with</span>
+                
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <a 
+                      href="https://vellum.ai?utm_medium=tool&utm_content=anita&utm_source=tool&utm_campaign=seo_agent" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="w-12 h-12 rounded-xl bg-white flex items-center justify-center shadow-lg overflow-hidden hover:scale-110 transition-transform cursor-pointer"
+                    >
+                      <img src={vellumLogo} alt="Vellum" className="w-8 h-8 object-contain" />
+                    </a>
+                  </TooltipTrigger>
+                  <TooltipContent className="bg-card text-foreground border-border">
+                    <p className="font-medium">vellum.ai</p>
+                  </TooltipContent>
+                </Tooltip>
+
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <a 
+                      href="https://lovable.dev" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="w-12 h-12 rounded-xl overflow-hidden shadow-lg hover:scale-110 transition-transform cursor-pointer"
+                    >
+                      <img src={lovableLogo} alt="Lovable" className="w-full h-full object-cover" />
+                    </a>
+                  </TooltipTrigger>
+                  <TooltipContent className="bg-card text-foreground border-border">
+                    <p className="font-medium">lovable.dev</p>
+                  </TooltipContent>
+                </Tooltip>
+
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <a 
+                      href="https://firecrawl.dev" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="w-12 h-12 rounded-xl overflow-hidden shadow-lg hover:scale-110 transition-transform cursor-pointer bg-white flex items-center justify-center"
+                    >
+                      <img src={firecrawlLogo} alt="Firecrawl" className="w-8 h-8 object-contain" />
+                    </a>
+                  </TooltipTrigger>
+                  <TooltipContent className="bg-card text-foreground border-border">
+                    <p className="font-medium">firecrawl.dev</p>
+                  </TooltipContent>
+                </Tooltip>
+
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <a 
+                      href="https://serpapi.com" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="w-12 h-12 rounded-xl overflow-hidden shadow-lg hover:scale-110 transition-transform cursor-pointer"
+                    >
+                      <img src={serpApiLogo} alt="SerpAPI" className="w-full h-full object-cover" />
+                    </a>
+                  </TooltipTrigger>
+                  <TooltipContent className="bg-card text-foreground border-border">
+                    <p className="font-medium">serpapi.com</p>
+                  </TooltipContent>
+                </Tooltip>
               </div>
-              <h1 className="text-3xl md:text-4xl font-bold text-white">SEO Agent</h1>
-            </div>
-            <p className="text-white/60 max-w-2xl mx-auto text-lg">
+            </TooltipProvider>
+
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-white mb-3 tracking-tight drop-shadow-lg">
+              SEO <span className="text-emerald-400">Agent</span>
+            </h1>
+
+            <p className="text-base md:text-lg text-white/80 max-w-lg mx-auto drop-shadow">
               Automated content creation powered by AI. Analyzes top-ranking content and generates optimized articles daily.
             </p>
+          </header>
+
+          {/* Embedded Workflow */}
+          <div className="mb-8">
+            <div className="bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 overflow-hidden">
+              <iframe
+                src="https://app.vellum.ai/public/workflow-deployments/781c2781-7158-42d4-ad0b-de3a05855fb2?releaseTag=LATEST&condensedNodeView=1&showOpenInVellum=1"
+                className="w-full h-[500px] md:h-[600px]"
+                title="SEO Agent Workflow"
+                allow="clipboard-write"
+              />
+            </div>
           </div>
 
           {/* How it works */}
@@ -102,35 +187,21 @@ const SEOAgent = () => {
           </div>
 
           {/* Tools Used */}
-          <div className="max-w-3xl mx-auto mb-8">
-            <h2 className="text-sm font-medium text-white/40 uppercase tracking-wider mb-4 text-center">Tools Used</h2>
+          <div className="max-w-3xl mx-auto">
+            <h2 className="text-sm font-medium text-white/40 uppercase tracking-wider mb-4 text-center">All Tools Used</h2>
             <div className="flex flex-wrap justify-center gap-3">
               {tools.map((tool) => (
-                <div 
+                <a 
                   key={tool.name}
-                  className="flex items-center gap-2 bg-white/5 backdrop-blur-sm rounded-lg px-3 py-2 border border-white/10"
+                  href={tool.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 bg-white/5 backdrop-blur-sm rounded-lg px-3 py-2 border border-white/10 hover:bg-white/10 transition-colors"
                 >
-                  {tool.logo ? (
-                    <img src={tool.logo} alt={tool.name} className="w-5 h-5 object-contain" />
-                  ) : tool.icon ? (
-                    <tool.icon className={`w-5 h-5 ${tool.color}`} />
-                  ) : null}
+                  <img src={tool.logo} alt={tool.name} className="w-5 h-5 object-contain" />
                   <span className="text-white/70 text-sm">{tool.name}</span>
-                </div>
+                </a>
               ))}
-            </div>
-          </div>
-
-          {/* Embedded Workflow */}
-          <div className="max-w-5xl mx-auto">
-            <h2 className="text-sm font-medium text-white/40 uppercase tracking-wider mb-4 text-center">Workflow Preview</h2>
-            <div className="bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 overflow-hidden">
-              <iframe
-                src="https://app.vellum.ai/public/workflow-deployments/781c2781-7158-42d4-ad0b-de3a05855fb2?releaseTag=LATEST&condensedNodeView=1&showOpenInVellum=1"
-                className="w-full h-[600px] md:h-[700px]"
-                title="SEO Agent Workflow"
-                allow="clipboard-write"
-              />
             </div>
           </div>
         </div>
