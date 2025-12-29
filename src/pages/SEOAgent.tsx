@@ -1,7 +1,9 @@
+import { useState } from "react";
 import { Helmet } from "react-helmet-async";
-import { FileText, Search, Clock, Zap, FileEdit, MessageSquare, Database, ExternalLink } from "lucide-react";
+import { FileText, Search, Clock, Zap, FileEdit, MessageSquare, Database, ExternalLink, X, Play } from "lucide-react";
 import { ToolHeader } from "@/components/ToolHeader";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 
 import googleDriveLogo from "@/assets/google-drive-logo.png";
 import serpApiLogo from "@/assets/serp-api-logo.png";
@@ -20,6 +22,8 @@ const tools = [
 ];
 
 const SEOAgent = () => {
+  const [isPreviewOpen, setIsPreviewOpen] = useState(false);
+
   return (
     <>
       <Helmet>
@@ -172,18 +176,36 @@ const SEOAgent = () => {
               />
               {/* Overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20 flex items-center justify-center">
-                <a
-                  href="https://app.vellum.ai/public/workflow-deployments/781c2781-7158-42d4-ad0b-de3a05855fb2?releaseTag=LATEST&condensedNodeView=1&showOpenInVellum=1"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <button
+                  onClick={() => setIsPreviewOpen(true)}
                   className="inline-flex items-center gap-2 px-6 py-3 bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 rounded-xl text-white font-medium transition-all hover:scale-105"
                 >
-                  <ExternalLink className="w-5 h-5" />
+                  <Play className="w-5 h-5" />
                   Preview Agent
-                </a>
+                </button>
               </div>
             </div>
           </div>
+
+          {/* Fullscreen Workflow Dialog */}
+          <Dialog open={isPreviewOpen} onOpenChange={setIsPreviewOpen}>
+            <DialogContent className="max-w-[95vw] w-[95vw] h-[90vh] p-0 bg-slate-900 border-white/10">
+              <div className="relative w-full h-full">
+                <button
+                  onClick={() => setIsPreviewOpen(false)}
+                  className="absolute top-4 right-4 z-50 p-2 bg-black/50 hover:bg-black/70 rounded-full text-white transition-colors"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+                <iframe
+                  src="https://app.vellum.ai/public/workflow-deployments/781c2781-7158-42d4-ad0b-de3a05855fb2?releaseTag=LATEST&condensedNodeView=1&showOpenInVellum=1"
+                  className="w-full h-full rounded-lg"
+                  title="SEO Agent Workflow"
+                  allow="clipboard-write"
+                />
+              </div>
+            </DialogContent>
+          </Dialog>
 
           {/* How it works */}
           <div className="max-w-3xl mx-auto mb-8">
