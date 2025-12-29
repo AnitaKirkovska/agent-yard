@@ -43,8 +43,15 @@ interface WorkflowResponse {
 
 const parseBookRecommendations = (value: unknown): BookRecommendation[] => {
   // Handle array directly (new workflow output format)
+  // Each item may be wrapped in {type: "JSON", value: {...}}
   if (Array.isArray(value)) {
-    return value;
+    return value.map((item) => {
+      // If item has a nested value property (Vellum ARRAY format)
+      if (item && typeof item === 'object' && 'value' in item) {
+        return item.value as BookRecommendation;
+      }
+      return item as BookRecommendation;
+    });
   }
   
   // Handle string (old workflow output format)
