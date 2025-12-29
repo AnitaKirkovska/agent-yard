@@ -417,6 +417,18 @@ const AgentReads = () => {
                   {error}
                 </div>
               )}
+              
+              <p className="text-center text-white/50 text-xs mt-6">
+                Built with ❤️ by{" "}
+                <a 
+                  href="https://twitter.com/anitakirkovska" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-white/70 hover:text-white transition-colors"
+                >
+                  @anitakirkovska
+                </a>
+              </p>
             </main>
           )}
 
