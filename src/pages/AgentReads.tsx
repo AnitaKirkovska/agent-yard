@@ -306,8 +306,8 @@ const AgentReads = () => {
                 Agent <span className="text-amber-600 dark:text-amber-400">Reads</span>
               </h1>
 
-              <p className="text-base md:text-lg text-muted-foreground max-w-lg mx-auto font-serif italic">
-                "Tell me where you are in life, and I shall guide you to the books that will light your path."
+              <p className="text-base md:text-lg text-muted-foreground max-w-lg mx-auto">
+                Share your goals or current situation, and get personalized book recommendations
               </p>
             </header>
           )}
