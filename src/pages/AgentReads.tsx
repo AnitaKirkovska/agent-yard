@@ -407,7 +407,7 @@ const AgentReads = () => {
                 Consulting the shelves...
               </h3>
               <p className="text-muted-foreground font-serif italic">
-                Our librarian is searching through countless volumes to find the perfect reads for you.
+                Our librarian is searching through countless volumes to find the perfect reads for you. This might take up to a minute.
               </p>
             </main>
           )}
