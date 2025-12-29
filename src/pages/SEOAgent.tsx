@@ -120,6 +120,70 @@ const SEOAgent = () => {
                     <p className="font-medium">serpapi.com</p>
                   </TooltipContent>
                 </Tooltip>
+
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <a 
+                      href="https://drive.google.com" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="w-12 h-12 rounded-xl overflow-hidden shadow-lg hover:scale-110 transition-transform cursor-pointer bg-white flex items-center justify-center"
+                    >
+                      <img src={googleDriveLogo} alt="Google Drive" className="w-8 h-8 object-contain" />
+                    </a>
+                  </TooltipTrigger>
+                  <TooltipContent className="bg-card text-foreground border-border">
+                    <p className="font-medium">Google Drive</p>
+                  </TooltipContent>
+                </Tooltip>
+
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <a 
+                      href="https://docs.google.com" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="w-12 h-12 rounded-xl overflow-hidden shadow-lg hover:scale-110 transition-transform cursor-pointer bg-white flex items-center justify-center"
+                    >
+                      <img src={googleDocsLogo} alt="Google Docs" className="w-8 h-8 object-contain" />
+                    </a>
+                  </TooltipTrigger>
+                  <TooltipContent className="bg-card text-foreground border-border">
+                    <p className="font-medium">Google Docs</p>
+                  </TooltipContent>
+                </Tooltip>
+
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <a 
+                      href="https://sheets.google.com" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="w-12 h-12 rounded-xl overflow-hidden shadow-lg hover:scale-110 transition-transform cursor-pointer bg-white flex items-center justify-center"
+                    >
+                      <img src={googleSheetsLogo} alt="Google Sheets" className="w-8 h-8 object-contain" />
+                    </a>
+                  </TooltipTrigger>
+                  <TooltipContent className="bg-card text-foreground border-border">
+                    <p className="font-medium">Google Sheets</p>
+                  </TooltipContent>
+                </Tooltip>
+
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <a 
+                      href="https://slack.com" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="w-12 h-12 rounded-xl overflow-hidden shadow-lg hover:scale-110 transition-transform cursor-pointer bg-white flex items-center justify-center"
+                    >
+                      <img src={slackLogo} alt="Slack" className="w-8 h-8 object-contain" />
+                    </a>
+                  </TooltipTrigger>
+                  <TooltipContent className="bg-card text-foreground border-border">
+                    <p className="font-medium">Slack</p>
+                  </TooltipContent>
+                </Tooltip>
               </div>
             </TooltipProvider>
 
@@ -186,24 +250,6 @@ const SEOAgent = () => {
             </div>
           </div>
 
-          {/* Tools Used */}
-          <div className="max-w-3xl mx-auto">
-            <h2 className="text-sm font-medium text-white/40 uppercase tracking-wider mb-4 text-center">All Tools Used</h2>
-            <div className="flex flex-wrap justify-center gap-3">
-              {tools.map((tool) => (
-                <a 
-                  key={tool.name}
-                  href={tool.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 bg-white/5 backdrop-blur-sm rounded-lg px-3 py-2 border border-white/10 hover:bg-white/10 transition-colors"
-                >
-                  <img src={tool.logo} alt={tool.name} className="w-5 h-5 object-contain" />
-                  <span className="text-white/70 text-sm">{tool.name}</span>
-                </a>
-              ))}
-            </div>
-          </div>
         </div>
       </div>
     </>
