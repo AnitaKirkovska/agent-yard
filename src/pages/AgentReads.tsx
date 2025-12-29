@@ -226,7 +226,7 @@ const AgentReads = () => {
         <meta name="twitter:card" content="summary_large_image" />
       </Helmet>
       
-      <div className="min-h-screen relative overflow-hidden">
+      <div className="h-screen relative overflow-hidden">
         {/* Gradient background */}
         <div 
           className="fixed inset-0"
