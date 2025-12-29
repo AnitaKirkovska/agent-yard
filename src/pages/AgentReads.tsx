@@ -266,10 +266,10 @@ const AgentReads = () => {
 
         {/* Main Content */}
         <div className={cn(
-          "relative z-10 w-full px-4 transition-all duration-500 min-h-screen flex flex-col justify-center",
+          "relative z-10 w-full px-4 transition-all duration-500 min-h-screen flex flex-col",
           hasRecommendations 
-            ? "py-16" 
-            : "py-8 md:py-16 container max-w-xl mx-auto"
+            ? "justify-center py-16" 
+            : "justify-center container max-w-xl mx-auto py-8 md:py-16"
         )}>
           {/* Page Header */}
           {!hasRecommendations && (
