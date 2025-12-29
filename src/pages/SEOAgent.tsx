@@ -55,8 +55,8 @@ const SEOAgent = () => {
           <header className="text-center mb-8 animate-fade-in">
             {/* Built with logos */}
             <TooltipProvider>
-              <div className="flex items-center justify-center gap-4 mb-6 flex-wrap">
-                <span className="text-white/70 text-sm font-medium">Built with</span>
+              <div className="flex items-center justify-center gap-3 mb-6 flex-wrap">
+                <span className="text-white/60 text-xs font-medium">Built with</span>
                 
                 <Tooltip>
                   <TooltipTrigger asChild>
@@ -64,9 +64,9 @@ const SEOAgent = () => {
                       href="https://vellum.ai?utm_medium=tool&utm_content=anita&utm_source=tool&utm_campaign=seo_agent" 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="w-12 h-12 rounded-xl bg-white flex items-center justify-center shadow-lg overflow-hidden hover:scale-110 transition-transform cursor-pointer"
+                      className="w-9 h-9 rounded-lg bg-white flex items-center justify-center shadow-md overflow-hidden hover:scale-110 transition-transform cursor-pointer"
                     >
-                      <img src={vellumLogo} alt="Vellum" className="w-8 h-8 object-contain" />
+                      <img src={vellumLogo} alt="Vellum" className="w-6 h-6 object-contain" />
                     </a>
                   </TooltipTrigger>
                   <TooltipContent className="bg-card text-foreground border-border">
@@ -80,7 +80,7 @@ const SEOAgent = () => {
                       href="https://lovable.dev" 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="w-12 h-12 rounded-xl overflow-hidden shadow-lg hover:scale-110 transition-transform cursor-pointer"
+                      className="w-9 h-9 rounded-lg overflow-hidden shadow-md hover:scale-110 transition-transform cursor-pointer"
                     >
                       <img src={lovableLogo} alt="Lovable" className="w-full h-full object-cover" />
                     </a>
@@ -96,9 +96,9 @@ const SEOAgent = () => {
                       href="https://firecrawl.dev" 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="w-12 h-12 rounded-xl overflow-hidden shadow-lg hover:scale-110 transition-transform cursor-pointer bg-white flex items-center justify-center"
+                      className="w-9 h-9 rounded-lg overflow-hidden shadow-md hover:scale-110 transition-transform cursor-pointer bg-white flex items-center justify-center"
                     >
-                      <img src={firecrawlLogo} alt="Firecrawl" className="w-8 h-8 object-contain" />
+                      <img src={firecrawlLogo} alt="Firecrawl" className="w-6 h-6 object-contain" />
                     </a>
                   </TooltipTrigger>
                   <TooltipContent className="bg-card text-foreground border-border">
@@ -112,7 +112,7 @@ const SEOAgent = () => {
                       href="https://serpapi.com" 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="w-12 h-12 rounded-xl overflow-hidden shadow-lg hover:scale-110 transition-transform cursor-pointer"
+                      className="w-9 h-9 rounded-lg overflow-hidden shadow-md hover:scale-110 transition-transform cursor-pointer"
                     >
                       <img src={serpApiLogo} alt="SerpAPI" className="w-full h-full object-cover" />
                     </a>
@@ -128,9 +128,9 @@ const SEOAgent = () => {
                       href="https://drive.google.com" 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="w-12 h-12 rounded-xl overflow-hidden shadow-lg hover:scale-110 transition-transform cursor-pointer bg-white flex items-center justify-center"
+                      className="w-9 h-9 rounded-lg overflow-hidden shadow-md hover:scale-110 transition-transform cursor-pointer bg-white flex items-center justify-center"
                     >
-                      <img src={googleDriveLogo} alt="Google Drive" className="w-8 h-8 object-contain" />
+                      <img src={googleDriveLogo} alt="Google Drive" className="w-6 h-6 object-contain" />
                     </a>
                   </TooltipTrigger>
                   <TooltipContent className="bg-card text-foreground border-border">
@@ -138,16 +138,15 @@ const SEOAgent = () => {
                   </TooltipContent>
                 </Tooltip>
 
-
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <a 
                       href="https://slack.com" 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="w-12 h-12 rounded-xl overflow-hidden shadow-lg hover:scale-110 transition-transform cursor-pointer bg-white flex items-center justify-center"
+                      className="w-9 h-9 rounded-lg overflow-hidden shadow-md hover:scale-110 transition-transform cursor-pointer bg-white flex items-center justify-center"
                     >
-                      <img src={slackLogo} alt="Slack" className="w-8 h-8 object-contain" />
+                      <img src={slackLogo} alt="Slack" className="w-6 h-6 object-contain" />
                     </a>
                   </TooltipTrigger>
                   <TooltipContent className="bg-card text-foreground border-border">
