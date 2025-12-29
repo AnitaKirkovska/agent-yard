@@ -41,33 +41,40 @@ interface WorkflowResponse {
   };
 }
 
-const parseBookRecommendations = (value: string): BookRecommendation[] => {
-  try {
-    // Try to parse as JSON array directly
-    const parsed = JSON.parse(value);
-    if (Array.isArray(parsed)) {
-      return parsed;
-    }
-    // If it's an object with a books array
-    if (parsed.books && Array.isArray(parsed.books)) {
-      return parsed.books;
-    }
-    if (parsed.recommendations && Array.isArray(parsed.recommendations)) {
-      return parsed.recommendations;
-    }
-    return [];
-  } catch {
-    // Try to extract JSON from the string
-    const jsonMatch = value.match(/\[[\s\S]*\]/);
-    if (jsonMatch) {
-      try {
-        return JSON.parse(jsonMatch[0]);
-      } catch {
-        return [];
-      }
-    }
-    return [];
+const parseBookRecommendations = (value: unknown): BookRecommendation[] => {
+  // Handle array directly (new workflow output format)
+  if (Array.isArray(value)) {
+    return value;
   }
+  
+  // Handle string (old workflow output format)
+  if (typeof value === 'string') {
+    try {
+      const parsed = JSON.parse(value);
+      if (Array.isArray(parsed)) {
+        return parsed;
+      }
+      if (parsed.books && Array.isArray(parsed.books)) {
+        return parsed.books;
+      }
+      if (parsed.recommendations && Array.isArray(parsed.recommendations)) {
+        return parsed.recommendations;
+      }
+      return [];
+    } catch {
+      const jsonMatch = value.match(/\[[\s\S]*\]/);
+      if (jsonMatch) {
+        try {
+          return JSON.parse(jsonMatch[0]);
+        } catch {
+          return [];
+        }
+      }
+      return [];
+    }
+  }
+  
+  return [];
 };
 
 // Collapsible "Why this book?" section
