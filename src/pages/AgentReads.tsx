@@ -439,9 +439,12 @@ const AgentReads = () => {
             <div className="flex-1 flex items-center justify-center pb-8">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 animate-fade-in max-w-6xl w-full">
               {recommendations.map((book, index) => (
-                <article 
+                <a 
                   key={index}
-                  className="group rounded-2xl border border-white/20 bg-white/95 backdrop-blur-sm overflow-hidden shadow-xl hover:shadow-2xl hover:scale-[1.02] transition-all duration-300"
+                  href={book.amazon_url || book.amazon_link || '#'}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group rounded-2xl border border-white/20 bg-white/95 backdrop-blur-sm overflow-hidden shadow-xl hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 cursor-pointer block"
                   style={{ animationDelay: `${index * 0.1}s` }}
                 >
                   {/* Book Cover */}
@@ -507,7 +510,7 @@ const AgentReads = () => {
                       </a>
                     )}
                   </div>
-                </article>
+                </a>
               ))}
               </div>
             </div>
