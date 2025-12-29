@@ -1,5 +1,5 @@
 import { Helmet } from "react-helmet-async";
-import { FileText, Search, Clock, Zap, FileEdit, MessageSquare, Database } from "lucide-react";
+import { FileText, Search, Clock, Zap, FileEdit, MessageSquare, Database, ExternalLink } from "lucide-react";
 import { ToolHeader } from "@/components/ToolHeader";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
@@ -9,6 +9,7 @@ import slackLogo from "@/assets/slack-logo.png";
 import firecrawlLogo from "@/assets/firecrawl-logo.png";
 import vellumLogo from "@/assets/vellum-logo.png";
 import lovableLogo from "@/assets/lovable-logo.png";
+import seoAgentPreview from "@/assets/seo-agent-preview.png";
 
 const tools = [
   { name: "Google Drive", logo: googleDriveLogo, url: "https://drive.google.com" },
@@ -161,15 +162,26 @@ const SEOAgent = () => {
             </p>
           </header>
 
-          {/* Embedded Workflow */}
+          {/* Workflow Preview */}
           <div className="mb-8">
-            <div className="bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 overflow-hidden">
-              <iframe
-                src="https://app.vellum.ai/public/workflow-deployments/781c2781-7158-42d4-ad0b-de3a05855fb2?releaseTag=LATEST&condensedNodeView=1&showOpenInVellum=1"
-                className="w-full h-[500px] md:h-[600px]"
-                title="SEO Agent Workflow"
-                allow="clipboard-write"
+            <div className="relative bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 overflow-hidden">
+              <img 
+                src={seoAgentPreview} 
+                alt="SEO Agent Workflow Preview" 
+                className="w-full h-[400px] md:h-[500px] object-cover object-top"
               />
+              {/* Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20 flex items-center justify-center">
+                <a
+                  href="https://app.vellum.ai/public/workflow-deployments/781c2781-7158-42d4-ad0b-de3a05855fb2?releaseTag=LATEST&condensedNodeView=1&showOpenInVellum=1"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 rounded-xl text-white font-medium transition-all hover:scale-105"
+                >
+                  <ExternalLink className="w-5 h-5" />
+                  Preview Agent
+                </a>
+              </div>
             </div>
           </div>
 
