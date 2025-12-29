@@ -10,7 +10,7 @@ import { Textarea } from "@/components/ui/textarea";
 import vellumLogo from "@/assets/vellum-logo.png";
 import lovableLogo from "@/assets/lovable-logo.png";
 import serpApiLogo from "@/assets/serp-api-logo.png";
-import googleBooksLogo from "@/assets/google-books-logo.png";
+import openLibraryLogo from "@/assets/open-library-logo.png";
 import libraryBackground from "@/assets/library-background.png";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
@@ -341,11 +341,11 @@ const AgentReads = () => {
                         rel="noopener noreferrer"
                         className="h-12 px-3 rounded-xl bg-white flex items-center justify-center shadow-lg overflow-hidden hover:scale-110 transition-transform cursor-pointer"
                       >
-                        <img src={googleBooksLogo} alt="Google Books" className="h-6 object-contain" />
+                        <img src={openLibraryLogo} alt="Open Library" className="h-6 object-contain" />
                       </a>
                     </TooltipTrigger>
                     <TooltipContent className="bg-card text-foreground border-border">
-                      <p className="font-medium">Google Books API</p>
+                      <p className="font-medium">Open Library API</p>
                     </TooltipContent>
                   </Tooltip>
                 </div>
