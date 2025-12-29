@@ -4,8 +4,6 @@ import { ToolHeader } from "@/components/ToolHeader";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 import googleDriveLogo from "@/assets/google-drive-logo.png";
-import googleDocsLogo from "@/assets/google-docs-logo.png";
-import googleSheetsLogo from "@/assets/google-sheets-logo.png";
 import serpApiLogo from "@/assets/serp-api-logo.png";
 import slackLogo from "@/assets/slack-logo.png";
 import firecrawlLogo from "@/assets/firecrawl-logo.png";
@@ -14,8 +12,6 @@ import lovableLogo from "@/assets/lovable-logo.png";
 
 const tools = [
   { name: "Google Drive", logo: googleDriveLogo, url: "https://drive.google.com" },
-  { name: "Google Docs", logo: googleDocsLogo, url: "https://docs.google.com" },
-  { name: "Google Sheets", logo: googleSheetsLogo, url: "https://sheets.google.com" },
   { name: "SERP API", logo: serpApiLogo, url: "https://serpapi.com" },
   { name: "Slack", logo: slackLogo, url: "https://slack.com" },
   { name: "Firecrawl", logo: firecrawlLogo, url: "https://firecrawl.dev" },
@@ -137,37 +133,6 @@ const SEOAgent = () => {
                   </TooltipContent>
                 </Tooltip>
 
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <a 
-                      href="https://docs.google.com" 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="w-12 h-12 rounded-xl overflow-hidden shadow-lg hover:scale-110 transition-transform cursor-pointer bg-white flex items-center justify-center"
-                    >
-                      <img src={googleDocsLogo} alt="Google Docs" className="w-8 h-8 object-contain" />
-                    </a>
-                  </TooltipTrigger>
-                  <TooltipContent className="bg-card text-foreground border-border">
-                    <p className="font-medium">Google Docs</p>
-                  </TooltipContent>
-                </Tooltip>
-
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <a 
-                      href="https://sheets.google.com" 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="w-12 h-12 rounded-xl overflow-hidden shadow-lg hover:scale-110 transition-transform cursor-pointer bg-white flex items-center justify-center"
-                    >
-                      <img src={googleSheetsLogo} alt="Google Sheets" className="w-8 h-8 object-contain" />
-                    </a>
-                  </TooltipTrigger>
-                  <TooltipContent className="bg-card text-foreground border-border">
-                    <p className="font-medium">Google Sheets</p>
-                  </TooltipContent>
-                </Tooltip>
 
                 <Tooltip>
                   <TooltipTrigger asChild>
