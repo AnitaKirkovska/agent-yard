@@ -8,6 +8,8 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import vellumLogo from "@/assets/vellum-logo.png";
 import lovableLogo from "@/assets/lovable-logo.png";
+import serpApiLogo from "@/assets/serp-api-logo.png";
+import googleBooksLogo from "@/assets/google-books-logo.png";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 interface BookRecommendation {
@@ -231,20 +233,9 @@ const AgentReads = () => {
             <header className="text-center mb-8 animate-fade-in">
               {/* Partner Logos */}
               <TooltipProvider>
-                <div className="flex items-center justify-center gap-4 mb-6">
+                <div className="flex items-center justify-center gap-4 mb-6 flex-wrap">
                   <span className="text-muted-foreground/70 text-sm font-medium">Built with</span>
                   
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <div className="w-12 h-12 rounded-xl bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center shadow-lg overflow-hidden hover:scale-110 transition-transform cursor-pointer border border-amber-200/50 dark:border-amber-800/50">
-                        <BookOpen className="w-6 h-6 text-amber-700 dark:text-amber-400" />
-                      </div>
-                    </TooltipTrigger>
-                    <TooltipContent className="bg-card text-foreground border-border">
-                      <p className="font-medium">The Librarian's Wisdom</p>
-                    </TooltipContent>
-                  </Tooltip>
-
                   <Tooltip>
                     <TooltipTrigger asChild>
                       <a 
@@ -274,6 +265,38 @@ const AgentReads = () => {
                     </TooltipTrigger>
                     <TooltipContent className="bg-card text-foreground border-border">
                       <p className="font-medium">lovable.dev</p>
+                    </TooltipContent>
+                  </Tooltip>
+
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <a 
+                        href="https://serpapi.com" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="w-12 h-12 rounded-xl overflow-hidden shadow-lg hover:scale-110 transition-transform cursor-pointer"
+                      >
+                        <img src={serpApiLogo} alt="SerpAPI" className="w-full h-full object-cover" />
+                      </a>
+                    </TooltipTrigger>
+                    <TooltipContent className="bg-card text-foreground border-border">
+                      <p className="font-medium">serpapi.com</p>
+                    </TooltipContent>
+                  </Tooltip>
+
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <a 
+                        href="https://developers.google.com/books" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="h-12 px-3 rounded-xl bg-white flex items-center justify-center shadow-lg overflow-hidden hover:scale-110 transition-transform cursor-pointer"
+                      >
+                        <img src={googleBooksLogo} alt="Google Books" className="h-6 object-contain" />
+                      </a>
+                    </TooltipTrigger>
+                    <TooltipContent className="bg-card text-foreground border-border">
+                      <p className="font-medium">Google Books API</p>
                     </TooltipContent>
                   </Tooltip>
                 </div>
