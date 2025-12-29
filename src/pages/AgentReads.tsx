@@ -1,6 +1,6 @@
 import { useState, useCallback, useMemo } from "react";
 import { Helmet } from "react-helmet-async";
-import { BookOpen, Send, Loader2, RotateCcw, ExternalLink } from "lucide-react";
+import { BookOpen, Send, Loader2, RotateCcw, ExternalLink, Star, Calendar, Quote } from "lucide-react";
 import { ToolHeader } from "@/components/ToolHeader";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
@@ -16,10 +16,14 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 interface BookRecommendation {
   title: string;
   author: string;
-  description: string;
-  why_perfect: string;
+  description?: string;
+  why_perfect?: string;
+  why_relevant?: string;
   cover_url?: string;
   amazon_link?: string;
+  publication_year?: number;
+  rating?: number;
+  review_quote?: string;
 }
 
 interface WorkflowOutput {
@@ -406,21 +410,49 @@ const AgentReads = () => {
                   
                   {/* Book Info */}
                   <div className="p-5">
-                    <h3 className="font-display font-bold text-lg text-foreground mb-1 line-clamp-2 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
-                      {book.title}
-                    </h3>
-                    <p className="text-sm text-muted-foreground mb-3 font-serif italic">
-                      by {book.author}
-                    </p>
+                    <div className="flex items-start justify-between gap-2 mb-1">
+                      <h3 className="font-display font-bold text-lg text-gray-900 line-clamp-2 group-hover:text-amber-600 transition-colors">
+                        {book.title}
+                      </h3>
+                      {book.rating && (
+                        <div className="flex items-center gap-1 shrink-0 bg-amber-100 px-2 py-0.5 rounded-full">
+                          <Star className="w-3.5 h-3.5 text-amber-500 fill-amber-500" />
+                          <span className="text-sm font-medium text-amber-700">{book.rating}</span>
+                        </div>
+                      )}
+                    </div>
                     
-                    <p className="text-sm text-muted-foreground mb-4 line-clamp-3">
-                      {book.description}
-                    </p>
+                    <div className="flex items-center gap-2 mb-3">
+                      <p className="text-sm text-gray-600 font-serif italic">
+                        by {book.author}
+                      </p>
+                      {book.publication_year && (
+                        <span className="flex items-center gap-1 text-xs text-gray-500">
+                          <Calendar className="w-3 h-3" />
+                          {book.publication_year}
+                        </span>
+                      )}
+                    </div>
+                    
+                    {book.description && (
+                      <p className="text-sm text-gray-600 mb-4">
+                        {book.description}
+                      </p>
+                    )}
 
-                    {book.why_perfect && (
-                      <div className="p-3 rounded-xl bg-amber-50 dark:bg-amber-900/20 border border-amber-200/50 dark:border-amber-800/50 mb-4">
-                        <p className="text-xs font-medium text-amber-700 dark:text-amber-400 mb-1">Why this book?</p>
-                        <p className="text-sm text-foreground/80 line-clamp-3">{book.why_perfect}</p>
+                    {(book.why_perfect || book.why_relevant) && (
+                      <div className="p-3 rounded-xl bg-amber-50 border border-amber-200/50 mb-4">
+                        <p className="text-xs font-medium text-amber-700 mb-1">Why this book?</p>
+                        <p className="text-sm text-gray-700">{book.why_perfect || book.why_relevant}</p>
+                      </div>
+                    )}
+
+                    {book.review_quote && (
+                      <div className="p-3 rounded-xl bg-gray-50 border border-gray-200/50 mb-4">
+                        <div className="flex items-start gap-2">
+                          <Quote className="w-4 h-4 text-gray-400 shrink-0 mt-0.5" />
+                          <p className="text-sm text-gray-600 italic">{book.review_quote}</p>
+                        </div>
                       </div>
                     )}
 
@@ -429,7 +461,7 @@ const AgentReads = () => {
                         href={book.amazon_link}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 text-sm font-medium text-amber-600 dark:text-amber-400 hover:text-amber-700 dark:hover:text-amber-300 transition-colors"
+                        className="inline-flex items-center gap-2 text-sm font-medium text-amber-600 hover:text-amber-700 transition-colors"
                       >
                         View on Amazon
                         <ExternalLink className="w-3.5 h-3.5" />
