@@ -308,9 +308,9 @@ const AgentReads = () => {
 
           {/* Results Header */}
           {hasRecommendations && (
-            <header className="flex items-center justify-between gap-3 mb-6 animate-fade-in">
+            <header className="flex items-center justify-between gap-3 mb-6 animate-fade-in container max-w-6xl mx-auto">
               <div className="flex items-center gap-3">
-                <div className="p-2 rounded-xl bg-amber-900/50 border border-amber-700/50">
+                <div className="p-2 rounded-xl bg-amber-900/70 border border-amber-600/50 backdrop-blur-sm">
                   <BookOpen className="w-6 h-6 text-amber-400" />
                 </div>
                 <h1 className="text-xl md:text-2xl font-display font-bold text-white drop-shadow-lg">
@@ -319,9 +319,8 @@ const AgentReads = () => {
               </div>
               <Button 
                 onClick={handleReset} 
-                variant="outline"
                 size="sm"
-                className="h-9 px-4 text-sm font-medium rounded-xl border-amber-700/60 text-white hover:bg-amber-900/40 transition-all duration-300"
+                className="h-9 px-4 text-sm font-medium rounded-xl bg-amber-600 hover:bg-amber-700 text-white shadow-lg transition-all duration-300"
               >
                 <RotateCcw className="w-4 h-4 mr-2" />
                 New Search
@@ -383,11 +382,12 @@ const AgentReads = () => {
 
           {/* Recommendations Grid */}
           {hasRecommendations && (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 animate-fade-in container max-w-6xl mx-auto">
+            <div className="flex-1 flex items-center justify-center pb-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 animate-fade-in max-w-6xl w-full">
               {recommendations.map((book, index) => (
                 <article 
                   key={index}
-                  className="group rounded-2xl border border-amber-200/40 dark:border-amber-800/40 bg-card/80 backdrop-blur-sm overflow-hidden shadow-lg hover:shadow-xl hover:border-amber-300/60 dark:hover:border-amber-700/60 transition-all duration-300"
+                  className="group rounded-2xl border border-white/20 bg-white/95 backdrop-blur-sm overflow-hidden shadow-xl hover:shadow-2xl hover:scale-[1.02] transition-all duration-300"
                   style={{ animationDelay: `${index * 0.1}s` }}
                 >
                   {/* Book Cover */}
@@ -438,6 +438,7 @@ const AgentReads = () => {
                   </div>
                 </article>
               ))}
+              </div>
             </div>
           )}
         </div>
