@@ -184,7 +184,7 @@ const SEOAgent = () => {
                   href="https://app.vellum.ai/public/workflow-deployments/781c2781-7158-42d4-ad0b-de3a05855fb2?releaseTag=LATEST&condensedNodeView=1&showOpenInVellum=1"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 rounded-xl text-white font-medium transition-all hover:scale-105"
+                  className="inline-flex items-center gap-2 px-8 py-4 bg-emerald-500 hover:bg-emerald-400 rounded-xl text-white font-semibold text-lg shadow-lg shadow-emerald-500/30 transition-all hover:scale-105"
                 >
                   <ExternalLink className="w-5 h-5" />
                   Fork this Agent
