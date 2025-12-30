@@ -126,3 +126,7 @@ Daily Trigger (9am) ─▶ Vellum Workflow
 ## Workflow Preview
 
 The page includes an interactive iframe that loads the Vellum workflow visualization, allowing users to see the full agent architecture.
+
+## Vellum Workflow
+
+[Fork this Agent →](https://app.vellum.ai/public/workflow-deployments/781c2781-7158-42d4-ad0b-de3a05855fb2?releaseTag=LATEST&condensedNodeView=1&showOpenInVellum=1)

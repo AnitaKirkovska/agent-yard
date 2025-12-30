@@ -124,3 +124,7 @@ Analyze → [Search Cat1 | Search Cat2 | Search Cat3] →
 - 🔗 Direct Amazon purchase links
 - 🎨 Beautiful library-themed UI
 - 📱 Responsive grid layout
+
+## Vellum Workflow
+
+[Fork this Agent →](https://app.vellum.ai/public/workflow-deployments/4c0d8f19-90b4-4d91-a663-874e782656aa?releaseTag=LATEST&condensedNodeView=1&showOpenInVellum=1)
