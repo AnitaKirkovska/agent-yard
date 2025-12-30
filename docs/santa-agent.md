@@ -86,3 +86,7 @@ User Input ─▶ Edge Function ─▶ Vellum Workflow
 - 🎮 Mini-game while waiting for results
 - ❄️ Christmas-themed UI with snow animations
 - 🎉 Confetti celebration when results load
+
+## Vellum Workflow
+
+[Fork this Agent →](https://app.vellum.ai/public/workflow-deployments/98d37ca2-5771-4fe7-bd26-01d5f95bea32?releaseTag=LATEST&condensedNodeView=1&showOpenInVellum=1)
