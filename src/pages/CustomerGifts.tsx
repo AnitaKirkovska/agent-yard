@@ -211,6 +211,7 @@ const CustomerGifts = () => {
         {/* Tool Header - Fixed at top */}
         <ToolHeader
           workflowName="printful-printing-agent"
+          forkAgentUrl="https://app.vellum.ai/public/workflow-deployments/0c82deb1-58d7-41ce-91a6-29288592d0e1?releaseTag=LATEST&condensedNodeView=1&showOpenInVellum=1"
         />
 
         {/* Decorative elements */}
