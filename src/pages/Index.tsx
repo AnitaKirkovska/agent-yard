@@ -209,7 +209,7 @@ const Index = () => {
 
       {/* Open Source Banner */}
       <a 
-        href="https://github.com/anitakirkovska/30-days-of-ai-agents"
+        href="https://github.com/AnitaKirkovska/agent-yard"
         target="_blank"
         rel="noopener noreferrer"
         className="relative z-10 flex items-center justify-center gap-3 px-4 py-3 bg-gradient-to-r from-purple-500/10 via-pink-500/10 to-orange-500/10 border-b border-white/10 hover:border-white/20 transition-all animate-fade-in group"
