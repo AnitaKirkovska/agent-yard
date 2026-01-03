@@ -61,7 +61,7 @@ const apps: DayApp[] = [
   {
     day: 5,
     date: "Jan 3",
-    title: "2025 Calendar Roast",
+    title: "Roast Agent",
     description: "AI roasts how you spent your 2025 based on your calendar and creates a Gamma presentation",
     route: "/productivity-wrapped",
     icon: <BarChart3 className="w-6 h-6 text-purple-500" />,
