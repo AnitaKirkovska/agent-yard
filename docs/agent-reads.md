@@ -13,7 +13,7 @@ Agent Reads is an AI-powered book recommendation engine that suggests books base
 
 | Technology | Purpose |
 |------------|---------|
-| [Vellum](https://vellum.ai) | AI workflow orchestration |
+| [Vellum](https://vellum.ai?utm_medium=agentyard&utm_source=github) | AI workflow orchestration |
 | [SerpAPI](https://serpapi.com) | Book search and metadata |
 | [Google Books API](https://developers.google.com/books) | Book covers and details |
 | [Lovable](https://lovable.dev) | Frontend app builder |

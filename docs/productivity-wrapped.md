@@ -13,7 +13,7 @@ The 2025 Calendar Roast agent connects to your Google Calendar, analyzes how you
 
 | Technology | Purpose |
 |------------|---------|
-| [Vellum](https://vellum.ai) | AI workflow orchestration |
+| [Vellum](https://vellum.ai?utm_medium=agentyard&utm_source=github) | AI workflow orchestration |
 | [Lovable](https://lovable.dev) | Frontend app builder |
 | [Google Calendar](https://calendar.google.com) | Calendar data source |
 | [Google Docs](https://docs.google.com) | Document processing |

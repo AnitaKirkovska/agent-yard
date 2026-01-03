@@ -24,7 +24,7 @@ This project is built with:
 - **Frontend**: React, TypeScript, Vite, Tailwind CSS
 - **UI Components**: shadcn/ui
 - **Backend**: Supabase (via Lovable Cloud)
-- **AI Orchestration**: [Vellum](https://vellum.ai)
+- **AI Orchestration**: [Vellum](https://vellum.ai?utm_medium=agentyard&utm_source=github)
 - **App Builder**: [Lovable](https://lovable.dev)
 
 ## Project Structure
