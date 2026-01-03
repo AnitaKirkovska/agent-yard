@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Helmet } from "react-helmet-async";
-import { Calendar, Zap, BarChart3, Target, Lightbulb, Presentation, ExternalLink, X, Loader2 } from "lucide-react";
+import { Calendar, Zap, BarChart3, Lightbulb, Presentation, ExternalLink, X, Loader2 } from "lucide-react";
 import { ToolHeader } from "@/components/ToolHeader";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
@@ -24,7 +24,7 @@ const ProductivityWrapped = () => {
     <>
       <Helmet>
         <title>Productivity Wrapped | 30 Days of AI Agents</title>
-        <meta name="description" content="AI agent that analyzes your 2025 calendar and planning notes to reveal productivity patterns and create actionable insights for 2026." />
+        <meta name="description" content="AI agent that roasts how you spent your time in 2025 based on your Google Calendar and creates a brutally honest Gamma presentation." />
       </Helmet>
 
       <div className="min-h-screen relative overflow-x-hidden">
@@ -141,7 +141,7 @@ const ProductivityWrapped = () => {
             </h1>
 
             <p className="text-base md:text-lg text-white/80 max-w-lg mx-auto drop-shadow">
-              AI analyzes your 2025 calendar & planning notes to reveal productivity patterns and create a Gamma presentation with actionable insights for 2026.
+              Give the AI your calendar and it will roast how you spent your time in 2025. Get a brutally honest Gamma presentation with your productivity sins exposed.
             </p>
           </header>
 
@@ -218,31 +218,25 @@ const ProductivityWrapped = () => {
                   <div className="w-6 h-6 rounded-full bg-purple-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
                     <Calendar className="w-3.5 h-3.5 text-purple-400" />
                   </div>
-                  <p><span className="text-white font-medium">Fetches your calendar</span> — Pulls all your 2025 Google Calendar events and meeting patterns</p>
-                </div>
-                <div className="flex items-start gap-3">
-                  <div className="w-6 h-6 rounded-full bg-blue-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <Target className="w-3.5 h-3.5 text-blue-400" />
-                  </div>
-                  <p><span className="text-white font-medium">Reads planning notes</span> — Analyzes your planning documents and goal-setting notes from 2025</p>
+                  <p><span className="text-white font-medium">Ingests your calendar</span> — Pulls all your 2025 Google Calendar events and sees where your time really went</p>
                 </div>
                 <div className="flex items-start gap-3">
                   <div className="w-6 h-6 rounded-full bg-pink-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
                     <BarChart3 className="w-3.5 h-3.5 text-pink-400" />
                   </div>
-                  <p><span className="text-white font-medium">Identifies patterns</span> — Discovers recurring productivity patterns, peak hours, and habits</p>
+                  <p><span className="text-white font-medium">Analyzes the damage</span> — Calculates hours in meetings, context switches, and productivity sins</p>
                 </div>
                 <div className="flex items-start gap-3">
                   <div className="w-6 h-6 rounded-full bg-orange-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
                     <Lightbulb className="w-3.5 h-3.5 text-orange-400" />
                   </div>
-                  <p><span className="text-white font-medium">Generates insights</span> — Creates personalized recommendations for improving productivity in 2026</p>
+                  <p><span className="text-white font-medium">Roasts you mercilessly</span> — AI generates brutally honest observations about your time management</p>
                 </div>
                 <div className="flex items-start gap-3">
                   <div className="w-6 h-6 rounded-full bg-green-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
                     <Presentation className="w-3.5 h-3.5 text-green-400" />
                   </div>
-                  <p><span className="text-white font-medium">Creates Gamma presentation</span> — Delivers a beautiful, shareable presentation with all your insights</p>
+                  <p><span className="text-white font-medium">Creates Gamma presentation</span> — Delivers a shareable "Wrapped" style presentation with all your stats and roasts</p>
                 </div>
               </div>
             </div>

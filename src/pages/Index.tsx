@@ -62,7 +62,7 @@ const apps: DayApp[] = [
     day: 5,
     date: "Jan 3",
     title: "Productivity Wrapped",
-    description: "AI analyzes your 2025 calendar & notes to create a Gamma presentation with insights",
+    description: "AI roasts how you spent your 2025 based on your calendar and creates a Gamma presentation",
     route: "/productivity-wrapped",
     icon: <BarChart3 className="w-6 h-6 text-purple-500" />,
     available: true,
