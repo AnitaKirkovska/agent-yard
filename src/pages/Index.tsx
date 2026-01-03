@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
-import { Calendar, Sparkles, ArrowRight, Heart, Twitter, Shirt, Activity, BookOpen, FileText } from "lucide-react";
+import { Calendar, Sparkles, ArrowRight, Heart, Twitter, Shirt, Activity, BookOpen, FileText, Github, Star } from "lucide-react";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
@@ -209,6 +209,21 @@ const Index = () => {
 
       {/* Main Content */}
       <div className="relative z-10 container max-w-4xl mx-auto px-4 py-12 md:py-16">
+        {/* Open Source Banner */}
+        <a 
+          href="https://github.com/anitakirkovska/30-days-of-ai-agents"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center justify-center gap-3 mb-6 px-4 py-3 rounded-xl bg-gradient-to-r from-purple-500/10 via-pink-500/10 to-orange-500/10 border border-white/10 hover:border-white/20 transition-all animate-fade-in group"
+        >
+          <Github className="w-5 h-5 text-foreground" />
+          <span className="text-sm font-medium text-foreground">This project is open source!</span>
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-yellow-500/20 text-yellow-600 dark:text-yellow-400 text-sm font-semibold group-hover:scale-105 transition-transform">
+            <Star className="w-4 h-4 fill-current" />
+            Star on GitHub
+          </span>
+        </a>
+
         {/* Built with - Top */}
         <div className="text-center mb-8 text-sm text-muted-foreground/60 animate-fade-in">
           <p>Built with love using <a href="https://lovable.dev" target="_blank" rel="noopener noreferrer" className="underline hover:text-muted-foreground transition-colors">Lovable</a> and <a href="https://vellum.ai" target="_blank" rel="noopener noreferrer" className="underline hover:text-muted-foreground transition-colors">Vellum</a></p>
