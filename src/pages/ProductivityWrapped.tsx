@@ -148,23 +148,13 @@ const ProductivityWrapped = () => {
           {/* Workflow Preview */}
           <div className="mb-8">
             <div className="relative bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 overflow-hidden">
-              {/* Placeholder for workflow preview image */}
-              <div className="w-full h-[400px] md:h-[500px] bg-gradient-to-br from-purple-900/50 via-purple-800/30 to-pink-900/50 flex items-center justify-center">
-                <div className="text-center text-white/60">
-                  <Presentation className="w-16 h-16 mx-auto mb-4 opacity-50" />
-                  <p className="text-sm">Workflow preview coming soon</p>
-                </div>
-              </div>
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20 flex items-center justify-center">
-                <a
-                  href="https://app.vellum.ai/public/workflow-deployments/0b66e3ab-4655-4029-8ac4-9b23e0cc3949?releaseTag=LATEST&condensedNodeView=1&showOpenInVellum=1"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-8 py-4 bg-purple-500 hover:bg-purple-400 rounded-xl text-white font-semibold text-lg shadow-lg shadow-purple-500/30 transition-all hover:scale-105"
-                >
-                  <ExternalLink className="w-5 h-5" />
-                  Fork this Agent
-                </a>
+              <div className="w-full h-[500px] md:h-[600px]">
+                <iframe
+                  src="https://app.vellum.ai/public/workflow-deployments/0b66e3ab-4655-4029-8ac4-9b23e0cc3949?releaseTag=LATEST&condensedNodeView=1&showOpenInVellum=1"
+                  className="w-full h-full"
+                  title="2025 Calendar Roast Workflow"
+                  allow="clipboard-write"
+                />
               </div>
             </div>
           </div>
