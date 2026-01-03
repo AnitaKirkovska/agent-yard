@@ -145,19 +145,6 @@ const ProductivityWrapped = () => {
             </p>
           </header>
 
-          {/* Build this Agent Button */}
-          <div className="mb-6 flex justify-center">
-            <a
-              href="https://app.vellum.ai/onboarding/agent-builder/signup?agentBuilderPrompt=I want to build an agent that looks only at my calendar from the last year and roasts how I spent my time. It should call out meeting overload, context switching, fake busy work, and anything that looks obviously dumb in hindsight. The output should be a Gamma presentation with 4 slides covering the top insights only: where my time went, what wasted it, what actually mattered, and what to stop doing&utm_medium=agentyard&utm_source=calendar-roast"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-purple-500 hover:bg-purple-400 rounded-xl text-white font-semibold text-lg shadow-lg shadow-purple-500/30 transition-all hover:scale-105"
-            >
-              <ExternalLink className="w-5 h-5" />
-              Build this Agent
-            </a>
-          </div>
-
           {/* Workflow Preview */}
           <div className="mb-8">
             <div className="relative bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 overflow-hidden">
@@ -168,6 +155,18 @@ const ProductivityWrapped = () => {
                   title="2025 Calendar Roast Workflow"
                   allow="clipboard-write"
                 />
+              </div>
+              {/* Overlay with Build this Agent Button */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20 flex items-center justify-center">
+                <a
+                  href="https://app.vellum.ai/onboarding/agent-builder/signup?agentBuilderPrompt=I want to build an agent that looks only at my calendar from the last year and roasts how I spent my time. It should call out meeting overload, context switching, fake busy work, and anything that looks obviously dumb in hindsight. The output should be a Gamma presentation with 4 slides covering the top insights only: where my time went, what wasted it, what actually mattered, and what to stop doing&utm_medium=agentyard&utm_source=calendar-roast"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-8 py-4 bg-purple-500 hover:bg-purple-400 rounded-xl text-white font-semibold text-lg shadow-lg shadow-purple-500/30 transition-all hover:scale-105"
+                >
+                  <ExternalLink className="w-5 h-5" />
+                  Build this Agent
+                </a>
               </div>
             </div>
           </div>
