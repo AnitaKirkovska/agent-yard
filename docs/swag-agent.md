@@ -15,7 +15,7 @@ The Swag Agent creates personalized merchandise based on a user's hobby. It sele
 
 | Technology | Purpose |
 |------------|---------|
-| [Vellum](https://vellum.ai) | AI workflow orchestration |
+| [Vellum](https://vellum.ai?utm_medium=agentyard&utm_source=github) | AI workflow orchestration |
 | [Printify](https://printify.com) | Print-on-demand fulfillment |
 | [Lovable](https://lovable.dev) | Frontend app builder |
 | Supabase Edge Functions | Serverless API layer |

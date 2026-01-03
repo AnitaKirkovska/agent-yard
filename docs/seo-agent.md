@@ -15,7 +15,7 @@ The SEO Agent automates the entire SEO content creation pipeline. It runs on a d
 
 | Technology | Purpose |
 |------------|---------|
-| [Vellum](https://vellum.ai) | AI workflow orchestration |
+| [Vellum](https://vellum.ai?utm_medium=agentyard&utm_source=github) | AI workflow orchestration |
 | [Firecrawl](https://firecrawl.dev) | Web scraping for competitor content |
 | [SerpAPI](https://serpapi.com) | Search engine results analysis |
 | [Google Drive](https://drive.google.com) | Article storage (Google Docs) |

@@ -13,7 +13,7 @@ The Santa Agent helps users find personalized Secret Santa gifts by analyzing a 
 
 | Technology | Purpose |
 |------------|---------|
-| [Vellum](https://vellum.ai) | AI workflow orchestration |
+| [Vellum](https://vellum.ai?utm_medium=agentyard&utm_source=github) | AI workflow orchestration |
 | [Firecrawl](https://firecrawl.dev) | Web scraping for product details |
 | [Lovable](https://lovable.dev) | Frontend app builder |
 | Supabase Edge Functions | Serverless API layer |
