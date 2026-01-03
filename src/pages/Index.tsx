@@ -216,7 +216,7 @@ const Index = () => {
       >
         <Github className="w-5 h-5 text-foreground" />
         <span className="text-sm font-medium text-foreground">This project is open source!</span>
-        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-yellow-500/20 text-yellow-600 dark:text-yellow-400 text-sm font-semibold group-hover:scale-105 transition-transform">
+        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black text-white text-sm font-semibold group-hover:scale-105 transition-transform">
           <Star className="w-4 h-4 fill-current" />
           Star on GitHub
         </span>
