@@ -23,7 +23,7 @@ const ProductivityWrapped = () => {
   return (
     <>
       <Helmet>
-        <title>Productivity Wrapped | 30 Days of AI Agents</title>
+        <title>2025 Calendar Roast | 30 Days of AI Agents</title>
         <meta name="description" content="AI agent that roasts how you spent your time in 2025 based on your Google Calendar and creates a brutally honest Gamma presentation." />
       </Helmet>
 
@@ -137,7 +137,7 @@ const ProductivityWrapped = () => {
             </TooltipProvider>
 
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-white mb-3 tracking-tight drop-shadow-lg">
-              Productivity <span className="text-purple-400">Wrapped</span>
+              2025 Calendar <span className="text-purple-400">Roast</span>
             </h1>
 
             <p className="text-base md:text-lg text-white/80 max-w-lg mx-auto drop-shadow">
@@ -174,7 +174,7 @@ const ProductivityWrapped = () => {
             <DialogContent className="max-w-[95vw] w-[95vw] h-[90vh] p-0 bg-slate-900 border-white/10 flex flex-col">
               {/* Header bar with close button */}
               <div className="flex items-center justify-between px-4 py-3 border-b border-white/10 bg-slate-800/50 flex-shrink-0">
-                <span className="text-white/70 text-sm font-medium">Productivity Wrapped Workflow</span>
+                <span className="text-white/70 text-sm font-medium">2025 Calendar Roast Workflow</span>
                 <button
                   onClick={() => setIsPreviewOpen(false)}
                   className="p-2 bg-white/10 hover:bg-white/20 rounded-lg text-white transition-colors"
@@ -198,7 +198,7 @@ const ProductivityWrapped = () => {
                 <iframe
                   src="https://app.vellum.ai/public/workflow-deployments/YOUR_WORKFLOW_ID?releaseTag=LATEST&condensedNodeView=1&showOpenInVellum=1"
                   className="w-full h-full"
-                  title="Productivity Wrapped Workflow"
+                  title="2025 Calendar Roast Workflow"
                   allow="clipboard-write"
                   onLoad={() => setIsIframeLoading(false)}
                 />
