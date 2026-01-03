@@ -42,7 +42,6 @@ const ProductivityWrapped = () => {
         {/* Header */}
         <ToolHeader
           workflowName="productivity-wrapped-agent"
-          forkAgentUrl="https://app.vellum.ai/public/workflow-deployments/YOUR_WORKFLOW_ID?releaseTag=LATEST&condensedNodeView=1&showOpenInVellum=1"
         />
 
         {/* Main Content */}
