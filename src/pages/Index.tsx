@@ -224,11 +224,6 @@ const Index = () => {
           </span>
         </a>
 
-        {/* Built with - Top */}
-        <div className="text-center mb-8 text-sm text-muted-foreground/60 animate-fade-in">
-          <p>Built with love using <a href="https://lovable.dev" target="_blank" rel="noopener noreferrer" className="underline hover:text-muted-foreground transition-colors">Lovable</a> and <a href="https://vellum.ai" target="_blank" rel="noopener noreferrer" className="underline hover:text-muted-foreground transition-colors">Vellum</a></p>
-        </div>
-
         {/* Header */}
         <header className="text-center mb-12 animate-fade-in">
           <div className="inline-flex items-center justify-center p-3 rounded-2xl bg-gradient-subtle mb-6">
@@ -240,8 +235,16 @@ const Index = () => {
           </h1>
           
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Every day for the next 30 days, I'm building a new AI agent app. 
-            Follow along and try each one as they launch!
+            Every day for the next 30 days, I'm building a new AI agent app with{" "}
+            <a 
+              href="https://vellum.ai?utm_source=agentyard&utm_medium=website" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-primary hover:underline font-medium"
+            >
+              Vellum
+            </a>
+            . Follow along and try each one as they launch!
           </p>
 
           <div className="flex flex-wrap items-center justify-center gap-4 mt-6 text-sm text-muted-foreground">
