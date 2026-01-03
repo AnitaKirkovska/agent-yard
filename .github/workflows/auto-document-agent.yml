@@ -1,0 +1,157 @@
+name: Auto-Document New Agents
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'src/pages/*.tsx'
+
+jobs:
+  check-and-document:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Get changed files
+        id: changed-files
+        run: |
+          # Get list of added files in src/pages/
+          ADDED_FILES=$(git diff --name-only --diff-filter=A HEAD~1 HEAD -- 'src/pages/*.tsx' | grep -v 'Index.tsx\|NotFound.tsx' || true)
+          echo "added_files=$ADDED_FILES" >> $GITHUB_OUTPUT
+          if [ -n "$ADDED_FILES" ]; then
+            echo "has_new_pages=true" >> $GITHUB_OUTPUT
+          else
+            echo "has_new_pages=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Setup Node.js
+        if: steps.changed-files.outputs.has_new_pages == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Generate documentation
+        if: steps.changed-files.outputs.has_new_pages == 'true'
+        run: |
+          for file in ${{ steps.changed-files.outputs.added_files }}; do
+            # Extract filename without extension
+            FILENAME=$(basename "$file" .tsx)
+            
+            # Convert PascalCase/CamelCase to kebab-case for doc filename
+            DOC_NAME=$(echo "$FILENAME" | sed 's/\([A-Z]\)/-\L\1/g' | sed 's/^-//')
+            
+            # Extract page title from the file (looks for text in <h1> or title patterns)
+            PAGE_TITLE=$(grep -oP '(?<=<h1[^>]*>)[^<]+|(?<=title[=:]\s*["\x27])[^"\x27]+' "$file" | head -1 || echo "$FILENAME")
+            
+            # If no title found, use filename
+            if [ -z "$PAGE_TITLE" ]; then
+              PAGE_TITLE="$FILENAME"
+            fi
+            
+            # Get the day number by counting existing docs + 1
+            EXISTING_DOCS=$(ls docs/*.md 2>/dev/null | grep -v README.md | wc -l)
+            DAY_NUM=$((EXISTING_DOCS + 1))
+            
+            # Create doc file if it doesn't exist
+            DOC_PATH="docs/${DOC_NAME}.md"
+            if [ ! -f "$DOC_PATH" ]; then
+              cat > "$DOC_PATH" << EOF
+          # ${PAGE_TITLE} (Day ${DAY_NUM})
+          
+          <!-- TODO: Add one-line description -->
+          
+          ## Live Demo
+          [agentyard.co/${DOC_NAME}](https://agentyard.co/${DOC_NAME})
+          
+          ## Overview
+          
+          <!-- TODO: Describe what this agent does -->
+          
+          ## Tech Stack
+          
+          | Technology | Purpose |
+          |------------|---------|
+          | [Vellum](https://vellum.ai) | AI workflow orchestration |
+          | [Lovable](https://lovable.dev) | Frontend app builder |
+          | Supabase Edge Functions | Serverless API layer |
+          <!-- TODO: Add other technologies used -->
+          
+          ## How It Works
+          
+          \`\`\`
+          User Input ─▶ Edge Function ─▶ Vellum Workflow
+                                              │
+                                              ▼
+                                        [Processing]
+                                              │
+                                              ▼
+                                        Format & Return
+          \`\`\`
+          
+          ## Key Files
+          
+          | File | Description |
+          |------|-------------|
+          | \`src/pages/${FILENAME}.tsx\` | Main page component |
+          <!-- TODO: Add other key files -->
+          
+          ## Workflow Inputs
+          
+          | Input | Type | Description |
+          |-------|------|-------------|
+          <!-- TODO: Document workflow inputs -->
+          
+          ## Workflow Outputs
+          
+          | Output | Type | Description |
+          |--------|------|-------------|
+          <!-- TODO: Document workflow outputs -->
+          
+          ## Learnings & Optimizations
+          
+          <!-- TODO: Add learnings from building this agent -->
+          
+          ## Features
+          
+          <!-- TODO: List key features -->
+          
+          ## Vellum Workflow
+          
+          <!-- TODO: Add fork link -->
+          [Fork this Agent →](https://app.vellum.ai/public/workflow-deployments/YOUR_WORKFLOW_ID?releaseTag=LATEST)
+          EOF
+              
+              echo "Created documentation: $DOC_PATH"
+            fi
+            
+            # Update README.md - add new row to the table
+            # Check if agent is already in README
+            if ! grep -q "$DOC_NAME" README.md; then
+              # Find the line with the last agent entry and add after it
+              # Look for the pattern "| X |" where X is a number
+              LAST_DAY_LINE=$(grep -n "^| [0-9]" README.md | tail -1 | cut -d: -f1)
+              
+              if [ -n "$LAST_DAY_LINE" ]; then
+                # Insert new line after the last agent entry
+                sed -i "${LAST_DAY_LINE}a\\| ${DAY_NUM} | **${PAGE_TITLE}** | <!-- TODO: Add description --> | Vellum, Lovable | [📖](./docs/${DOC_NAME}.md) |" README.md
+                echo "Updated README.md with new agent entry"
+              fi
+            fi
+          done
+
+      - name: Commit and push changes
+        if: steps.changed-files.outputs.has_new_pages == 'true'
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add docs/*.md README.md
+          git diff --staged --quiet || git commit -m "📚 Auto-generate documentation for new agent pages"
+          git push
