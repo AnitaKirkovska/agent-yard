@@ -10,6 +10,7 @@ This folder contains detailed documentation for each AI agent in the 30 Days of 
 | 2 | Swag Agent | [swag-agent.md](./swag-agent.md) |
 | 3 | Agent Reads | [agent-reads.md](./agent-reads.md) |
 | 4 | SEO Agent | [seo-agent.md](./seo-agent.md) |
+| 5 | 2025 Calendar Roast | [productivity-wrapped.md](./productivity-wrapped.md) |
 
 ## Architecture Overview
 
