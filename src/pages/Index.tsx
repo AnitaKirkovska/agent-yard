@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
-import { Calendar, Sparkles, ArrowRight, Heart, Twitter, Shirt, Activity, BookOpen, FileText, Github, Star } from "lucide-react";
+import { Calendar, Sparkles, ArrowRight, Heart, Twitter, Shirt, Activity, BookOpen, FileText, Github, Star, BarChart3 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
@@ -58,9 +58,19 @@ const apps: DayApp[] = [
     available: true,
     workflowName: "seo-content-agent",
   },
+  {
+    day: 5,
+    date: "Jan 3",
+    title: "Productivity Wrapped",
+    description: "AI analyzes your 2025 calendar & notes to create a Gamma presentation with insights",
+    route: "/productivity-wrapped",
+    icon: <BarChart3 className="w-6 h-6 text-purple-500" />,
+    available: true,
+    workflowName: "productivity-wrapped-agent",
+  },
   // Future days will be added here
-  ...Array.from({ length: 26 }, (_, i) => ({
-    day: i + 5,
+  ...Array.from({ length: 25 }, (_, i) => ({
+    day: i + 6,
     date: `Dec ${26 + i > 31 ? (26 + i - 31) : 26 + i}`,
     title: "Coming Soon",
     description: "A new AI agent app will be revealed",

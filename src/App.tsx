@@ -9,6 +9,7 @@ import SecretSantaGiftFinder from "./pages/SecretSantaGiftFinder";
 import CustomerGifts from "./pages/CustomerGifts";
 import AgentReads from "./pages/AgentReads";
 import SEOAgent from "./pages/SEOAgent";
+import ProductivityWrapped from "./pages/ProductivityWrapped";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -26,6 +27,7 @@ const App = () => (
             <Route path="/customer-gifts" element={<CustomerGifts />} />
             <Route path="/agent-reads" element={<AgentReads />} />
             <Route path="/seo-agent" element={<SEOAgent />} />
+            <Route path="/productivity-wrapped" element={<ProductivityWrapped />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
