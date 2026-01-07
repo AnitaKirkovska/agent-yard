@@ -634,7 +634,7 @@ const AutomationAdvisor = () => {
               <div className="flex items-start justify-between mb-6">
                 <div>
                   <h2 className="text-xl font-semibold text-gray-900 mb-1">Your AI Agent Recommendations</h2>
-                  <p className="text-gray-500 text-sm">Here are 4 agents tailored to your workflow</p>
+                  <p className="text-gray-500 text-sm">Here are 4 tasks that you can automate today</p>
                 </div>
                 <Button
                   variant="ghost"
