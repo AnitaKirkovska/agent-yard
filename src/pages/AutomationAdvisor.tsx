@@ -630,9 +630,9 @@ const AutomationAdvisor = () => {
 
           {/* Results Section */}
           {hasSubmitted && !isLoading && ideas.length > 0 && (
-            <div className="mt-12 space-y-6">
-              <div className="text-center flex items-center justify-between">
-                <div className="flex-1">
+            <div className="mt-12 p-6 bg-gray-50 rounded-xl border border-gray-100">
+              <div className="flex items-start justify-between mb-6">
+                <div>
                   <h2 className="text-xl font-semibold text-gray-900 mb-1">Your AI Agent Recommendations</h2>
                   <p className="text-gray-500 text-sm">Here are 4 agents tailored to your workflow</p>
                 </div>
@@ -647,7 +647,7 @@ const AutomationAdvisor = () => {
                 </Button>
               </div>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
                 {ideas.slice(0, 4).map((idea, index) => {
                   const cardStyles = [
                     { bg: 'bg-blue-100', text: 'text-blue-600', border: 'hover:border-blue-300', icon: Zap },
@@ -664,19 +664,19 @@ const AutomationAdvisor = () => {
                       open={expandedCards.includes(index)}
                       onOpenChange={() => toggleCard(index)}
                     >
-                      <Card className={`border-gray-200 ${style.border} transition-colors h-full`}>
+                      <Card className={`border-gray-200 bg-white ${style.border} transition-colors`}>
                         <CollapsibleTrigger className="w-full text-left">
                           <CardHeader className="pb-3">
                             <div className="flex items-start gap-3">
                               <div className={`p-2 rounded-lg ${style.bg}`}>
                                 <IconComponent className={`w-5 h-5 ${style.text}`} />
                               </div>
-                              <div className="flex-1">
+                              <div className="flex-1 min-w-0">
                                 <CardTitle className="text-base font-medium text-gray-900 leading-snug">
                                   {idea.title}
                                 </CardTitle>
                                 <div className="flex items-center gap-2 mt-2 text-sm text-gray-500">
-                                  <Clock className="w-3.5 h-3.5" />
+                                  <Clock className="w-3.5 h-3.5 flex-shrink-0" />
                                   <span className="text-xs">{idea.trigger}</span>
                                 </div>
                               </div>
@@ -696,7 +696,7 @@ const AutomationAdvisor = () => {
                                 <Badge 
                                   key={toolIndex} 
                                   variant="secondary" 
-                                  className="bg-gray-100 text-gray-600 text-xs font-normal"
+                                  className="bg-blue-100 text-blue-700 text-xs font-normal"
                                 >
                                   {tool}
                                 </Badge>
