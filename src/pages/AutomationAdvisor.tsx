@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Helmet } from "react-helmet-async";
-import { ArrowRight, Loader2, X, Plus, Zap, Clock, Sparkles, ChevronDown, ExternalLink, Pencil } from "lucide-react";
+import { ArrowRight, Loader2, X, Plus, Zap, Clock, Sparkles, ChevronDown, ExternalLink, Pencil, Bot, Cpu, Workflow } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -355,49 +355,6 @@ const AutomationAdvisor = () => {
             <p className="text-gray-500">Tell us what you do and get 3 AI agent ideas you can build today</p>
           </div>
 
-          {/* Collapsed Form Summary */}
-          {formCollapsed && hasSubmitted && (
-            <div className="mb-8 p-4 bg-gray-50 rounded-lg border border-gray-200">
-              <div className="flex items-center justify-between mb-3">
-                <h3 className="text-sm font-medium text-gray-900">Your Profile</h3>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => setFormCollapsed(false)}
-                  className="text-gray-500 hover:text-gray-700"
-                >
-                  <Pencil className="w-4 h-4 mr-1" />
-                  Edit
-                </Button>
-              </div>
-              <div className="space-y-2 text-sm text-gray-600">
-                <p><span className="font-medium">Role:</span> {jobTitle} ({seniorityLevel})</p>
-                <div className="flex flex-wrap gap-1">
-                  <span className="font-medium">Work to automate:</span>
-                  {responsibilities.slice(0, 3).map((r) => (
-                    <Badge key={r} variant="secondary" className="bg-gray-100 text-gray-600 text-xs font-normal">
-                      {r}
-                    </Badge>
-                  ))}
-                  {responsibilities.length > 3 && (
-                    <span className="text-gray-400 text-xs">+{responsibilities.length - 3} more</span>
-                  )}
-                </div>
-                <div className="flex flex-wrap gap-1">
-                  <span className="font-medium">Tools:</span>
-                  {toolsUsed.slice(0, 4).map((t) => (
-                    <Badge key={t} variant="secondary" className="bg-gray-100 text-gray-600 text-xs font-normal">
-                      {t}
-                    </Badge>
-                  ))}
-                  {toolsUsed.length > 4 && (
-                    <span className="text-gray-400 text-xs">+{toolsUsed.length - 4} more</span>
-                  )}
-                </div>
-              </div>
-            </div>
-          )}
-
           {/* Full Form */}
           {!formCollapsed && (
             <form onSubmit={handleSubmit} className="space-y-6">
@@ -650,18 +607,21 @@ const AutomationAdvisor = () => {
                 <p className="text-gray-500">Analyzing your workflow to find the best AI agents</p>
               </div>
               
-              <div className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {[1, 2, 3].map((i) => (
                   <Card key={i} className="border-gray-200">
                     <CardHeader className="pb-3">
                       <div className="flex items-start gap-3">
-                        <Skeleton className="w-9 h-9 rounded-lg" />
+                        <Skeleton className="w-10 h-10 rounded-lg" />
                         <div className="flex-1 space-y-2">
                           <Skeleton className="h-5 w-3/4" />
                           <Skeleton className="h-4 w-1/2" />
                         </div>
                       </div>
                     </CardHeader>
+                    <CardContent className="pt-0">
+                      <Skeleton className="h-10 w-full" />
+                    </CardContent>
                   </Card>
                 ))}
               </div>
@@ -671,70 +631,88 @@ const AutomationAdvisor = () => {
           {/* Results Section */}
           {hasSubmitted && !isLoading && ideas.length > 0 && (
             <div className="mt-12 space-y-6">
-              <div className="text-center">
-                <h2 className="text-xl font-semibold text-gray-900 mb-2">Your AI Agent Recommendations</h2>
-                <p className="text-gray-500">Here are 3 agents tailored to your workflow</p>
+              <div className="text-center flex items-center justify-between">
+                <div className="flex-1">
+                  <h2 className="text-xl font-semibold text-gray-900 mb-1">Your AI Agent Recommendations</h2>
+                  <p className="text-gray-500 text-sm">Here are 3 agents tailored to your workflow</p>
+                </div>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setFormCollapsed(false)}
+                  className="text-gray-500 hover:text-gray-700"
+                >
+                  <Pencil className="w-4 h-4 mr-1" />
+                  Edit inputs
+                </Button>
               </div>
               
-              <div className="space-y-4">
-                {ideas.slice(0, 3).map((idea, index) => (
-                  <Collapsible 
-                    key={index} 
-                    open={expandedCards.includes(index)}
-                    onOpenChange={() => toggleCard(index)}
-                  >
-                    <Card className="border-gray-200 hover:border-blue-200 transition-colors">
-                      <CollapsibleTrigger className="w-full text-left">
-                        <CardHeader className="pb-3">
-                          <div className="flex items-start gap-3">
-                            <div className="p-2 rounded-lg bg-blue-100">
-                              <Zap className="w-5 h-5 text-blue-600" />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {ideas.slice(0, 3).map((idea, index) => {
+                  const cardStyles = [
+                    { bg: 'bg-blue-100', text: 'text-blue-600', border: 'hover:border-blue-300', icon: Zap },
+                    { bg: 'bg-purple-100', text: 'text-purple-600', border: 'hover:border-purple-300', icon: Bot },
+                    { bg: 'bg-emerald-100', text: 'text-emerald-600', border: 'hover:border-emerald-300', icon: Workflow },
+                  ];
+                  const style = cardStyles[index % 3];
+                  const IconComponent = style.icon;
+                  
+                  return (
+                    <Collapsible 
+                      key={index} 
+                      open={expandedCards.includes(index)}
+                      onOpenChange={() => toggleCard(index)}
+                    >
+                      <Card className={`border-gray-200 ${style.border} transition-colors h-full`}>
+                        <CollapsibleTrigger className="w-full text-left">
+                          <CardHeader className="pb-3">
+                            <div className="flex items-start gap-3">
+                              <div className={`p-2 rounded-lg ${style.bg}`}>
+                                <IconComponent className={`w-5 h-5 ${style.text}`} />
+                              </div>
+                              <div className="flex-1">
+                                <CardTitle className="text-base font-medium text-gray-900 leading-snug">
+                                  {idea.title}
+                                </CardTitle>
+                                <div className="flex items-center gap-2 mt-2 text-sm text-gray-500">
+                                  <Clock className="w-3.5 h-3.5" />
+                                  <span className="text-xs">{idea.trigger}</span>
+                                </div>
+                              </div>
+                              <ChevronDown 
+                                className={`w-5 h-5 text-gray-400 transition-transform flex-shrink-0 ${
+                                  expandedCards.includes(index) ? 'rotate-180' : ''
+                                }`}
+                              />
                             </div>
-                            <div className="flex-1">
-                              <CardTitle className="text-lg font-medium text-gray-900">
-                                {idea.title}
-                              </CardTitle>
-                              <div className="flex items-center gap-2 mt-2 text-sm text-gray-500">
-                                <Clock className="w-4 h-4" />
-                                <span>{idea.trigger}</span>
+                          </CardHeader>
+                        </CollapsibleTrigger>
+                        
+                        <CollapsibleContent>
+                          <CardContent className="pt-0 space-y-4">
+                            <div className="flex flex-wrap gap-1.5">
+                              {idea.tools.map((tool, toolIndex) => (
+                                <Badge 
+                                  key={toolIndex} 
+                                  variant="secondary" 
+                                  className="bg-gray-100 text-gray-600 text-xs font-normal"
+                                >
+                                  {tool}
+                                </Badge>
+                              ))}
+                            </div>
+                            
+                            <div className="flex items-start gap-2">
+                              <Sparkles className="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" />
+                              <div>
+                                <p className="text-xs text-gray-400 uppercase tracking-wide mb-1">What it automates</p>
+                                <p className="text-sm text-gray-700">{idea.what_it_automates}</p>
                               </div>
                             </div>
-                            <ChevronDown 
-                              className={`w-5 h-5 text-gray-400 transition-transform ${
-                                expandedCards.includes(index) ? 'rotate-180' : ''
-                              }`}
-                            />
-                          </div>
-                        </CardHeader>
-                      </CollapsibleTrigger>
-                      
-                      <CollapsibleContent>
-                        <CardContent className="pt-0 space-y-4">
-                          <div className="flex flex-wrap gap-1.5">
-                            {idea.tools.map((tool, toolIndex) => (
-                              <Badge 
-                                key={toolIndex} 
-                                variant="secondary" 
-                                className="bg-gray-100 text-gray-600 text-xs font-normal"
-                              >
-                                {tool}
-                              </Badge>
-                            ))}
-                          </div>
-                          
-                          <div className="flex items-start gap-2">
-                            <Sparkles className="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" />
-                            <div>
-                              <p className="text-xs text-gray-400 uppercase tracking-wide mb-1">What it automates</p>
-                              <p className="text-sm text-gray-700">{idea.what_it_automates}</p>
-                            </div>
-                          </div>
-                          
-                          <div className="bg-blue-50 rounded-lg p-3">
-                            <p className="text-xs text-blue-600 uppercase tracking-wide mb-1">Why this fits you</p>
-                            <p className="text-sm text-blue-800">{idea.why_this_fits_you}</p>
-                          </div>
-                          
+                          </CardContent>
+                        </CollapsibleContent>
+                        
+                        <CardContent className="pt-0">
                           <Button 
                             className="w-full bg-gray-900 hover:bg-gray-800 text-white"
                             onClick={(e) => {
@@ -742,14 +720,14 @@ const AutomationAdvisor = () => {
                               window.open('https://www.vellum.ai/', '_blank');
                             }}
                           >
-                            Build this agent with Vellum
+                            Build this agent
                             <ExternalLink className="w-4 h-4 ml-2" />
                           </Button>
                         </CardContent>
-                      </CollapsibleContent>
-                    </Card>
-                  </Collapsible>
-                ))}
+                      </Card>
+                    </Collapsible>
+                  );
+                })}
               </div>
             </div>
           )}
