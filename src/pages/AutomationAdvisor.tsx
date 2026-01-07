@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Helmet } from "react-helmet-async";
-import { ArrowRight, Loader2, X, Plus, Zap, Clock, Sparkles, ChevronDown, ExternalLink } from "lucide-react";
+import { ArrowRight, Loader2, X, Plus, Zap, Clock, Sparkles, ChevronDown, ExternalLink, Pencil } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -259,6 +259,7 @@ const AutomationAdvisor = () => {
   const [ideas, setIdeas] = useState<AgentIdea[]>([]);
   const [hasSubmitted, setHasSubmitted] = useState(false);
   const [expandedCards, setExpandedCards] = useState<number[]>([]);
+  const [formCollapsed, setFormCollapsed] = useState(false);
 
   const toggleCard = (index: number) => {
     setExpandedCards(prev => 
@@ -295,6 +296,7 @@ const AutomationAdvisor = () => {
     e.preventDefault();
     setIsLoading(true);
     setHasSubmitted(true);
+    setFormCollapsed(true);
     
     try {
       const { data, error } = await supabase.functions.invoke('automation-advisor', {
@@ -353,247 +355,293 @@ const AutomationAdvisor = () => {
             <p className="text-gray-500">Add your details and get 3 AI agent recs that you can build today</p>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Role */}
-            <section className="space-y-4">
-              <h2 className="text-sm font-medium text-gray-900">Your Role</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-1.5">
-                  <Label htmlFor="jobTitle" className="text-gray-600 text-sm">Job Title</Label>
-                  <Input
-                    id="jobTitle"
-                    value={jobTitle}
-                    onChange={(e) => setJobTitle(e.target.value)}
-                    placeholder="e.g. Sales Development Representative"
-                    className="border-gray-200"
-                  />
-                </div>
-                <div className="space-y-1.5">
-                  <Label htmlFor="seniority" className="text-gray-600 text-sm">Level</Label>
-                  <Select value={seniorityLevel} onValueChange={setSeniorityLevel}>
-                    <SelectTrigger className="border-gray-200">
-                      <SelectValue placeholder="Select level" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-white">
-                      {SENIORITY_LEVELS.map((level) => (
-                        <SelectItem key={level} value={level}>
-                          {level}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
+          {/* Collapsed Form Summary */}
+          {formCollapsed && hasSubmitted && (
+            <div className="mb-8 p-4 bg-gray-50 rounded-lg border border-gray-200">
+              <div className="flex items-center justify-between mb-3">
+                <h3 className="text-sm font-medium text-gray-900">Your Profile</h3>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setFormCollapsed(false)}
+                  className="text-gray-500 hover:text-gray-700"
+                >
+                  <Pencil className="w-4 h-4 mr-1" />
+                  Edit
+                </Button>
               </div>
-            </section>
-
-            {/* Responsibilities */}
-            <section className="space-y-3">
-              <Label className="text-gray-600 text-sm">Work I want to spend less time on</Label>
-              {responsibilities.length > 0 && (
-                <div className="flex flex-wrap gap-1.5">
-                  {responsibilities.map((resp) => (
-                    <Badge 
-                      key={resp} 
-                      variant="secondary" 
-                      className="bg-blue-100 text-blue-700 px-2 py-1 text-xs flex items-center gap-1.5 font-normal hover:bg-blue-600 hover:text-white transition-colors cursor-default"
-                    >
-                      {resp}
-                      <button
-                        type="button"
-                        onClick={() => handleRemoveResponsibility(resp)}
-                        className="hover:text-blue-900"
-                      >
-                        <X className="w-3 h-3" />
-                      </button>
+              <div className="space-y-2 text-sm text-gray-600">
+                <p><span className="font-medium">Role:</span> {jobTitle} ({seniorityLevel})</p>
+                <div className="flex flex-wrap gap-1">
+                  <span className="font-medium">Work to automate:</span>
+                  {responsibilities.slice(0, 3).map((r) => (
+                    <Badge key={r} variant="secondary" className="bg-gray-100 text-gray-600 text-xs font-normal">
+                      {r}
                     </Badge>
                   ))}
+                  {responsibilities.length > 3 && (
+                    <span className="text-gray-400 text-xs">+{responsibilities.length - 3} more</span>
+                  )}
                 </div>
-              )}
-              <Popover open={respOpen} onOpenChange={setRespOpen}>
-                <PopoverTrigger asChild>
-                  <Button
-                    variant="outline"
-                    type="button"
-                    className="w-full justify-between border-gray-200 font-normal text-gray-500 hover:bg-gray-50 hover:text-gray-600"
-                  >
-                    Add responsibilities...
-                    <Plus className="w-4 h-4 ml-2 opacity-50" />
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0 bg-white z-50" align="start">
-                  <div className="p-2 border-b border-gray-100">
-                    <div className="flex gap-2">
-                      <Input
-                        value={customResp}
-                        onChange={(e) => setCustomResp(e.target.value)}
-                        placeholder="Search or add custom..."
-                        className="border-gray-200 text-sm h-8"
-                        onKeyDown={(e) => {
-                          if (e.key === "Enter") {
-                            e.preventDefault();
-                            handleAddResponsibility(customResp);
-                            setCustomResp("");
-                          }
-                        }}
-                      />
-                      <Button
-                        type="button"
-                        size="sm"
-                        variant="outline"
-                        className="h-8 px-3"
-                        onClick={() => {
-                          handleAddResponsibility(customResp);
-                          setCustomResp("");
-                        }}
-                      >
-                        Add
-                      </Button>
-                    </div>
+                <div className="flex flex-wrap gap-1">
+                  <span className="font-medium">Tools:</span>
+                  {toolsUsed.slice(0, 4).map((t) => (
+                    <Badge key={t} variant="secondary" className="bg-gray-100 text-gray-600 text-xs font-normal">
+                      {t}
+                    </Badge>
+                  ))}
+                  {toolsUsed.length > 4 && (
+                    <span className="text-gray-400 text-xs">+{toolsUsed.length - 4} more</span>
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Full Form */}
+          {!formCollapsed && (
+            <form onSubmit={handleSubmit} className="space-y-6">
+              {/* Role */}
+              <section className="space-y-4">
+                <h2 className="text-sm font-medium text-gray-900">Your Role</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-1.5">
+                    <Label htmlFor="jobTitle" className="text-gray-600 text-sm">Job Title</Label>
+                    <Input
+                      id="jobTitle"
+                      value={jobTitle}
+                      onChange={(e) => setJobTitle(e.target.value)}
+                      placeholder="e.g. Sales Development Representative"
+                      className="border-gray-200"
+                    />
                   </div>
-                  <div className="max-h-48 overflow-auto">
-                    <div className="px-2 py-1.5 text-xs text-gray-400 uppercase tracking-wide">Examples</div>
-                    {availableResponsibilities.map((resp) => (
-                      <button
-                        key={resp}
-                        type="button"
-                        onClick={() => handleAddResponsibility(resp)}
-                        className="w-full px-3 py-2 text-sm text-left hover:bg-gray-50"
+                  <div className="space-y-1.5">
+                    <Label htmlFor="seniority" className="text-gray-600 text-sm">Level</Label>
+                    <Select value={seniorityLevel} onValueChange={setSeniorityLevel}>
+                      <SelectTrigger className="border-gray-200">
+                        <SelectValue placeholder="Select level" />
+                      </SelectTrigger>
+                      <SelectContent className="bg-white">
+                        {SENIORITY_LEVELS.map((level) => (
+                          <SelectItem key={level} value={level}>
+                            {level}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+              </section>
+
+              {/* Responsibilities */}
+              <section className="space-y-3">
+                <Label className="text-gray-600 text-sm">Work I want to spend less time on</Label>
+                {responsibilities.length > 0 && (
+                  <div className="flex flex-wrap gap-1.5">
+                    {responsibilities.map((resp) => (
+                      <Badge 
+                        key={resp} 
+                        variant="secondary" 
+                        className="bg-blue-100 text-blue-700 px-2 py-1 text-xs flex items-center gap-1.5 font-normal hover:bg-blue-600 hover:text-white transition-colors cursor-default"
                       >
                         {resp}
-                      </button>
+                        <button
+                          type="button"
+                          onClick={() => handleRemoveResponsibility(resp)}
+                          className="hover:text-blue-900"
+                        >
+                          <X className="w-3 h-3" />
+                        </button>
+                      </Badge>
                     ))}
-                    {availableResponsibilities.length === 0 && (
-                      <div className="px-3 py-2 text-sm text-gray-400">All examples added</div>
-                    )}
                   </div>
-                </PopoverContent>
-              </Popover>
-            </section>
-
-            {/* Tools */}
-            <section className="space-y-3">
-              <Label className="text-gray-600 text-sm">Tools that you use most</Label>
-              {toolsUsed.length > 0 && (
-                <div className="flex flex-wrap gap-1.5">
-                  {toolsUsed.map((tool) => (
-                    <Badge 
-                      key={tool} 
-                      variant="secondary" 
-                      className="bg-blue-100 text-blue-700 px-2 py-1 text-xs flex items-center gap-1.5 font-normal hover:bg-blue-600 hover:text-white transition-colors cursor-default"
+                )}
+                <Popover open={respOpen} onOpenChange={setRespOpen}>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      type="button"
+                      className="w-full justify-between border-gray-200 font-normal text-gray-500 hover:bg-gray-50 hover:text-gray-600"
                     >
-                      {tool}
-                      <button
-                        type="button"
-                        onClick={() => handleRemoveTool(tool)}
-                        className="hover:text-blue-900"
-                      >
-                        <X className="w-3 h-3" />
-                      </button>
-                    </Badge>
-                  ))}
-                </div>
-              )}
-              <Popover open={toolsOpen} onOpenChange={setToolsOpen}>
-                <PopoverTrigger asChild>
-                  <Button
-                    variant="outline"
-                    type="button"
-                    className="w-full justify-between border-gray-200 font-normal text-gray-500 hover:bg-gray-50 hover:text-gray-600"
-                  >
-                    Add tools...
-                    <Plus className="w-4 h-4 ml-2 opacity-50" />
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0 bg-white z-50" align="start">
-                  <div className="p-2 border-b border-gray-100">
-                    <div className="flex gap-2">
-                      <Input
-                        value={customTool}
-                        onChange={(e) => setCustomTool(e.target.value)}
-                        placeholder="Search or add custom..."
-                        className="border-gray-200 text-sm h-8"
-                        onKeyDown={(e) => {
-                          if (e.key === "Enter") {
-                            e.preventDefault();
-                            handleAddTool(customTool);
-                            setCustomTool("");
-                          }
-                        }}
-                      />
-                      <Button
-                        type="button"
-                        size="sm"
-                        variant="outline"
-                        className="h-8 px-3"
-                        onClick={() => {
-                          handleAddTool(customTool);
-                          setCustomTool("");
-                        }}
-                      >
-                        Add
-                      </Button>
+                      Add responsibilities...
+                      <Plus className="w-4 h-4 ml-2 opacity-50" />
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0 bg-white z-50" align="start">
+                    <div className="p-2 border-b border-gray-100">
+                      <div className="flex gap-2">
+                        <Input
+                          value={customResp}
+                          onChange={(e) => setCustomResp(e.target.value)}
+                          placeholder="Search or add custom..."
+                          className="border-gray-200 text-sm h-8"
+                          onKeyDown={(e) => {
+                            if (e.key === "Enter") {
+                              e.preventDefault();
+                              handleAddResponsibility(customResp);
+                              setCustomResp("");
+                            }
+                          }}
+                        />
+                        <Button
+                          type="button"
+                          size="sm"
+                          variant="outline"
+                          className="h-8 px-3"
+                          onClick={() => {
+                            handleAddResponsibility(customResp);
+                            setCustomResp("");
+                          }}
+                        >
+                          Add
+                        </Button>
+                      </div>
                     </div>
-                  </div>
-                  <div className="max-h-48 overflow-auto">
-                    <div className="px-2 py-1.5 text-xs text-gray-400 uppercase tracking-wide">Examples</div>
-                    {availableTools.map((tool) => (
-                      <button
-                        key={tool}
-                        type="button"
-                        onClick={() => handleAddTool(tool)}
-                        className="w-full px-3 py-2 text-sm text-left hover:bg-gray-50"
+                    <div className="max-h-48 overflow-auto">
+                      <div className="px-2 py-1.5 text-xs text-gray-400 uppercase tracking-wide">Examples</div>
+                      {availableResponsibilities.map((resp) => (
+                        <button
+                          key={resp}
+                          type="button"
+                          onClick={() => handleAddResponsibility(resp)}
+                          className="w-full px-3 py-2 text-sm text-left hover:bg-gray-50"
+                        >
+                          {resp}
+                        </button>
+                      ))}
+                      {availableResponsibilities.length === 0 && (
+                        <div className="px-3 py-2 text-sm text-gray-400">All examples added</div>
+                      )}
+                    </div>
+                  </PopoverContent>
+                </Popover>
+              </section>
+
+              {/* Tools */}
+              <section className="space-y-3">
+                <Label className="text-gray-600 text-sm">Tools that you use most</Label>
+                {toolsUsed.length > 0 && (
+                  <div className="flex flex-wrap gap-1.5">
+                    {toolsUsed.map((tool) => (
+                      <Badge 
+                        key={tool} 
+                        variant="secondary" 
+                        className="bg-blue-100 text-blue-700 px-2 py-1 text-xs flex items-center gap-1.5 font-normal hover:bg-blue-600 hover:text-white transition-colors cursor-default"
                       >
                         {tool}
-                      </button>
+                        <button
+                          type="button"
+                          onClick={() => handleRemoveTool(tool)}
+                          className="hover:text-blue-900"
+                        >
+                          <X className="w-3 h-3" />
+                        </button>
+                      </Badge>
                     ))}
-                    {availableTools.length === 0 && (
-                      <div className="px-3 py-2 text-sm text-gray-400">All examples added</div>
-                    )}
                   </div>
-                </PopoverContent>
-              </Popover>
-            </section>
+                )}
+                <Popover open={toolsOpen} onOpenChange={setToolsOpen}>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      type="button"
+                      className="w-full justify-between border-gray-200 font-normal text-gray-500 hover:bg-gray-50 hover:text-gray-600"
+                    >
+                      Add tools...
+                      <Plus className="w-4 h-4 ml-2 opacity-50" />
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0 bg-white z-50" align="start">
+                    <div className="p-2 border-b border-gray-100">
+                      <div className="flex gap-2">
+                        <Input
+                          value={customTool}
+                          onChange={(e) => setCustomTool(e.target.value)}
+                          placeholder="Search or add custom..."
+                          className="border-gray-200 text-sm h-8"
+                          onKeyDown={(e) => {
+                            if (e.key === "Enter") {
+                              e.preventDefault();
+                              handleAddTool(customTool);
+                              setCustomTool("");
+                            }
+                          }}
+                        />
+                        <Button
+                          type="button"
+                          size="sm"
+                          variant="outline"
+                          className="h-8 px-3"
+                          onClick={() => {
+                            handleAddTool(customTool);
+                            setCustomTool("");
+                          }}
+                        >
+                          Add
+                        </Button>
+                      </div>
+                    </div>
+                    <div className="max-h-48 overflow-auto">
+                      <div className="px-2 py-1.5 text-xs text-gray-400 uppercase tracking-wide">Examples</div>
+                      {availableTools.map((tool) => (
+                        <button
+                          key={tool}
+                          type="button"
+                          onClick={() => handleAddTool(tool)}
+                          className="w-full px-3 py-2 text-sm text-left hover:bg-gray-50"
+                        >
+                          {tool}
+                        </button>
+                      ))}
+                      {availableTools.length === 0 && (
+                        <div className="px-3 py-2 text-sm text-gray-400">All examples added</div>
+                      )}
+                    </div>
+                  </PopoverContent>
+                </Popover>
+              </section>
 
-            {/* Compliance */}
-            <section className="space-y-4">
-              <h2 className="text-sm font-medium text-gray-900">Constraints</h2>
-              <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <Label className="text-gray-600 text-sm">I want to approve LLM outputs</Label>
-                  <Switch
-                    checked={requiresApproval}
-                    onCheckedChange={setRequiresApproval}
-                  />
+              {/* Compliance */}
+              <section className="space-y-4">
+                <h2 className="text-sm font-medium text-gray-900">Constraints</h2>
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <Label className="text-gray-600 text-sm">I want to approve LLM outputs</Label>
+                    <Switch
+                      checked={requiresApproval}
+                      onCheckedChange={setRequiresApproval}
+                    />
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <Label className="text-gray-600 text-sm">My processes involve customer data</Label>
+                    <Switch
+                      checked={involvesCustomerData}
+                      onCheckedChange={setInvolvesCustomerData}
+                    />
+                  </div>
                 </div>
-                <div className="flex items-center justify-between">
-                  <Label className="text-gray-600 text-sm">My processes involve customer data</Label>
-                  <Switch
-                    checked={involvesCustomerData}
-                    onCheckedChange={setInvolvesCustomerData}
-                  />
-                </div>
-              </div>
-            </section>
+              </section>
 
-            {/* Submit */}
-            <Button
-              type="submit"
-              disabled={!isFormValid || isLoading}
-              className="w-full bg-gray-900 hover:bg-gray-800 text-white py-6"
-            >
-              {isLoading ? (
-                <>
-                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                  Analyzing your workflow...
-                </>
-              ) : (
-                <>
-                  Get Recommendations
-                  <ArrowRight className="w-4 h-4 ml-2" />
-                </>
-              )}
-            </Button>
-          </form>
+              {/* Submit */}
+              <Button
+                type="submit"
+                disabled={!isFormValid || isLoading}
+                className="w-full bg-gray-900 hover:bg-gray-800 text-white py-6"
+              >
+                {isLoading ? (
+                  <>
+                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                    Analyzing your workflow...
+                  </>
+                ) : (
+                  <>
+                    Get Recommendations
+                    <ArrowRight className="w-4 h-4 ml-2" />
+                  </>
+                )}
+              </Button>
+            </form>
+          )}
 
           {/* Loading Skeleton */}
           {isLoading && hasSubmitted && (
