@@ -672,7 +672,7 @@ const AutomationAdvisor = () => {
                                 <IconComponent className={`w-5 h-5 ${style.text}`} />
                               </div>
                               <div className="flex-1 min-w-0">
-                                <CardTitle className="text-base font-medium text-gray-900 leading-relaxed min-h-[3rem]">
+                                <CardTitle className="text-base font-medium text-gray-900 leading-relaxed min-h-[3rem] max-w-[200px]">
                                   <span className="line-clamp-2">{idea.title}</span>
                                 </CardTitle>
                                 {!expandedCards.includes(index) && (
