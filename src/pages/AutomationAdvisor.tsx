@@ -171,7 +171,7 @@ const AutomationAdvisor = () => {
           <div className="mb-10 text-center">
             <img src={automationGenie} alt="Automation Genie" className="w-28 h-28 mx-auto mb-4" />
             <h1 className="text-2xl font-semibold text-gray-900 mb-2">Automation Advisor</h1>
-            <p className="text-gray-500">We'll suggest 3 AI agents for your workflow</p>
+            <p className="text-gray-500">Add your details and get 3 AI agent recs that you can build today</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
