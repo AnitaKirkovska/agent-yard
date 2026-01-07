@@ -344,7 +344,7 @@ const AutomationAdvisor = () => {
       </Helmet>
 
       <div className="min-h-screen bg-white">
-        <ToolHeader workflowName="automation-advisor-agent" />
+        <ToolHeader workflowName="personal-automation-advisor" />
         
         <main className="container mx-auto px-4 py-12 max-w-2xl">
           <div className="mb-10 text-center">
