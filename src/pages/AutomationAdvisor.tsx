@@ -9,6 +9,7 @@ import { Switch } from "@/components/ui/switch";
 import { Badge } from "@/components/ui/badge";
 import { ToolHeader } from "@/components/ToolHeader";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import automationGenie from "@/assets/automation-genie.png";
 
 const SENIORITY_LEVELS = [
   "Entry Level",
@@ -109,7 +110,8 @@ const AutomationAdvisor = () => {
         <ToolHeader workflowName="automation-advisor-agent" />
         
         <main className="container mx-auto px-4 py-12 max-w-2xl">
-          <div className="mb-10">
+          <div className="mb-10 text-center">
+            <img src={automationGenie} alt="Automation Genie" className="w-28 h-28 mx-auto mb-4" />
             <h1 className="text-2xl font-semibold text-gray-900 mb-2">Automation Advisor</h1>
             <p className="text-gray-500">We'll suggest 3 AI agents for your workflow</p>
           </div>
