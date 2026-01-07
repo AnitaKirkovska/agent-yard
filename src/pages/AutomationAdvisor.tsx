@@ -352,7 +352,7 @@ const AutomationAdvisor = () => {
           <div className="mb-10 text-center">
             <img src={automationGenie} alt="Automation Genie" className="w-28 h-28 mx-auto mb-4" />
             <h1 className="text-2xl font-semibold text-gray-900 mb-2">Automation Advisor</h1>
-            <p className="text-gray-500">Add your details and get 3 AI agent recs that you can build today</p>
+            <p className="text-gray-500">Tell us what you do and get 3 AI agent ideas you can build today</p>
           </div>
 
           {/* Collapsed Form Summary */}
@@ -401,10 +401,9 @@ const AutomationAdvisor = () => {
           {/* Full Form */}
           {!formCollapsed && (
             <form onSubmit={handleSubmit} className="space-y-6">
-              {/* Role */}
-              <section className="space-y-4">
-                <h2 className="text-sm font-medium text-gray-900">Your Role</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* Role */}
+            <section className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-1.5">
                     <Label htmlFor="jobTitle" className="text-gray-600 text-sm">Job Title</Label>
                     <Input
