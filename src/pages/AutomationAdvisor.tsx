@@ -388,7 +388,7 @@ const AutomationAdvisor = () => {
 
             {/* Responsibilities */}
             <section className="space-y-3">
-              <Label className="text-gray-600 text-sm">Things I do often</Label>
+              <Label className="text-gray-600 text-sm">Work I want to spend less time on</Label>
               {responsibilities.length > 0 && (
                 <div className="flex flex-wrap gap-1.5">
                   {responsibilities.map((resp) => (
