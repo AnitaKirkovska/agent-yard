@@ -93,7 +93,7 @@ const AutomationAdvisor = () => {
     }, 2000);
   };
 
-  const isFormValid = jobTitle && seniorityLevel && responsibilities.length > 0 && toolsUsed.length > 0 && primaryTool;
+  const isFormValid = jobTitle && seniorityLevel && responsibilities.length > 0 && toolsUsed.length > 0;
 
   const availableResponsibilities = EXAMPLE_RESPONSIBILITIES.filter(r => !responsibilities.includes(r));
   const availableTools = EXAMPLE_TOOLS.filter(t => !toolsUsed.includes(t));
@@ -313,24 +313,6 @@ const AutomationAdvisor = () => {
                   ))}
                 </div>
               )}
-
-              {toolsUsed.length > 0 && (
-                <div className="space-y-1.5 pt-2">
-                  <Label className="text-gray-600 text-sm">Primary Tool</Label>
-                  <Select value={primaryTool} onValueChange={setPrimaryTool}>
-                    <SelectTrigger className="border-gray-200 max-w-xs">
-                      <SelectValue placeholder="Select primary tool" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-white">
-                      {toolsUsed.map((tool) => (
-                        <SelectItem key={tool} value={tool}>
-                          {tool}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-              )}
             </section>
 
             {/* Compliance */}
@@ -338,14 +320,14 @@ const AutomationAdvisor = () => {
               <h2 className="text-sm font-medium text-gray-900">Constraints</h2>
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
-                  <Label className="text-gray-600 text-sm">Requires approval workflows</Label>
+                  <Label className="text-gray-600 text-sm">I want to approve LLM outputs</Label>
                   <Switch
                     checked={requiresApproval}
                     onCheckedChange={setRequiresApproval}
                   />
                 </div>
                 <div className="flex items-center justify-between">
-                  <Label className="text-gray-600 text-sm">Involves customer data</Label>
+                  <Label className="text-gray-600 text-sm">My processes involve customer data</Label>
                   <Switch
                     checked={involvesCustomerData}
                     onCheckedChange={setInvolvesCustomerData}
