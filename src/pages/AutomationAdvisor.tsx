@@ -338,6 +338,26 @@ const AutomationAdvisor = () => {
             {/* Responsibilities */}
             <section className="space-y-3">
               <Label className="text-gray-600 text-sm">Core Responsibilities</Label>
+              {responsibilities.length > 0 && (
+                <div className="flex flex-wrap gap-1.5">
+                  {responsibilities.map((resp) => (
+                    <Badge 
+                      key={resp} 
+                      variant="secondary" 
+                      className="bg-blue-100 text-blue-700 px-2 py-1 text-xs flex items-center gap-1.5 font-normal"
+                    >
+                      {resp}
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveResponsibility(resp)}
+                        className="hover:text-blue-900"
+                      >
+                        <X className="w-3 h-3" />
+                      </button>
+                    </Badge>
+                  ))}
+                </div>
+              )}
               <Popover open={respOpen} onOpenChange={setRespOpen}>
                 <PopoverTrigger asChild>
                   <Button
@@ -397,19 +417,24 @@ const AutomationAdvisor = () => {
                   </div>
                 </PopoverContent>
               </Popover>
-              {responsibilities.length > 0 && (
+            </section>
+
+            {/* Tools */}
+            <section className="space-y-3">
+              <Label className="text-gray-600 text-sm">Tools that you use most</Label>
+              {toolsUsed.length > 0 && (
                 <div className="flex flex-wrap gap-1.5">
-                  {responsibilities.map((resp) => (
+                  {toolsUsed.map((tool) => (
                     <Badge 
-                      key={resp} 
+                      key={tool} 
                       variant="secondary" 
                       className="bg-blue-100 text-blue-700 px-2 py-1 text-xs flex items-center gap-1.5 font-normal"
                     >
-                      {resp}
+                      {tool}
                       <button
                         type="button"
-                        onClick={() => handleRemoveResponsibility(resp)}
-                        className="hover:text-gray-900"
+                        onClick={() => handleRemoveTool(tool)}
+                        className="hover:text-blue-900"
                       >
                         <X className="w-3 h-3" />
                       </button>
@@ -417,11 +442,6 @@ const AutomationAdvisor = () => {
                   ))}
                 </div>
               )}
-            </section>
-
-            {/* Tools */}
-            <section className="space-y-3">
-              <Label className="text-gray-600 text-sm">Tools that you use most</Label>
               <Popover open={toolsOpen} onOpenChange={setToolsOpen}>
                 <PopoverTrigger asChild>
                   <Button
@@ -481,26 +501,6 @@ const AutomationAdvisor = () => {
                   </div>
                 </PopoverContent>
               </Popover>
-              {toolsUsed.length > 0 && (
-                <div className="flex flex-wrap gap-1.5">
-                  {toolsUsed.map((tool) => (
-                    <Badge 
-                      key={tool} 
-                      variant="secondary" 
-                      className="bg-blue-100 text-blue-700 px-2 py-1 text-xs flex items-center gap-1.5 font-normal"
-                    >
-                      {tool}
-                      <button
-                        type="button"
-                        onClick={() => handleRemoveTool(tool)}
-                        className="hover:text-gray-900"
-                      >
-                        <X className="w-3 h-3" />
-                      </button>
-                    </Badge>
-                  ))}
-                </div>
-              )}
             </section>
 
             {/* Compliance */}
