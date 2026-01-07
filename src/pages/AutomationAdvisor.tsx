@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Helmet } from "react-helmet-async";
-import { ArrowRight, Loader2, X, Check, ChevronDown } from "lucide-react";
+import { ArrowRight, Loader2, X, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -21,7 +21,7 @@ const SENIORITY_LEVELS = [
   "C-Level"
 ];
 
-const ALL_RESPONSIBILITIES = [
+const EXAMPLE_RESPONSIBILITIES = [
   "Prospecting and outreach",
   "Running discovery calls",
   "Managing pipeline in CRM",
@@ -34,7 +34,7 @@ const ALL_RESPONSIBILITIES = [
   "Reporting and analytics"
 ];
 
-const ALL_TOOLS = [
+const EXAMPLE_TOOLS = [
   "Slack",
   "Gmail",
   "Salesforce",
@@ -48,33 +48,28 @@ const ALL_TOOLS = [
 ];
 
 const AutomationAdvisor = () => {
-  const [jobTitle, setJobTitle] = useState("Sales Development Representative");
-  const [seniorityLevel, setSeniorityLevel] = useState("Mid Level");
-  const [responsibilities, setResponsibilities] = useState<string[]>(ALL_RESPONSIBILITIES.slice(0, 5));
-  const [toolsUsed, setToolsUsed] = useState<string[]>(ALL_TOOLS.slice(0, 5));
-  const [primaryTool, setPrimaryTool] = useState("Salesforce");
+  const [jobTitle, setJobTitle] = useState("");
+  const [seniorityLevel, setSeniorityLevel] = useState("");
+  const [responsibilities, setResponsibilities] = useState<string[]>([]);
+  const [toolsUsed, setToolsUsed] = useState<string[]>([]);
+  const [primaryTool, setPrimaryTool] = useState("");
   const [requiresApproval, setRequiresApproval] = useState(false);
-  const [involvesCustomerData, setInvolvesCustomerData] = useState(true);
+  const [involvesCustomerData, setInvolvesCustomerData] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [respOpen, setRespOpen] = useState(false);
   const [toolsOpen, setToolsOpen] = useState(false);
+  const [customResp, setCustomResp] = useState("");
+  const [customTool, setCustomTool] = useState("");
 
-  const handleToggleResponsibility = (resp: string) => {
-    if (responsibilities.includes(resp)) {
-      setResponsibilities(responsibilities.filter(r => r !== resp));
-    } else {
-      setResponsibilities([...responsibilities, resp]);
+  const handleAddResponsibility = (resp: string) => {
+    if (resp.trim() && !responsibilities.includes(resp.trim())) {
+      setResponsibilities([...responsibilities, resp.trim()]);
     }
   };
 
-  const handleToggleTool = (tool: string) => {
-    if (toolsUsed.includes(tool)) {
-      setToolsUsed(toolsUsed.filter(t => t !== tool));
-      if (primaryTool === tool) {
-        setPrimaryTool("");
-      }
-    } else {
-      setToolsUsed([...toolsUsed, tool]);
+  const handleAddTool = (tool: string) => {
+    if (tool.trim() && !toolsUsed.includes(tool.trim())) {
+      setToolsUsed([...toolsUsed, tool.trim()]);
     }
   };
 
@@ -99,6 +94,9 @@ const AutomationAdvisor = () => {
   };
 
   const isFormValid = jobTitle && seniorityLevel && responsibilities.length > 0 && toolsUsed.length > 0 && primaryTool;
+
+  const availableResponsibilities = EXAMPLE_RESPONSIBILITIES.filter(r => !responsibilities.includes(r));
+  const availableTools = EXAMPLE_TOOLS.filter(t => !toolsUsed.includes(t));
 
   return (
     <>
@@ -156,31 +154,58 @@ const AutomationAdvisor = () => {
                 <PopoverTrigger asChild>
                   <Button
                     variant="outline"
-                    className="w-full justify-between border-gray-200 font-normal text-gray-700"
+                    type="button"
+                    className="w-full justify-between border-gray-200 font-normal text-gray-500"
                   >
-                    {responsibilities.length > 0 
-                      ? `${responsibilities.length} selected`
-                      : "Select responsibilities"}
-                    <ChevronDown className="w-4 h-4 ml-2 opacity-50" />
+                    Add responsibilities...
+                    <Plus className="w-4 h-4 ml-2 opacity-50" />
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0 bg-white z-50" align="start">
-                  <div className="max-h-64 overflow-auto">
-                    {ALL_RESPONSIBILITIES.map((resp) => (
+                  <div className="p-2 border-b border-gray-100">
+                    <div className="flex gap-2">
+                      <Input
+                        value={customResp}
+                        onChange={(e) => setCustomResp(e.target.value)}
+                        placeholder="Add custom..."
+                        className="border-gray-200 text-sm h-8"
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") {
+                            e.preventDefault();
+                            handleAddResponsibility(customResp);
+                            setCustomResp("");
+                          }
+                        }}
+                      />
+                      <Button
+                        type="button"
+                        size="sm"
+                        variant="outline"
+                        className="h-8 px-3"
+                        onClick={() => {
+                          handleAddResponsibility(customResp);
+                          setCustomResp("");
+                        }}
+                      >
+                        Add
+                      </Button>
+                    </div>
+                  </div>
+                  <div className="max-h-48 overflow-auto">
+                    <div className="px-2 py-1.5 text-xs text-gray-400 uppercase tracking-wide">Examples</div>
+                    {availableResponsibilities.map((resp) => (
                       <button
                         key={resp}
                         type="button"
-                        onClick={() => handleToggleResponsibility(resp)}
-                        className="w-full flex items-center gap-2 px-3 py-2 text-sm text-left hover:bg-gray-50"
+                        onClick={() => handleAddResponsibility(resp)}
+                        className="w-full px-3 py-2 text-sm text-left hover:bg-gray-50"
                       >
-                        <div className={`w-4 h-4 border rounded flex items-center justify-center ${
-                          responsibilities.includes(resp) ? "bg-gray-900 border-gray-900" : "border-gray-300"
-                        }`}>
-                          {responsibilities.includes(resp) && <Check className="w-3 h-3 text-white" />}
-                        </div>
                         {resp}
                       </button>
                     ))}
+                    {availableResponsibilities.length === 0 && (
+                      <div className="px-3 py-2 text-sm text-gray-400">All examples added</div>
+                    )}
                   </div>
                 </PopoverContent>
               </Popover>
@@ -213,31 +238,58 @@ const AutomationAdvisor = () => {
                 <PopoverTrigger asChild>
                   <Button
                     variant="outline"
-                    className="w-full justify-between border-gray-200 font-normal text-gray-700"
+                    type="button"
+                    className="w-full justify-between border-gray-200 font-normal text-gray-500"
                   >
-                    {toolsUsed.length > 0 
-                      ? `${toolsUsed.length} selected`
-                      : "Select tools"}
-                    <ChevronDown className="w-4 h-4 ml-2 opacity-50" />
+                    Add tools...
+                    <Plus className="w-4 h-4 ml-2 opacity-50" />
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0 bg-white z-50" align="start">
-                  <div className="max-h-64 overflow-auto">
-                    {ALL_TOOLS.map((tool) => (
+                  <div className="p-2 border-b border-gray-100">
+                    <div className="flex gap-2">
+                      <Input
+                        value={customTool}
+                        onChange={(e) => setCustomTool(e.target.value)}
+                        placeholder="Add custom..."
+                        className="border-gray-200 text-sm h-8"
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") {
+                            e.preventDefault();
+                            handleAddTool(customTool);
+                            setCustomTool("");
+                          }
+                        }}
+                      />
+                      <Button
+                        type="button"
+                        size="sm"
+                        variant="outline"
+                        className="h-8 px-3"
+                        onClick={() => {
+                          handleAddTool(customTool);
+                          setCustomTool("");
+                        }}
+                      >
+                        Add
+                      </Button>
+                    </div>
+                  </div>
+                  <div className="max-h-48 overflow-auto">
+                    <div className="px-2 py-1.5 text-xs text-gray-400 uppercase tracking-wide">Examples</div>
+                    {availableTools.map((tool) => (
                       <button
                         key={tool}
                         type="button"
-                        onClick={() => handleToggleTool(tool)}
-                        className="w-full flex items-center gap-2 px-3 py-2 text-sm text-left hover:bg-gray-50"
+                        onClick={() => handleAddTool(tool)}
+                        className="w-full px-3 py-2 text-sm text-left hover:bg-gray-50"
                       >
-                        <div className={`w-4 h-4 border rounded flex items-center justify-center ${
-                          toolsUsed.includes(tool) ? "bg-gray-900 border-gray-900" : "border-gray-300"
-                        }`}>
-                          {toolsUsed.includes(tool) && <Check className="w-3 h-3 text-white" />}
-                        </div>
                         {tool}
                       </button>
                     ))}
+                    {availableTools.length === 0 && (
+                      <div className="px-3 py-2 text-sm text-gray-400">All examples added</div>
+                    )}
                   </div>
                 </PopoverContent>
               </Popover>
