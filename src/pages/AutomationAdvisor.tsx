@@ -348,11 +348,11 @@ const AutomationAdvisor = () => {
       <div className="min-h-screen bg-white">
         <ToolHeader workflowName="personal-automation-advisor" />
         
-        <main className="container mx-auto px-4 py-12 max-w-2xl">
+        <main className="container mx-auto px-4 py-12 max-w-4xl">
           <div className="mb-10 text-center">
             <img src={automationGenie} alt="Automation Genie" className="w-28 h-28 mx-auto mb-4" />
             <h1 className="text-2xl font-semibold text-gray-900 mb-2">Automation Advisor</h1>
-            <p className="text-gray-500">Tell us what you do and get 3 AI agent ideas you can build today</p>
+            <p className="text-gray-500">Tell us what you do and get 4 AI agent ideas you can build today</p>
           </div>
 
           {/* Full Form */}
@@ -608,7 +608,7 @@ const AutomationAdvisor = () => {
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {[1, 2, 3].map((i) => (
+                {[1, 2, 3, 4].map((i) => (
                   <Card key={i} className="border-gray-200">
                     <CardHeader className="pb-3">
                       <div className="flex items-start gap-3">
@@ -634,7 +634,7 @@ const AutomationAdvisor = () => {
               <div className="text-center flex items-center justify-between">
                 <div className="flex-1">
                   <h2 className="text-xl font-semibold text-gray-900 mb-1">Your AI Agent Recommendations</h2>
-                  <p className="text-gray-500 text-sm">Here are 3 agents tailored to your workflow</p>
+                  <p className="text-gray-500 text-sm">Here are 4 agents tailored to your workflow</p>
                 </div>
                 <Button
                   variant="ghost"
@@ -648,13 +648,14 @@ const AutomationAdvisor = () => {
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {ideas.slice(0, 3).map((idea, index) => {
+                {ideas.slice(0, 4).map((idea, index) => {
                   const cardStyles = [
                     { bg: 'bg-blue-100', text: 'text-blue-600', border: 'hover:border-blue-300', icon: Zap },
                     { bg: 'bg-purple-100', text: 'text-purple-600', border: 'hover:border-purple-300', icon: Bot },
                     { bg: 'bg-emerald-100', text: 'text-emerald-600', border: 'hover:border-emerald-300', icon: Workflow },
+                    { bg: 'bg-amber-100', text: 'text-amber-600', border: 'hover:border-amber-300', icon: Cpu },
                   ];
-                  const style = cardStyles[index % 3];
+                  const style = cardStyles[index % 4];
                   const IconComponent = style.icon;
                   
                   return (
