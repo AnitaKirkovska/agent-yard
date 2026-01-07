@@ -647,7 +647,7 @@ const AutomationAdvisor = () => {
                 </Button>
               </div>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
+              <div className="columns-1 md:columns-2 gap-4 space-y-4">
                 {ideas.slice(0, 4).map((idea, index) => {
                   const cardStyles = [
                     { bg: 'bg-blue-100', text: 'text-blue-600', border: 'hover:border-blue-300', icon: Zap },
@@ -663,6 +663,7 @@ const AutomationAdvisor = () => {
                       key={index} 
                       open={expandedCards.includes(index)}
                       onOpenChange={() => toggleCard(index)}
+                      className="break-inside-avoid"
                     >
                       <Card className={`border-gray-200 bg-white ${style.border} transition-colors`}>
                         <CollapsibleTrigger className="w-full text-left">
