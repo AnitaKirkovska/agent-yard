@@ -150,8 +150,12 @@ const AutomationAdvisor = () => {
 
   const isFormValid = jobTitle && seniorityLevel && responsibilities.length > 0 && toolsUsed.length > 0;
 
-  const availableResponsibilities = EXAMPLE_RESPONSIBILITIES.filter(r => !responsibilities.includes(r));
-  const availableTools = EXAMPLE_TOOLS.filter(t => !toolsUsed.includes(t));
+  const availableResponsibilities = EXAMPLE_RESPONSIBILITIES
+    .filter(r => !responsibilities.includes(r))
+    .filter(r => customResp ? r.toLowerCase().includes(customResp.toLowerCase()) : true);
+  const availableTools = EXAMPLE_TOOLS
+    .filter(t => !toolsUsed.includes(t))
+    .filter(t => customTool ? t.toLowerCase().includes(customTool.toLowerCase()) : true);
 
   return (
     <>
@@ -223,7 +227,7 @@ const AutomationAdvisor = () => {
                       <Input
                         value={customResp}
                         onChange={(e) => setCustomResp(e.target.value)}
-                        placeholder="Add custom..."
+                        placeholder="Search or add custom..."
                         className="border-gray-200 text-sm h-8"
                         onKeyDown={(e) => {
                           if (e.key === "Enter") {
@@ -307,7 +311,7 @@ const AutomationAdvisor = () => {
                       <Input
                         value={customTool}
                         onChange={(e) => setCustomTool(e.target.value)}
-                        placeholder="Add custom..."
+                        placeholder="Search or add custom..."
                         className="border-gray-200 text-sm h-8"
                         onKeyDown={(e) => {
                           if (e.key === "Enter") {
