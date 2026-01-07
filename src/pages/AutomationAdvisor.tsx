@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Helmet } from "react-helmet-async";
-import { ArrowRight, Loader2, X, Plus, Zap, Clock, Sparkles } from "lucide-react";
+import { ArrowRight, Loader2, X, Plus, Zap, Clock, Sparkles, ChevronDown, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -10,6 +10,8 @@ import { Badge } from "@/components/ui/badge";
 import { ToolHeader } from "@/components/ToolHeader";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { Skeleton } from "@/components/ui/skeleton";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import automationGenie from "@/assets/automation-genie.png";
@@ -256,6 +258,15 @@ const AutomationAdvisor = () => {
   const [customTool, setCustomTool] = useState("");
   const [ideas, setIdeas] = useState<AgentIdea[]>([]);
   const [hasSubmitted, setHasSubmitted] = useState(false);
+  const [expandedCards, setExpandedCards] = useState<number[]>([]);
+
+  const toggleCard = (index: number) => {
+    setExpandedCards(prev => 
+      prev.includes(index) 
+        ? prev.filter(i => i !== index) 
+        : [...prev, index]
+    );
+  };
 
   const handleAddResponsibility = (resp: string) => {
     if (resp.trim() && !responsibilities.includes(resp.trim())) {
@@ -584,6 +595,32 @@ const AutomationAdvisor = () => {
             </Button>
           </form>
 
+          {/* Loading Skeleton */}
+          {isLoading && hasSubmitted && (
+            <div className="mt-12 space-y-6">
+              <div className="text-center">
+                <h2 className="text-xl font-semibold text-gray-900 mb-2">Generating Your Recommendations...</h2>
+                <p className="text-gray-500">Analyzing your workflow to find the best AI agents</p>
+              </div>
+              
+              <div className="space-y-4">
+                {[1, 2, 3].map((i) => (
+                  <Card key={i} className="border-gray-200">
+                    <CardHeader className="pb-3">
+                      <div className="flex items-start gap-3">
+                        <Skeleton className="w-9 h-9 rounded-lg" />
+                        <div className="flex-1 space-y-2">
+                          <Skeleton className="h-5 w-3/4" />
+                          <Skeleton className="h-4 w-1/2" />
+                        </div>
+                      </div>
+                    </CardHeader>
+                  </Card>
+                ))}
+              </div>
+            </div>
+          )}
+
           {/* Results Section */}
           {hasSubmitted && !isLoading && ideas.length > 0 && (
             <div className="mt-12 space-y-6">
@@ -593,18 +630,40 @@ const AutomationAdvisor = () => {
               </div>
               
               <div className="space-y-4">
-                {ideas.map((idea, index) => (
-                  <Card key={index} className="border-gray-200 hover:border-blue-200 transition-colors">
-                    <CardHeader className="pb-3">
-                      <div className="flex items-start gap-3">
-                        <div className="p-2 rounded-lg bg-blue-100">
-                          <Zap className="w-5 h-5 text-blue-600" />
-                        </div>
-                        <div className="flex-1">
-                          <CardTitle className="text-lg font-medium text-gray-900">
-                            {idea.title}
-                          </CardTitle>
-                          <div className="flex flex-wrap gap-1.5 mt-2">
+                {ideas.slice(0, 3).map((idea, index) => (
+                  <Collapsible 
+                    key={index} 
+                    open={expandedCards.includes(index)}
+                    onOpenChange={() => toggleCard(index)}
+                  >
+                    <Card className="border-gray-200 hover:border-blue-200 transition-colors">
+                      <CollapsibleTrigger className="w-full text-left">
+                        <CardHeader className="pb-3">
+                          <div className="flex items-start gap-3">
+                            <div className="p-2 rounded-lg bg-blue-100">
+                              <Zap className="w-5 h-5 text-blue-600" />
+                            </div>
+                            <div className="flex-1">
+                              <CardTitle className="text-lg font-medium text-gray-900">
+                                {idea.title}
+                              </CardTitle>
+                              <div className="flex items-center gap-2 mt-2 text-sm text-gray-500">
+                                <Clock className="w-4 h-4" />
+                                <span>{idea.trigger}</span>
+                              </div>
+                            </div>
+                            <ChevronDown 
+                              className={`w-5 h-5 text-gray-400 transition-transform ${
+                                expandedCards.includes(index) ? 'rotate-180' : ''
+                              }`}
+                            />
+                          </div>
+                        </CardHeader>
+                      </CollapsibleTrigger>
+                      
+                      <CollapsibleContent>
+                        <CardContent className="pt-0 space-y-4">
+                          <div className="flex flex-wrap gap-1.5">
                             {idea.tools.map((tool, toolIndex) => (
                               <Badge 
                                 key={toolIndex} 
@@ -615,42 +674,36 @@ const AutomationAdvisor = () => {
                               </Badge>
                             ))}
                           </div>
-                        </div>
-                      </div>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                      <div className="flex items-start gap-2">
-                        <Clock className="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" />
-                        <div>
-                          <p className="text-xs text-gray-400 uppercase tracking-wide mb-1">Trigger</p>
-                          <p className="text-sm text-gray-700">{idea.trigger}</p>
-                        </div>
-                      </div>
-                      
-                      <div className="flex items-start gap-2">
-                        <Sparkles className="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" />
-                        <div>
-                          <p className="text-xs text-gray-400 uppercase tracking-wide mb-1">What it automates</p>
-                          <p className="text-sm text-gray-700">{idea.what_it_automates}</p>
-                        </div>
-                      </div>
-                      
-                      <div className="bg-blue-50 rounded-lg p-3 mt-3">
-                        <p className="text-xs text-blue-600 uppercase tracking-wide mb-1">Why this fits you</p>
-                        <p className="text-sm text-blue-800">{idea.why_this_fits_you}</p>
-                      </div>
-                    </CardContent>
-                  </Card>
+                          
+                          <div className="flex items-start gap-2">
+                            <Sparkles className="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" />
+                            <div>
+                              <p className="text-xs text-gray-400 uppercase tracking-wide mb-1">What it automates</p>
+                              <p className="text-sm text-gray-700">{idea.what_it_automates}</p>
+                            </div>
+                          </div>
+                          
+                          <div className="bg-blue-50 rounded-lg p-3">
+                            <p className="text-xs text-blue-600 uppercase tracking-wide mb-1">Why this fits you</p>
+                            <p className="text-sm text-blue-800">{idea.why_this_fits_you}</p>
+                          </div>
+                          
+                          <Button 
+                            className="w-full bg-gray-900 hover:bg-gray-800 text-white"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              window.open('https://www.vellum.ai/', '_blank');
+                            }}
+                          >
+                            Build this agent with Vellum
+                            <ExternalLink className="w-4 h-4 ml-2" />
+                          </Button>
+                        </CardContent>
+                      </CollapsibleContent>
+                    </Card>
+                  </Collapsible>
                 ))}
               </div>
-            </div>
-          )}
-
-          {/* Loading state for results */}
-          {isLoading && hasSubmitted && (
-            <div className="mt-12 flex flex-col items-center justify-center py-12">
-              <Loader2 className="w-8 h-8 text-blue-600 animate-spin mb-4" />
-              <p className="text-gray-500">Analyzing your workflow and generating recommendations...</p>
             </div>
           )}
         </main>
