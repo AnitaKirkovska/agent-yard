@@ -672,9 +672,9 @@ const AutomationAdvisor = () => {
                               <div className={`p-2 rounded-lg ${style.bg} flex-shrink-0`}>
                                 <IconComponent className={`w-5 h-5 ${style.text}`} />
                               </div>
-                              <div className="flex-1 min-w-0">
-                                <CardTitle className="text-base font-medium text-gray-900 leading-snug min-h-[2.75rem] max-w-[220px]">
-                                  <span className="line-clamp-2">{idea.title}</span>
+                              <div className="flex-1">
+                                <CardTitle className="text-base font-medium text-gray-900 leading-snug">
+                                  {idea.title}
                                 </CardTitle>
                               </div>
                               <ChevronDown 
