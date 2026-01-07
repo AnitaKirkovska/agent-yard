@@ -403,7 +403,7 @@ const AutomationAdvisor = () => {
                     <Badge 
                       key={resp} 
                       variant="secondary" 
-                      className="bg-gray-100 text-gray-700 px-2 py-1 text-xs flex items-center gap-1.5 font-normal"
+                      className="bg-blue-100 text-blue-700 px-2 py-1 text-xs flex items-center gap-1.5 font-normal"
                     >
                       {resp}
                       <button
@@ -487,7 +487,7 @@ const AutomationAdvisor = () => {
                     <Badge 
                       key={tool} 
                       variant="secondary" 
-                      className="bg-gray-100 text-gray-700 px-2 py-1 text-xs flex items-center gap-1.5 font-normal"
+                      className="bg-blue-100 text-blue-700 px-2 py-1 text-xs flex items-center gap-1.5 font-normal"
                     >
                       {tool}
                       <button
