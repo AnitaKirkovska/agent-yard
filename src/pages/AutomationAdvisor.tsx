@@ -289,7 +289,7 @@ const AutomationAdvisor = () => {
 
             {/* Tools */}
             <section className="space-y-3">
-              <Label className="text-gray-600 text-sm">Weekly Tools</Label>
+              <Label className="text-gray-600 text-sm">Tools that you use most</Label>
               <Popover open={toolsOpen} onOpenChange={setToolsOpen}>
                 <PopoverTrigger asChild>
                   <Button
