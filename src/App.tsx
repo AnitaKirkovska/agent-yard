@@ -10,6 +10,7 @@ import CustomerGifts from "./pages/CustomerGifts";
 import AgentReads from "./pages/AgentReads";
 import SEOAgent from "./pages/SEOAgent";
 import ProductivityWrapped from "./pages/ProductivityWrapped";
+import AutomationAdvisor from "./pages/AutomationAdvisor";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -28,6 +29,7 @@ const App = () => (
             <Route path="/agent-reads" element={<AgentReads />} />
             <Route path="/seo-agent" element={<SEOAgent />} />
             <Route path="/productivity-wrapped" element={<ProductivityWrapped />} />
+            <Route path="/automation-advisor" element={<AutomationAdvisor />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
