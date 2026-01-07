@@ -666,21 +666,15 @@ const AutomationAdvisor = () => {
                     >
                       <Card className={`border-gray-200 bg-white ${style.border} transition-colors`}>
                         <CollapsibleTrigger className="w-full text-left">
-                          <CardHeader className="pb-3">
+                          <CardHeader className="pb-2">
                             <div className="flex items-start gap-3">
-                              <div className={`p-2 rounded-lg ${style.bg}`}>
+                              <div className={`p-2 rounded-lg ${style.bg} flex-shrink-0`}>
                                 <IconComponent className={`w-5 h-5 ${style.text}`} />
                               </div>
                               <div className="flex-1 min-w-0">
-                                <CardTitle className="text-base font-medium text-gray-900 leading-snug min-h-[2.75rem] max-w-[200px]">
+                                <CardTitle className="text-base font-medium text-gray-900 leading-snug min-h-[2.75rem] max-w-[220px]">
                                   <span className="line-clamp-2">{idea.title}</span>
                                 </CardTitle>
-                                {!expandedCards.includes(index) && (
-                                  <div className="flex items-center gap-2 mt-3 text-sm text-gray-500">
-                                    <Clock className="w-3.5 h-3.5 flex-shrink-0" />
-                                    <span className="text-xs truncate">{idea.trigger}</span>
-                                  </div>
-                                )}
                               </div>
                               <ChevronDown 
                                 className={`w-5 h-5 text-gray-400 transition-transform flex-shrink-0 ${
@@ -691,8 +685,17 @@ const AutomationAdvisor = () => {
                           </CardHeader>
                         </CollapsibleTrigger>
                         
+                        {!expandedCards.includes(index) && (
+                          <CardContent className="pt-0 pb-4">
+                            <div className="flex items-center gap-2 text-sm text-gray-500 ml-[52px]">
+                              <Clock className="w-3.5 h-3.5 flex-shrink-0" />
+                              <span className="text-xs truncate">{idea.trigger}</span>
+                            </div>
+                          </CardContent>
+                        )}
+                        
                         <CollapsibleContent>
-                          <CardContent className="pt-0 space-y-4">
+                          <CardContent className="pt-0 pb-4 space-y-4">
                             <div className="flex flex-wrap gap-1.5">
                               {idea.tools.map((tool, toolIndex) => (
                                 <Badge 
@@ -715,9 +718,9 @@ const AutomationAdvisor = () => {
                           </CardContent>
                         </CollapsibleContent>
                         
-                        <CardContent className="pt-0">
+                        <CardContent className="pt-2 pb-4">
                           <Button 
-                            className="w-full bg-gray-900 hover:bg-gray-800 text-white"
+                            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg shadow-sm"
                             onClick={(e) => {
                               e.stopPropagation();
                               window.open('https://www.vellum.ai/', '_blank');
