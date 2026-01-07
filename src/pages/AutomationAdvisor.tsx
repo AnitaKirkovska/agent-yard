@@ -23,29 +23,83 @@ const SENIORITY_LEVELS = [
 ];
 
 const EXAMPLE_RESPONSIBILITIES = [
+  // Sales
   "Prospecting and outreach",
-  "Running discovery calls",
   "Managing pipeline in CRM",
   "Following up with leads",
   "Preparing proposals",
-  "Client presentations",
-  "Contract negotiations",
-  "Account management",
-  "Market research",
-  "Reporting and analytics"
+  // Marketing
+  "Content creation",
+  "Social media management",
+  "Campaign analytics",
+  "SEO optimization",
+  // Engineering
+  "Code reviews",
+  "Writing documentation",
+  "Bug triage",
+  "Sprint planning",
+  // Product
+  "User research",
+  "Writing PRDs",
+  "Roadmap planning",
+  "Stakeholder updates",
+  // Operations
+  "Process documentation",
+  "Vendor management",
+  "Data entry",
+  "Scheduling",
+  // Customer Success
+  "Customer onboarding",
+  "Support ticket handling",
+  "QBR preparation",
+  "Churn analysis",
+  // HR
+  "Resume screening",
+  "Interview scheduling",
+  "Employee onboarding",
+  // Finance
+  "Invoice processing",
+  "Expense reporting",
+  "Financial reporting",
 ];
 
 const EXAMPLE_TOOLS = [
+  // Communication
   "Slack",
+  "Microsoft Teams",
   "Gmail",
-  "Salesforce",
-  "Google Calendar",
-  "LinkedIn",
+  "Outlook",
   "Zoom",
-  "HubSpot",
-  "Notion",
+  // Project Management
   "Asana",
-  "Microsoft Teams"
+  "Jira",
+  "Linear",
+  "Notion",
+  "Monday.com",
+  "Trello",
+  // CRM & Sales
+  "Salesforce",
+  "HubSpot",
+  "Pipedrive",
+  "LinkedIn",
+  // Marketing
+  "Google Analytics",
+  "Mailchimp",
+  "Figma",
+  "Canva",
+  // Productivity
+  "Google Calendar",
+  "Google Docs",
+  "Google Sheets",
+  "Airtable",
+  // Engineering
+  "GitHub",
+  "VS Code",
+  "Confluence",
+  // Finance & HR
+  "QuickBooks",
+  "Workday",
+  "BambooHR",
 ];
 
 const AutomationAdvisor = () => {
