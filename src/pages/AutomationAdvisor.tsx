@@ -672,13 +672,15 @@ const AutomationAdvisor = () => {
                                 <IconComponent className={`w-5 h-5 ${style.text}`} />
                               </div>
                               <div className="flex-1 min-w-0">
-                                <CardTitle className="text-base font-medium text-gray-900 leading-snug">
+                                <CardTitle className="text-base font-medium text-gray-900 leading-snug h-12 line-clamp-2">
                                   {idea.title}
                                 </CardTitle>
-                                <div className="flex items-center gap-2 mt-2 text-sm text-gray-500">
-                                  <Clock className="w-3.5 h-3.5 flex-shrink-0" />
-                                  <span className="text-xs">{idea.trigger}</span>
-                                </div>
+                                {!expandedCards.includes(index) && (
+                                  <div className="flex items-center gap-2 mt-2 text-sm text-gray-500">
+                                    <Clock className="w-3.5 h-3.5 flex-shrink-0" />
+                                    <span className="text-xs truncate">{idea.trigger}</span>
+                                  </div>
+                                )}
                               </div>
                               <ChevronDown 
                                 className={`w-5 h-5 text-gray-400 transition-transform flex-shrink-0 ${
