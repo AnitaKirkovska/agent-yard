@@ -363,7 +363,7 @@ const AutomationAdvisor = () => {
                   <Button
                     variant="outline"
                     type="button"
-                    className="w-full justify-between border-gray-200 font-normal text-gray-500"
+                    className="w-full justify-between border-gray-200 font-normal text-gray-500 hover:bg-gray-50 hover:text-gray-600"
                   >
                     Add responsibilities...
                     <Plus className="w-4 h-4 ml-2 opacity-50" />
@@ -447,7 +447,7 @@ const AutomationAdvisor = () => {
                   <Button
                     variant="outline"
                     type="button"
-                    className="w-full justify-between border-gray-200 font-normal text-gray-500"
+                    className="w-full justify-between border-gray-200 font-normal text-gray-500 hover:bg-gray-50 hover:text-gray-600"
                   >
                     Add tools...
                     <Plus className="w-4 h-4 ml-2 opacity-50" />
