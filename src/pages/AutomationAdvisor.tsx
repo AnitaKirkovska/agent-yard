@@ -601,15 +601,15 @@ const AutomationAdvisor = () => {
 
           {/* Loading Skeleton */}
           {isLoading && hasSubmitted && (
-            <div className="mt-12 space-y-6">
-              <div className="text-center">
+            <div className="mt-12 p-6 bg-gray-50 rounded-xl border border-gray-100">
+              <div className="text-center mb-6">
                 <h2 className="text-xl font-semibold text-gray-900 mb-2">Generating Your Recommendations...</h2>
                 <p className="text-gray-500">Analyzing your workflow to find the best AI agents</p>
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {[1, 2, 3, 4].map((i) => (
-                  <Card key={i} className="border-gray-200">
+                  <Card key={i} className="border-gray-200 bg-white">
                     <CardHeader className="pb-3">
                       <div className="flex items-start gap-3">
                         <Skeleton className="w-10 h-10 rounded-lg" />
