@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Helmet } from "react-helmet-async";
-import { ArrowRight, Loader2, X, Plus } from "lucide-react";
+import { ArrowRight, Loader2, X, Plus, Zap, Clock, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -9,7 +9,18 @@ import { Switch } from "@/components/ui/switch";
 import { Badge } from "@/components/ui/badge";
 import { ToolHeader } from "@/components/ToolHeader";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "@/hooks/use-toast";
 import automationGenie from "@/assets/automation-genie.png";
+
+interface AgentIdea {
+  title: string;
+  tools: string[];
+  trigger: string;
+  what_it_automates: string;
+  why_this_fits_you: string;
+}
 
 const SENIORITY_LEVELS = [
   "Entry Level",
@@ -243,6 +254,8 @@ const AutomationAdvisor = () => {
   const [toolsOpen, setToolsOpen] = useState(false);
   const [customResp, setCustomResp] = useState("");
   const [customTool, setCustomTool] = useState("");
+  const [ideas, setIdeas] = useState<AgentIdea[]>([]);
+  const [hasSubmitted, setHasSubmitted] = useState(false);
 
   const handleAddResponsibility = (resp: string) => {
     if (resp.trim() && !responsibilities.includes(resp.trim())) {
@@ -270,10 +283,37 @@ const AutomationAdvisor = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
+    setHasSubmitted(true);
     
-    setTimeout(() => {
+    try {
+      const { data, error } = await supabase.functions.invoke('automation-advisor', {
+        body: {
+          job_title: jobTitle,
+          seniority_level: seniorityLevel,
+          core_responsibilities: responsibilities,
+          tools_used_weekly: toolsUsed,
+          requires_approval: requiresApproval,
+          involves_customer_data: involvesCustomerData,
+        },
+      });
+
+      if (error) {
+        throw error;
+      }
+
+      if (data?.ideas) {
+        setIdeas(data.ideas);
+      }
+    } catch (error) {
+      console.error('Error fetching recommendations:', error);
+      toast({
+        title: "Error",
+        description: "Failed to get recommendations. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
       setIsLoading(false);
-    }, 2000);
+    }
   };
 
   const isFormValid = jobTitle && seniorityLevel && responsibilities.length > 0 && toolsUsed.length > 0;
@@ -533,7 +573,7 @@ const AutomationAdvisor = () => {
               {isLoading ? (
                 <>
                   <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                  Analyzing...
+                  Analyzing your workflow...
                 </>
               ) : (
                 <>
@@ -543,6 +583,76 @@ const AutomationAdvisor = () => {
               )}
             </Button>
           </form>
+
+          {/* Results Section */}
+          {hasSubmitted && !isLoading && ideas.length > 0 && (
+            <div className="mt-12 space-y-6">
+              <div className="text-center">
+                <h2 className="text-xl font-semibold text-gray-900 mb-2">Your AI Agent Recommendations</h2>
+                <p className="text-gray-500">Here are 3 agents tailored to your workflow</p>
+              </div>
+              
+              <div className="space-y-4">
+                {ideas.map((idea, index) => (
+                  <Card key={index} className="border-gray-200 hover:border-blue-200 transition-colors">
+                    <CardHeader className="pb-3">
+                      <div className="flex items-start gap-3">
+                        <div className="p-2 rounded-lg bg-blue-100">
+                          <Zap className="w-5 h-5 text-blue-600" />
+                        </div>
+                        <div className="flex-1">
+                          <CardTitle className="text-lg font-medium text-gray-900">
+                            {idea.title}
+                          </CardTitle>
+                          <div className="flex flex-wrap gap-1.5 mt-2">
+                            {idea.tools.map((tool, toolIndex) => (
+                              <Badge 
+                                key={toolIndex} 
+                                variant="secondary" 
+                                className="bg-gray-100 text-gray-600 text-xs font-normal"
+                              >
+                                {tool}
+                              </Badge>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <div className="flex items-start gap-2">
+                        <Clock className="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" />
+                        <div>
+                          <p className="text-xs text-gray-400 uppercase tracking-wide mb-1">Trigger</p>
+                          <p className="text-sm text-gray-700">{idea.trigger}</p>
+                        </div>
+                      </div>
+                      
+                      <div className="flex items-start gap-2">
+                        <Sparkles className="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" />
+                        <div>
+                          <p className="text-xs text-gray-400 uppercase tracking-wide mb-1">What it automates</p>
+                          <p className="text-sm text-gray-700">{idea.what_it_automates}</p>
+                        </div>
+                      </div>
+                      
+                      <div className="bg-blue-50 rounded-lg p-3 mt-3">
+                        <p className="text-xs text-blue-600 uppercase tracking-wide mb-1">Why this fits you</p>
+                        <p className="text-sm text-blue-800">{idea.why_this_fits_you}</p>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Loading state for results */}
+          {isLoading && hasSubmitted && (
+            <div className="mt-12 flex flex-col items-center justify-center py-12">
+              <Loader2 className="w-8 h-8 text-blue-600 animate-spin mb-4" />
+              <p className="text-gray-500">Analyzing your workflow and generating recommendations...</p>
+            </div>
+          )}
         </main>
       </div>
     </>
