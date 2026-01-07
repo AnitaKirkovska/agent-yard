@@ -105,42 +105,129 @@ const EXAMPLE_RESPONSIBILITIES = [
 ];
 
 const EXAMPLE_TOOLS = [
-  // Communication
-  "Slack",
-  "Microsoft Teams",
-  "Gmail",
-  "Outlook",
-  "Zoom",
-  // Project Management
+  // A
+  "AccuLynx",
+  "Active Campaign",
+  "Affinity",
+  "AgencyZoom",
+  "Ahrefs",
+  "Airtable",
+  "Apollo",
   "Asana",
-  "Jira",
-  "Linear",
-  "Notion",
-  "Monday.com",
-  "Trello",
-  // CRM & Sales
-  "Salesforce",
-  "HubSpot",
-  "Pipedrive",
-  "LinkedIn",
-  // Marketing
-  "Google Analytics",
-  "Mailchimp",
-  "Figma",
+  "Atlassian",
+  // B
+  "Bitbucket",
+  "Box",
+  "Brevo",
+  "Brex",
+  "Browserbase Tool",
+  // C
+  "Cal",
+  "Calendly",
   "Canva",
-  // Productivity
+  "Canvas",
+  "ClickUp",
+  "Coda",
+  "Coinbase",
+  "Confluence",
+  "Customer.io",
+  // D
+  "Discord",
+  "DocuSign",
+  "Dropbox",
+  // E
+  "ElevenLabs",
+  "Eventbrite",
+  "Exa",
+  // F
+  "Facebook",
+  "Figma",
+  "Firecrawl",
+  "Fireflies",
+  // G
+  "Gamma",
+  "GitHub",
+  "GitLab",
+  "Gmail",
+  "Gong",
+  "Google",
+  "Google Ads",
+  "Google Analytics",
   "Google Calendar",
   "Google Docs",
+  "Google Drive",
+  "Google Maps",
+  "Google Photos",
+  "Google Search Console",
   "Google Sheets",
-  "Airtable",
-  // Engineering
-  "GitHub",
-  "VS Code",
-  "Confluence",
-  // Finance & HR
-  "QuickBooks",
-  "Workday",
-  "BambooHR",
+  "Google Slides",
+  "Google Tasks",
+  // H
+  "HeyGen",
+  "HeyReach",
+  "HubSpot",
+  // I
+  "Instagram",
+  "Intercom",
+  // J
+  "Jira",
+  "Jungle Scout",
+  // K
+  "Klaviyo",
+  // L
+  "Linear",
+  "LinkedIn",
+  "Linkup",
+  "Listen Notes",
+  "LMNT",
+  // M
+  "Mailchimp",
+  "Mem0",
+  "Microsoft Teams",
+  "Miro",
+  "Monday",
+  // N
+  "Neon",
+  "Notion",
+  // O
+  "Outlook",
+  // P
+  "PagerDuty",
+  "Parsera",
+  "People Data Labs",
+  "Perplexity",
+  "PostHog",
+  "Productboard",
+  // R
+  "Reddit",
+  // S
+  "Salesforce",
+  "Segment",
+  "Semantic Scholar",
+  "Semrush",
+  "SendGrid",
+  "Serp Api",
+  "SharePoint",
+  "Shopify",
+  "Shortcut",
+  "Slack",
+  "Spotify",
+  "Stripe",
+  "Supabase",
+  // T
+  "Tavily",
+  "Telegram",
+  "Todoist",
+  "Trello",
+  // W
+  "Webflow",
+  "WhatsApp",
+  // Y
+  "You Search",
+  // Z
+  "Zendesk",
+  "ZenRows",
+  "Zoom",
 ];
 
 const AutomationAdvisor = () => {
