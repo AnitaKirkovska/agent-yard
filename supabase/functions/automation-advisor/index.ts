@@ -92,10 +92,10 @@ serve(async (req) => {
 
     // Extract the ideas from the workflow output
     let ideas = [];
-    if (data.outputs && Array.isArray(data.outputs)) {
-      for (const output of data.outputs) {
-        if (output.name === "ideas" || output.type === "JSON") {
-          ideas = output.value?.ideas || output.value || [];
+    if (data.data?.outputs && Array.isArray(data.data.outputs)) {
+      for (const output of data.data.outputs) {
+        if (output.name === "recommendations" && output.type === "JSON") {
+          ideas = output.value?.ideas || [];
           break;
         }
       }
