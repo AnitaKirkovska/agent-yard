@@ -14,6 +14,7 @@ Every day for 30 days, I'm building a new AI agent app. Follow along and try eac
 | 3 | **Agent Reads** | AI librarian recommends books based on your goals and life situation | Vellum, SerpAPI, Google Books API, Lovable | [📖](./docs/agent-reads.md) |
 | 4 | **SEO Agent** | Automated SEO content creation from keyword research to article | Vellum, Firecrawl, SerpAPI, Google Drive, Slack, Lovable | [📖](./docs/seo-agent.md) |
 | 5 | **2025 Calendar Roast** | AI roasts how you spent your time and creates a brutally honest Gamma presentation | Vellum, Google Calendar, Gamma, Lovable | [📖](./docs/productivity-wrapped.md) |
+| 6 | **AutomationAdvisor** | <!-- TODO: Add description --> | Vellum, Lovable | [📖](./docs/automation-advisor.md) |
 
 > 📚 See [docs/](./docs/) for detailed documentation on each agent's architecture and implementation.
 
