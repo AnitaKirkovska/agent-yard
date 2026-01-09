@@ -616,15 +616,32 @@ const AutomationAdvisor = () => {
                       key={index}
                       className="bg-white rounded-lg border border-gray-200 overflow-hidden"
                     >
-                      <div className="flex items-center justify-between p-4">
+                      <div className="flex items-center justify-between p-4 gap-4">
                         <button 
                           onClick={() => toggleCard(index)}
                           className="flex-1 text-left flex items-center gap-3 min-w-0"
                         >
                           <IconComponent className="w-5 h-5 text-blue-600 flex-shrink-0" />
-                          <h3 className="font-semibold text-gray-900 leading-snug truncate">
-                            {idea.title}
-                          </h3>
+                          <div className="flex-1 min-w-0">
+                            <h3 className="font-semibold text-gray-900 leading-snug">
+                              {idea.title}
+                            </h3>
+                            <div className="flex items-center gap-1.5 mt-1">
+                              {idea.tools.slice(0, 3).map((tool, toolIndex) => (
+                                <span 
+                                  key={toolIndex} 
+                                  className="inline-flex items-center px-1.5 py-0.5 rounded text-xs bg-gray-100 text-gray-500"
+                                >
+                                  {tool}
+                                </span>
+                              ))}
+                              {idea.tools.length > 3 && (
+                                <span className="text-xs text-gray-400">
+                                  +{idea.tools.length - 3}
+                                </span>
+                              )}
+                            </div>
+                          </div>
                           <ChevronDown 
                             className={`w-4 h-4 text-gray-400 transition-transform flex-shrink-0 ${
                               isExpanded ? 'rotate-180' : ''
@@ -634,7 +651,7 @@ const AutomationAdvisor = () => {
                         
                         <Button 
                           size="sm"
-                          className="ml-4 bg-blue-600 hover:bg-blue-700 text-white text-sm px-4 h-8 flex-shrink-0"
+                          className="bg-blue-600 hover:bg-blue-700 text-white text-sm px-4 h-8 flex-shrink-0"
                           onClick={(e) => {
                             e.stopPropagation();
                             const baseUrl = 'https://app.vellum.ai/onboarding/agent-builder/signup';
