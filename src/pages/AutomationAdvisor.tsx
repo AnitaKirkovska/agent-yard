@@ -608,6 +608,8 @@ const AutomationAdvisor = () => {
               <div className="space-y-3">
                 {ideas.slice(0, 4).map((idea, index) => {
                   const isExpanded = expandedCards.includes(index);
+                  const icons = [Zap, Bot, Workflow, Cpu];
+                  const IconComponent = icons[index % 4];
                   
                   return (
                     <div 
@@ -619,7 +621,8 @@ const AutomationAdvisor = () => {
                           onClick={() => toggleCard(index)}
                           className="flex-1 text-left flex items-center gap-3 min-w-0"
                         >
-                          <h3 className="font-medium text-gray-900 text-sm leading-snug truncate">
+                          <IconComponent className="w-5 h-5 text-blue-600 flex-shrink-0" />
+                          <h3 className="font-semibold text-gray-900 leading-snug truncate">
                             {idea.title}
                           </h3>
                           <ChevronDown 
