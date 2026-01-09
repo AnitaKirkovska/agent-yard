@@ -569,7 +569,7 @@ const AutomationAdvisor = () => {
                   </>
                 ) : (
                   <>
-                    Get Recommendations
+                    Get Agent Ideas
                     <ArrowRight className="w-4 h-4 ml-2" />
                   </>
                 )}
