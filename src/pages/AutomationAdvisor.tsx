@@ -675,6 +675,14 @@ const AutomationAdvisor = () => {
                                 <p className="text-sm text-gray-700">{idea.what_it_automates}</p>
                               </div>
                             </div>
+                            
+                            <div className="flex items-start gap-2">
+                              <Zap className="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" />
+                              <div>
+                                <p className="text-xs text-gray-400 uppercase tracking-wide mb-1">Why this fits you</p>
+                                <p className="text-sm text-gray-700">{idea.why_this_fits_you}</p>
+                              </div>
+                            </div>
                           </CardContent>
                         </CollapsibleContent>
                         
