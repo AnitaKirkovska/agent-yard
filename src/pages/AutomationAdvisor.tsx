@@ -349,8 +349,8 @@ const AutomationAdvisor = () => {
         <main className="container mx-auto px-4 py-12 max-w-4xl">
           <div className="mb-10 text-center">
             <img src={automationGenie} alt="Automation Genie" className="w-28 h-28 mx-auto mb-4" />
-            <h1 className="text-2xl font-semibold text-gray-900 mb-2">Automation Advisor</h1>
-            <p className="text-gray-500">Tell us what you do and get 4 AI agent ideas you can build today</p>
+            <h1 className="text-2xl font-semibold text-gray-900 mb-2">AI Agent Advisor</h1>
+            <p className="text-gray-500">This agent will suggest and build agents for you based on your context (your job, tasks and tools you use)</p>
           </div>
 
           {/* Full Form */}
