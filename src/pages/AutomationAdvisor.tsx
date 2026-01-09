@@ -589,123 +589,120 @@ const AutomationAdvisor = () => {
 
           {/* Results Section */}
           {hasSubmitted && !isLoading && ideas.length > 0 && (
-            <div className="mt-12 p-6 bg-gray-50 rounded-xl border border-gray-100">
+            <div className="mt-12">
               <div className="flex items-start justify-between mb-6">
                 <div>
                   <h2 className="text-xl font-semibold text-gray-900 mb-1">Your AI Agent Recommendations</h2>
-                  <p className="text-gray-500 text-sm">Here are 4 tasks that you can automate today</p>
+                  <p className="text-gray-500 text-sm">Click any card to learn more, or start building right away</p>
                 </div>
                 <Button
-                  variant="ghost"
+                  variant="outline"
                   size="sm"
                   onClick={() => setFormCollapsed(false)}
-                  className="text-gray-500 hover:text-gray-700"
+                  className="text-gray-600 hover:text-gray-800 border-gray-200"
                 >
-                  <Pencil className="w-4 h-4 mr-1" />
+                  <Pencil className="w-4 h-4 mr-1.5" />
                   Edit inputs
                 </Button>
               </div>
               
-              <div className="columns-1 md:columns-2 gap-4 space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {ideas.slice(0, 4).map((idea, index) => {
                   const cardStyles = [
-                    { bg: 'bg-blue-100', text: 'text-blue-600', border: 'hover:border-blue-300', icon: Zap },
-                    { bg: 'bg-purple-100', text: 'text-purple-600', border: 'hover:border-purple-300', icon: Bot },
-                    { bg: 'bg-emerald-100', text: 'text-emerald-600', border: 'hover:border-emerald-300', icon: Workflow },
-                    { bg: 'bg-amber-100', text: 'text-amber-600', border: 'hover:border-amber-300', icon: Cpu },
+                    { bg: 'bg-blue-50', text: 'text-blue-600', accent: 'border-l-blue-500', icon: Zap },
+                    { bg: 'bg-emerald-50', text: 'text-emerald-600', accent: 'border-l-emerald-500', icon: Workflow },
+                    { bg: 'bg-purple-50', text: 'text-purple-600', accent: 'border-l-purple-500', icon: Bot },
+                    { bg: 'bg-amber-50', text: 'text-amber-600', accent: 'border-l-amber-500', icon: Cpu },
                   ];
                   const style = cardStyles[index % 4];
                   const IconComponent = style.icon;
+                  const isExpanded = expandedCards.includes(index);
                   
                   return (
-                    <Collapsible 
-                      key={index} 
-                      open={expandedCards.includes(index)}
-                      onOpenChange={() => toggleCard(index)}
-                      className="break-inside-avoid"
+                    <div 
+                      key={index}
+                      className={`bg-white rounded-xl border border-gray-200 border-l-4 ${style.accent} overflow-hidden transition-shadow hover:shadow-md`}
                     >
-                      <Card className={`border-gray-200 bg-white ${style.border} transition-colors`}>
-                        <CollapsibleTrigger className="w-full text-left">
-                          <CardHeader className="pb-2">
-                            <div className="flex items-start gap-3">
-                              <div className={`p-2 rounded-lg ${style.bg} flex-shrink-0`}>
-                                <IconComponent className={`w-5 h-5 ${style.text}`} />
-                              </div>
-                              <div className="flex-1">
-                                <CardTitle className="text-base font-medium text-gray-900 leading-snug">
-                                  {idea.title}
-                                </CardTitle>
-                              </div>
-                              <ChevronDown 
-                                className={`w-5 h-5 text-gray-400 transition-transform flex-shrink-0 ${
-                                  expandedCards.includes(index) ? 'rotate-180' : ''
-                                }`}
-                              />
-                            </div>
-                          </CardHeader>
-                        </CollapsibleTrigger>
-                        
-                        {!expandedCards.includes(index) && (
-                          <CardContent className="pt-0 pb-4">
-                            <div className="flex items-center gap-2 text-sm text-gray-500 ml-[52px]">
+                      {/* Header - Always visible */}
+                      <button 
+                        onClick={() => toggleCard(index)}
+                        className="w-full text-left p-4 pb-3"
+                      >
+                        <div className="flex items-start gap-3">
+                          <div className={`p-2 rounded-lg ${style.bg} flex-shrink-0`}>
+                            <IconComponent className={`w-5 h-5 ${style.text}`} />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <h3 className="font-semibold text-gray-900 text-[15px] leading-snug mb-1.5">
+                              {idea.title}
+                            </h3>
+                            <div className="flex items-center gap-1.5 text-gray-500">
                               <Clock className="w-3.5 h-3.5 flex-shrink-0" />
-                              <span className="text-xs truncate">{idea.trigger}</span>
+                              <span className="text-xs">{idea.trigger}</span>
                             </div>
-                          </CardContent>
-                        )}
-                        
-                        <CollapsibleContent>
-                          <CardContent className="pt-0 pb-4 space-y-4">
-                            <div className="flex flex-wrap gap-1.5">
-                              {idea.tools.map((tool, toolIndex) => (
-                                <Badge 
-                                  key={toolIndex} 
-                                  variant="secondary" 
-                                  className="bg-blue-100 text-blue-700 text-xs font-normal"
-                                >
-                                  {tool}
-                                </Badge>
-                              ))}
-                            </div>
-                            
-                            <div className="flex items-start gap-2">
-                              <Sparkles className="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" />
-                              <div>
-                                <p className="text-xs text-gray-400 uppercase tracking-wide mb-1">What it automates</p>
-                                <p className="text-sm text-gray-700">{idea.what_it_automates}</p>
-                              </div>
-                            </div>
-                            
-                            <div className="flex items-start gap-2">
-                              <Zap className="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" />
-                              <div>
-                                <p className="text-xs text-gray-400 uppercase tracking-wide mb-1">Why this fits you</p>
-                                <p className="text-sm text-gray-700">{idea.why_this_fits_you}</p>
-                              </div>
-                            </div>
-                          </CardContent>
-                        </CollapsibleContent>
-                        
-                        <CardContent className="pt-2 pb-4">
-                          <Button 
-                            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg shadow-sm"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              const baseUrl = 'https://app.vellum.ai/onboarding/agent-builder/signup';
-                              const params = new URLSearchParams({
-                                agentBuilderPrompt: idea.prompt_to_build || idea.title,
-                                utm_medium: 'automation-advisor',
-                                utm_source: 'agentyard',
-                              });
-                              window.open(`${baseUrl}?${params.toString()}`, '_blank');
-                            }}
-                          >
-                            Build this agent
-                            <ExternalLink className="w-4 h-4 ml-2" />
-                          </Button>
-                        </CardContent>
-                      </Card>
-                    </Collapsible>
+                          </div>
+                          <ChevronDown 
+                            className={`w-5 h-5 text-gray-400 transition-transform flex-shrink-0 mt-1 ${
+                              isExpanded ? 'rotate-180' : ''
+                            }`}
+                          />
+                        </div>
+                      </button>
+                      
+                      {/* Tools - Always visible */}
+                      <div className="px-4 pb-3">
+                        <div className="flex flex-wrap gap-1.5">
+                          {idea.tools.slice(0, 4).map((tool, toolIndex) => (
+                            <span 
+                              key={toolIndex} 
+                              className="inline-flex items-center px-2 py-0.5 rounded-full text-xs bg-gray-100 text-gray-600"
+                            >
+                              {tool}
+                            </span>
+                          ))}
+                          {idea.tools.length > 4 && (
+                            <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs bg-gray-100 text-gray-500">
+                              +{idea.tools.length - 4} more
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                      
+                      {/* Expanded Content */}
+                      {isExpanded && (
+                        <div className="px-4 pb-3 space-y-3 border-t border-gray-100 pt-3">
+                          <div>
+                            <p className="text-xs font-medium text-gray-400 uppercase tracking-wider mb-1">What it automates</p>
+                            <p className="text-sm text-gray-700 leading-relaxed">{idea.what_it_automates}</p>
+                          </div>
+                          
+                          <div>
+                            <p className="text-xs font-medium text-gray-400 uppercase tracking-wider mb-1">Why this fits you</p>
+                            <p className="text-sm text-gray-700 leading-relaxed">{idea.why_this_fits_you}</p>
+                          </div>
+                        </div>
+                      )}
+                      
+                      {/* Action Button */}
+                      <div className="p-4 pt-2">
+                        <Button 
+                          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg h-10"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            const baseUrl = 'https://app.vellum.ai/onboarding/agent-builder/signup';
+                            const params = new URLSearchParams({
+                              agentBuilderPrompt: idea.prompt_to_build || idea.title,
+                              utm_medium: 'automation-advisor',
+                              utm_source: 'agentyard',
+                            });
+                            window.open(`${baseUrl}?${params.toString()}`, '_blank');
+                          }}
+                        >
+                          Build this agent
+                          <ExternalLink className="w-4 h-4 ml-2" />
+                        </Button>
+                      </div>
+                    </div>
                   );
                 })}
               </div>
