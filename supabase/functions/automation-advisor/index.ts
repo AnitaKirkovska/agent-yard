@@ -78,18 +78,28 @@ serve(async (req) => {
     const data = await response.json();
     console.log("Vellum response:", JSON.stringify(data, null, 2));
 
-    // Extract the ideas from the workflow output
+    // Extract the ideas and prompts from the workflow output
     let ideas = [];
+    let promptsToBuild: string[] = [];
+    
     if (data.data?.outputs && Array.isArray(data.data.outputs)) {
       for (const output of data.data.outputs) {
         if (output.name === "recommendations" && output.type === "JSON") {
           ideas = output.value?.ideas || [];
-          break;
+        }
+        if (output.name === "prompt_to_build" && output.type === "JSON") {
+          promptsToBuild = output.value || [];
         }
       }
     }
 
-    return new Response(JSON.stringify({ ideas }), {
+    // Merge prompt_to_build into each idea
+    const ideasWithPrompts = ideas.map((idea: any, index: number) => ({
+      ...idea,
+      prompt_to_build: promptsToBuild[index] || idea.title,
+    }));
+
+    return new Response(JSON.stringify({ ideas: ideasWithPrompts }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   } catch (error) {

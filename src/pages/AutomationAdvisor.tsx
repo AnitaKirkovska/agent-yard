@@ -22,6 +22,7 @@ interface AgentIdea {
   trigger: string;
   what_it_automates: string;
   why_this_fits_you: string;
+  prompt_to_build?: string;
 }
 
 const SENIORITY_LEVELS = [
@@ -700,7 +701,13 @@ const AutomationAdvisor = () => {
                             className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg shadow-sm"
                             onClick={(e) => {
                               e.stopPropagation();
-                              window.open('https://www.vellum.ai/', '_blank');
+                              const baseUrl = 'https://app.vellum.ai/onboarding/agent-builder/signup';
+                              const params = new URLSearchParams({
+                                agentBuilderPrompt: idea.prompt_to_build || idea.title,
+                                utm_medium: 'automation-advisor',
+                                utm_source: 'agentyard',
+                              });
+                              window.open(`${baseUrl}?${params.toString()}`, '_blank');
                             }}
                           >
                             Build this agent
