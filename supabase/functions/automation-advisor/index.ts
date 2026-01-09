@@ -15,9 +15,7 @@ serve(async (req) => {
       job_title, 
       seniority_level, 
       core_responsibilities, 
-      tools_used_weekly,
-      requires_approval,
-      involves_customer_data
+      tools_used_weekly
     } = await req.json();
 
     const VELLUM_API_KEY = Deno.env.get("VELLUM_API_KEY");
@@ -66,16 +64,6 @@ serve(async (req) => {
             type: "STRING",
             name: "primary_tool",
             value: tools_used_weekly[0] || "",
-          },
-          {
-            type: "JSON",
-            name: "requires_approval",
-            value: { value: requires_approval },
-          },
-          {
-            type: "JSON",
-            name: "involves_customer_data",
-            value: { value: involves_customer_data },
           },
         ],
       }),

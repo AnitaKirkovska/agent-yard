@@ -249,8 +249,6 @@ const AutomationAdvisor = () => {
   const [responsibilities, setResponsibilities] = useState<string[]>([]);
   const [toolsUsed, setToolsUsed] = useState<string[]>([]);
   const [primaryTool, setPrimaryTool] = useState("");
-  const [requiresApproval, setRequiresApproval] = useState(false);
-  const [involvesCustomerData, setInvolvesCustomerData] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [respOpen, setRespOpen] = useState(false);
   const [toolsOpen, setToolsOpen] = useState(false);
@@ -305,8 +303,6 @@ const AutomationAdvisor = () => {
           seniority_level: seniorityLevel,
           core_responsibilities: responsibilities,
           tools_used_weekly: toolsUsed,
-          requires_approval: requiresApproval,
-          involves_customer_data: involvesCustomerData,
         },
       });
 
@@ -557,26 +553,6 @@ const AutomationAdvisor = () => {
                 </Popover>
               </section>
 
-              {/* Compliance */}
-              <section className="space-y-4">
-                <h2 className="text-sm font-medium text-gray-900">Constraints</h2>
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between">
-                    <Label className="text-gray-600 text-sm">I want to approve LLM outputs</Label>
-                    <Switch
-                      checked={requiresApproval}
-                      onCheckedChange={setRequiresApproval}
-                    />
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <Label className="text-gray-600 text-sm">My processes involve customer data</Label>
-                    <Switch
-                      checked={involvesCustomerData}
-                      onCheckedChange={setInvolvesCustomerData}
-                    />
-                  </div>
-                </div>
-              </section>
 
               {/* Submit */}
               <Button
