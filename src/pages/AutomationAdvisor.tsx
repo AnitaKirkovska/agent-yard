@@ -1,4 +1,5 @@
 import { useState } from "react";
+import LoadingSkeletonWithProgress from "@/components/LoadingSkeletonWithProgress";
 import { Helmet } from "react-helmet-async";
 import { ArrowRight, Loader2, X, Plus, Zap, Clock, Sparkles, ChevronDown, ExternalLink, Pencil, Bot, Cpu, Workflow } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -564,7 +565,7 @@ const AutomationAdvisor = () => {
                 {isLoading ? (
                   <>
                     <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                    Analyzing your workflow...
+                    Analyzing your data...
                   </>
                 ) : (
                   <>
@@ -578,31 +579,12 @@ const AutomationAdvisor = () => {
 
           {/* Loading Skeleton */}
           {isLoading && hasSubmitted && (
-            <div className="mt-12 p-6 bg-gray-50 rounded-xl border border-gray-100">
-              <div className="text-center mb-6">
-                <h2 className="text-xl font-semibold text-gray-900 mb-2">Generating Your Recommendations...</h2>
-                <p className="text-gray-500">Analyzing your workflow to find the best AI agents</p>
-              </div>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {[1, 2, 3, 4].map((i) => (
-                  <Card key={i} className="border-gray-200 bg-white">
-                    <CardHeader className="pb-3">
-                      <div className="flex items-start gap-3">
-                        <Skeleton className="w-10 h-10 rounded-lg" />
-                        <div className="flex-1 space-y-2">
-                          <Skeleton className="h-5 w-3/4" />
-                          <Skeleton className="h-4 w-1/2" />
-                        </div>
-                      </div>
-                    </CardHeader>
-                    <CardContent className="pt-0">
-                      <Skeleton className="h-10 w-full" />
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            </div>
+            <LoadingSkeletonWithProgress 
+              jobTitle={jobTitle}
+              seniority={seniorityLevel}
+              responsibilities={responsibilities}
+              tools={toolsUsed}
+            />
           )}
 
           {/* Results Section */}
