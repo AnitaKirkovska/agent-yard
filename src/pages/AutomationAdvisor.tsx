@@ -616,17 +616,24 @@ const AutomationAdvisor = () => {
                       key={index}
                       className="bg-white rounded-lg border border-gray-200 overflow-hidden"
                     >
-                      <div className="flex items-center justify-between p-4 gap-4">
-                        <button 
-                          onClick={() => toggleCard(index)}
-                          className="flex-1 text-left flex items-center gap-3 min-w-0"
-                        >
-                          <IconComponent className="w-5 h-5 text-blue-600 flex-shrink-0" />
+                      <div className="p-4">
+                        <div className="flex items-start gap-3">
+                          <IconComponent className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
                           <div className="flex-1 min-w-0">
-                            <h3 className="font-semibold text-gray-900 leading-snug">
-                              {idea.title}
-                            </h3>
-                            <div className="flex items-center gap-1.5 mt-1">
+                            <button 
+                              onClick={() => toggleCard(index)}
+                              className="w-full text-left flex items-start justify-between gap-2"
+                            >
+                              <h3 className="font-semibold text-gray-900 leading-snug text-sm sm:text-base">
+                                {idea.title}
+                              </h3>
+                              <ChevronDown 
+                                className={`w-4 h-4 text-gray-400 transition-transform flex-shrink-0 mt-0.5 ${
+                                  isExpanded ? 'rotate-180' : ''
+                                }`}
+                              />
+                            </button>
+                            <div className="flex flex-wrap items-center gap-1.5 mt-2">
                               {idea.tools.slice(0, 3).map((tool, toolIndex) => (
                                 <span 
                                   key={toolIndex} 
@@ -641,31 +648,25 @@ const AutomationAdvisor = () => {
                                 </span>
                               )}
                             </div>
+                            <Button 
+                              size="sm"
+                              className="mt-3 bg-blue-600 hover:bg-blue-700 text-white text-sm px-4 h-8"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                const baseUrl = 'https://app.vellum.ai/onboarding/agent-builder/signup';
+                                const params = new URLSearchParams({
+                                  agentBuilderPrompt: idea.prompt_to_build || idea.title,
+                                  utm_medium: 'automation-advisor',
+                                  utm_source: 'agentyard',
+                                });
+                                window.open(`${baseUrl}?${params.toString()}`, '_blank');
+                              }}
+                            >
+                              Build
+                              <ExternalLink className="w-3.5 h-3.5 ml-1.5" />
+                            </Button>
                           </div>
-                          <ChevronDown 
-                            className={`w-4 h-4 text-gray-400 transition-transform flex-shrink-0 ${
-                              isExpanded ? 'rotate-180' : ''
-                            }`}
-                          />
-                        </button>
-                        
-                        <Button 
-                          size="sm"
-                          className="bg-blue-600 hover:bg-blue-700 text-white text-sm px-4 h-8 flex-shrink-0"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            const baseUrl = 'https://app.vellum.ai/onboarding/agent-builder/signup';
-                            const params = new URLSearchParams({
-                              agentBuilderPrompt: idea.prompt_to_build || idea.title,
-                              utm_medium: 'automation-advisor',
-                              utm_source: 'agentyard',
-                            });
-                            window.open(`${baseUrl}?${params.toString()}`, '_blank');
-                          }}
-                        >
-                          Build
-                          <ExternalLink className="w-3.5 h-3.5 ml-1.5" />
-                        </Button>
+                        </div>
                       </div>
                       
                       {/* Expanded Content */}
