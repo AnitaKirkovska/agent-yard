@@ -590,103 +590,48 @@ const AutomationAdvisor = () => {
           {/* Results Section */}
           {hasSubmitted && !isLoading && ideas.length > 0 && (
             <div className="mt-12">
-              <div className="flex items-start justify-between mb-6">
+              <div className="flex items-center justify-between mb-8">
                 <div>
-                  <h2 className="text-xl font-semibold text-gray-900 mb-1">Your AI Agent Recommendations</h2>
-                  <p className="text-gray-500 text-sm">Click any card to learn more, or start building right away</p>
+                  <h2 className="text-xl font-semibold text-gray-900">Your AI Agent Ideas</h2>
                 </div>
                 <Button
-                  variant="outline"
+                  variant="ghost"
                   size="sm"
                   onClick={() => setFormCollapsed(false)}
-                  className="text-gray-600 hover:text-gray-800 border-gray-200"
+                  className="text-gray-500 hover:text-gray-700"
                 >
                   <Pencil className="w-4 h-4 mr-1.5" />
-                  Edit inputs
+                  Edit
                 </Button>
               </div>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-3">
                 {ideas.slice(0, 4).map((idea, index) => {
-                  const cardStyles = [
-                    { bg: 'bg-blue-50', text: 'text-blue-600', accent: 'border-l-blue-500', icon: Zap },
-                    { bg: 'bg-emerald-50', text: 'text-emerald-600', accent: 'border-l-emerald-500', icon: Workflow },
-                    { bg: 'bg-purple-50', text: 'text-purple-600', accent: 'border-l-purple-500', icon: Bot },
-                    { bg: 'bg-amber-50', text: 'text-amber-600', accent: 'border-l-amber-500', icon: Cpu },
-                  ];
-                  const style = cardStyles[index % 4];
-                  const IconComponent = style.icon;
                   const isExpanded = expandedCards.includes(index);
                   
                   return (
                     <div 
                       key={index}
-                      className={`bg-white rounded-xl border border-gray-200 border-l-4 ${style.accent} overflow-hidden transition-shadow hover:shadow-md`}
+                      className="bg-white rounded-lg border border-gray-200 overflow-hidden"
                     >
-                      {/* Header - Always visible */}
-                      <button 
-                        onClick={() => toggleCard(index)}
-                        className="w-full text-left p-4 pb-3"
-                      >
-                        <div className="flex items-start gap-3">
-                          <div className={`p-2 rounded-lg ${style.bg} flex-shrink-0`}>
-                            <IconComponent className={`w-5 h-5 ${style.text}`} />
-                          </div>
-                          <div className="flex-1 min-w-0">
-                            <h3 className="font-semibold text-gray-900 text-[15px] leading-snug mb-1.5">
-                              {idea.title}
-                            </h3>
-                            <div className="flex items-center gap-1.5 text-gray-500">
-                              <Clock className="w-3.5 h-3.5 flex-shrink-0" />
-                              <span className="text-xs">{idea.trigger}</span>
-                            </div>
-                          </div>
+                      <div className="flex items-center justify-between p-4">
+                        <button 
+                          onClick={() => toggleCard(index)}
+                          className="flex-1 text-left flex items-center gap-3 min-w-0"
+                        >
+                          <h3 className="font-medium text-gray-900 text-sm leading-snug truncate">
+                            {idea.title}
+                          </h3>
                           <ChevronDown 
-                            className={`w-5 h-5 text-gray-400 transition-transform flex-shrink-0 mt-1 ${
+                            className={`w-4 h-4 text-gray-400 transition-transform flex-shrink-0 ${
                               isExpanded ? 'rotate-180' : ''
                             }`}
                           />
-                        </div>
-                      </button>
-                      
-                      {/* Tools - Always visible */}
-                      <div className="px-4 pb-3">
-                        <div className="flex flex-wrap gap-1.5">
-                          {idea.tools.slice(0, 4).map((tool, toolIndex) => (
-                            <span 
-                              key={toolIndex} 
-                              className="inline-flex items-center px-2 py-0.5 rounded-full text-xs bg-gray-100 text-gray-600"
-                            >
-                              {tool}
-                            </span>
-                          ))}
-                          {idea.tools.length > 4 && (
-                            <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs bg-gray-100 text-gray-500">
-                              +{idea.tools.length - 4} more
-                            </span>
-                          )}
-                        </div>
-                      </div>
-                      
-                      {/* Expanded Content */}
-                      {isExpanded && (
-                        <div className="px-4 pb-3 space-y-3 border-t border-gray-100 pt-3">
-                          <div>
-                            <p className="text-xs font-medium text-gray-400 uppercase tracking-wider mb-1">What it automates</p>
-                            <p className="text-sm text-gray-700 leading-relaxed">{idea.what_it_automates}</p>
-                          </div>
-                          
-                          <div>
-                            <p className="text-xs font-medium text-gray-400 uppercase tracking-wider mb-1">Why this fits you</p>
-                            <p className="text-sm text-gray-700 leading-relaxed">{idea.why_this_fits_you}</p>
-                          </div>
-                        </div>
-                      )}
-                      
-                      {/* Action Button */}
-                      <div className="p-4 pt-2">
+                        </button>
+                        
                         <Button 
-                          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg h-10"
+                          size="sm"
+                          className="ml-4 bg-blue-600 hover:bg-blue-700 text-white text-sm px-4 h-8 flex-shrink-0"
                           onClick={(e) => {
                             e.stopPropagation();
                             const baseUrl = 'https://app.vellum.ai/onboarding/agent-builder/signup';
@@ -698,10 +643,39 @@ const AutomationAdvisor = () => {
                             window.open(`${baseUrl}?${params.toString()}`, '_blank');
                           }}
                         >
-                          Build this agent
-                          <ExternalLink className="w-4 h-4 ml-2" />
+                          Build
+                          <ExternalLink className="w-3.5 h-3.5 ml-1.5" />
                         </Button>
                       </div>
+                      
+                      {/* Expanded Content */}
+                      {isExpanded && (
+                        <div className="px-4 pb-4 pt-0 space-y-3 border-t border-gray-100">
+                          <div className="pt-3 flex items-center gap-2 text-gray-500 text-xs">
+                            <Clock className="w-3.5 h-3.5" />
+                            <span>{idea.trigger}</span>
+                          </div>
+                          
+                          <div className="flex flex-wrap gap-1.5">
+                            {idea.tools.map((tool, toolIndex) => (
+                              <span 
+                                key={toolIndex} 
+                                className="inline-flex items-center px-2 py-0.5 rounded text-xs bg-gray-100 text-gray-600"
+                              >
+                                {tool}
+                              </span>
+                            ))}
+                          </div>
+                          
+                          <p className="text-sm text-gray-600 leading-relaxed">
+                            {idea.what_it_automates}
+                          </p>
+                          
+                          <p className="text-sm text-gray-500 leading-relaxed">
+                            {idea.why_this_fits_you}
+                          </p>
+                        </div>
+                      )}
                     </div>
                   );
                 })}
